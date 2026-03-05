@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crystal Obelisk — Level Up to 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fog: #0a0c12;
+    --deep: #10131e;
+    --panel: #161927;
+    --border: #2a3050;
+    --crystal: #7ec8e3;
+    --crystal-dim: #3a7a94;
+    --gold: #c9a84c;
+    --gold-dim: #7a6030;
+    --void: #8b5cf6;
+    --null: #ef4444;
+    --heartroot: #4ade80;
+    --text: #e8e0d0;
+    --text-dim: #8a8070;
+    --glow: rgba(126,200,227,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--fog);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Fog background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(126,200,227,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.02) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .campaign-header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    position: relative;
+  }
+
+  .campaign-header::before {
+    content: '✦';
+    display: block;
+    font-size: 1.5rem;
+    color: var(--crystal);
+    margin-bottom: 1rem;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  .campaign-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    color: var(--crystal);
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 30px rgba(126,200,227,0.4);
+    margin-bottom: 0.5rem;
+  }
+
+  .campaign-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    opacity: 0.4;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--crystal), transparent);
+  }
+  .divider span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--crystal);
+    letter-spacing: 0.3em;
+  }
+
+  .intro-text {
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+
+  /* Character selector */
+  .character-selector {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .character-selector::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--crystal), transparent);
+  }
+
+  .selector-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--crystal);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .char-btn {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    padding: 0.6rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    border-radius: 2px;
+  }
+
+  .char-btn:hover {
+    border-color: var(--crystal-dim);
+    color: var(--text);
+    background: rgba(126,200,227,0.05);
+  }
+
+  .char-btn.active {
+    border-color: var(--crystal);
+    color: var(--crystal);
+    background: rgba(126,200,227,0.08);
+    box-shadow: 0 0 12px rgba(126,200,227,0.1);
+  }
+
+  .char-btn .char-class {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gold-dim);
+    font-style: italic;
+    margin-top: 0.1rem;
+  }
+
+  .char-btn.active .char-class {
+    color: var(--gold);
+  }
+
+  /* Sheet */
+  .sheet {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .sheet.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Section */
+  .section {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .section-header {
+    background: var(--deep);
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-icon {
+    color: var(--crystal);
+    font-size: 0.9rem;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--crystal);
+    text-transform: uppercase;
+  }
+
+  .section-body { padding: 1.2rem; }
+
+  /* Identity row */
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .identity-grid { grid-template-columns: 1fr; }
+  }
+
+  .field-group { margin-bottom: 0.8rem; }
+
+  .field-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+
+  .field-value {
+    font-size: 1.1rem;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .field-value.gold { color: var(--gold); }
+  .field-value.crystal { color: var(--crystal); }
+
+  /* Stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.6rem;
+  }
+
+  @media (max-width: 500px) {
+    .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .stat-box {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.6rem 0.4rem;
+    text-align: center;
+  }
+
+  .stat-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-score {
+    font-size: 1.4rem;
+    color: var(--crystal);
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .stat-mod {
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-top: 0.2rem;
+  }
+
+  /* HP row */
+  .hp-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .hp-box {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.8rem;
+    text-align: center;
+  }
+
+  .hp-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  input[type="number"], input[type="text"], select, textarea {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 2px;
+    width: 100%;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+
+  input[type="number"]:focus, input[type="text"]:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--crystal-dim);
+    box-shadow: 0 0 8px rgba(126,200,227,0.1);
+  }
+
+  input[type="number"] { text-align: center; font-size: 1.2rem; }
+
+  select option { background: var(--deep); }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+  }
+
+  /* Subclass picker */
+  .subclass-grid {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .subclass-option {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .subclass-option:hover {
+    border-color: var(--crystal-dim);
+    background: rgba(126,200,227,0.04);
+  }
+
+  .subclass-option.selected {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.06);
+    box-shadow: 0 0 12px rgba(201,168,76,0.08);
+  }
+
+  .subclass-radio {
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: all 0.2s;
+    background: var(--fog);
+    position: relative;
+  }
+
+  .subclass-option.selected .subclass-radio {
+    border-color: var(--gold);
+    background: var(--gold);
+    box-shadow: 0 0 6px rgba(201,168,76,0.4);
+  }
+
+  .subclass-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+
+  .subclass-option.selected .subclass-name { color: var(--gold); }
+
+  .subclass-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* Spells */
+  .spell-list {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .spell-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.6rem;
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-size: 0.95rem;
+  }
+
+  .spell-level-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 1px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .cantrip { background: rgba(74,222,128,0.1); color: var(--heartroot); border: 1px solid rgba(74,222,128,0.2); }
+  .lvl1 { background: rgba(126,200,227,0.1); color: var(--crystal); border: 1px solid rgba(126,200,227,0.2); }
+  .lvl2 { background: rgba(201,168,76,0.1); color: var(--gold); border: 1px solid rgba(201,168,76,0.2); }
+
+  .spell-name { color: var(--text); flex: 1; }
+  .spell-new { font-size: 0.65rem; color: var(--void); font-family: 'Cinzel', serif; letter-spacing: 0.1em; }
+
+  /* Proficiencies */
+  .prof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .prof-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+
+  .prof-item::before {
+    content: '◆';
+    font-size: 0.5rem;
+    color: var(--crystal);
+    flex-shrink: 0;
+  }
+
+  /* New features */
+  .feature-item {
+    border-left: 2px solid var(--crystal-dim);
+    padding: 0.6rem 0 0.6rem 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .feature-item:last-child { margin-bottom: 0; }
+
+  .feature-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--crystal);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .feature-desc {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* Notes */
+  .notes-area {
+    width: 100%;
+    background: var(--deep);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    padding: 0.8rem;
+    border-radius: 2px;
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+  }
+
+  /* Save button */
+  .save-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.8rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  .btn-primary {
+    background: var(--crystal-dim);
+    color: var(--fog);
+    border: 1px solid var(--crystal);
+  }
+
+  .btn-primary:hover {
+    background: var(--crystal);
+    box-shadow: 0 0 20px rgba(126,200,227,0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+
+  .save-note {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: 0.8rem;
+  }
+
+  /* Fog warning */
+  .fog-banner {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(239,68,68,0.06));
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 2px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .fog-banner strong { color: var(--void); font-style: normal; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; }
+
+  /* Completion indicator */
+  .completion-bar {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    height: 4px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+
+  .completion-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--crystal-dim), var(--crystal));
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px rgba(126,200,227,0.4);
+  }
+
+  .completion-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-align: right;
+    margin-top: 0.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  hr.section-rule {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1rem 0;
+    opacity: 0.5;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 500px) { .two-col { grid-template-columns: 1fr; } }
+
+  .inline-field {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .inline-field label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="campaign-header">
+    <h1 class="campaign-title">Crystal Obelisk</h1>
+    <p class="campaign-subtitle">Level Up — Tier 2 Begins</p>
+  </div>
+
+  <div class="fog-banner">
+    <strong>Act II Approaches</strong><br>
+    You have survived Azurite Pointe. You have survived Sunfall. The road to Sanctus lies ahead — and something in the forest watches.<br><br>
+    You are no longer ordinary. <em>Choose who you become.</em>
+  </div>
+
+  <div class="divider"><span>Select Your Character</span></div>
+
+  <div class="character-selector">
+    <span class="selector-label">✦ Who are you?</span>
+    <div class="character-grid" id="charGrid"></div>
+  </div>
+
+  <div id="sheetsContainer"></div>
+
+</div>
+
+<script>
+// ============================================================
+// CHARACTER DATA
+// ============================================================
+const CHARACTERS = [
+  {
+    id: "seris",
+    name: "Seris Dawnblade",
+    race: "Human",
+    class: "Fighter",
+    background: "Soldier",
+    level: 3,
+    stats: { STR:16, DEX:13, CON:14, INT:10, WIS:12, CHA:8 },
+    hp: { base: 10, perLevel: 6, con: 2 },
+    proficiencies: ["All armor","Shields","Simple & martial weapons","Athletics","Perception","Intimidation","Survival"],
+    features: [
+      { name: "Action Surge", desc: "Once per short rest, take one additional action on your turn." },
+      { name: "Second Wind", desc: "Bonus action: regain 1d10 + Fighter level HP once per short rest." },
+      { name: "Improved Critical", desc: "(Champion) Your weapon attacks score a critical hit on a roll of 19–20." }
+    ],
+    subclasses: [
+      { name: "Champion", desc: "Improved Critical hits (19-20). Simple, reliable, devastating in the long run." },
+      { name: "Battle Master", desc: "Maneuvers and superiority dice — tactical combat with control options." },
+      { name: "Eldritch Knight", desc: "Blend fighting with arcane magic. Learn cantrips and 1st level spells." }
+    ],
+    spells: null,
+    savingThrows: ["Strength", "Constitution"]
+  },
+  {
+    id: "korrin",
+    name: "Korrin Ashfang",
+    race: "Half-Orc",
+    class: "Rogue",
+    background: "Charlatan",
+    level: 3,
+    stats: { STR:12, DEX:16, CON:13, INT:11, WIS:10, CHA:14 },
+    hp: { base: 8, perLevel: 5, con: 1 },
+    proficiencies: ["Light armor","Simple weapons","Hand crossbows","Longswords","Rapiers","Shortswords","Thieves' tools","Stealth","Sleight of Hand","Deception","Athletics"],
+    features: [
+      { name: "Sneak Attack", desc: "2d6 sneak attack damage when you have advantage or an ally is adjacent to target." },
+      { name: "Cunning Action", desc: "Bonus action: Dash, Disengage, or Hide." },
+      { name: "Steady Aim (optional)", desc: "Bonus action: gain advantage on next attack, but your speed becomes 0." }
+    ],
+    subclasses: [
+      { name: "Thief", desc: "Fast Hands (bonus action item use), Second Story Work. Perfect for a survivor." },
+      { name: "Assassin", desc: "Assassinate: advantage on attacks vs creatures who haven't acted. Deadly opener." },
+      { name: "Arcane Trickster", desc: "Gain Mage Hand and illusion/enchantment spells alongside your rogue skills." }
+    ],
+    spells: null,
+    savingThrows: ["Dexterity", "Intelligence"]
+  },
+  {
+    id: "haldor",
+    name: "Haldor Brightshield",
+    race: "Dwarf",
+    class: "Cleric",
+    background: "Acolyte",
+    level: 3,
+    stats: { STR:14, DEX:10, CON:16, INT:11, WIS:16, CHA:10 },
+    hp: { base: 8, perLevel: 5, con: 3 },
+    proficiencies: ["Light & medium armor","Shields","Simple weapons","History","Insight","Medicine","Religion"],
+    features: [
+      { name: "Channel Divinity (1/rest)", desc: "Use Channel Divinity once per short rest. Upgrades to 2 uses at level 6." },
+      { name: "Turn Undead", desc: "Channel Divinity: force undead within 30ft to flee for 1 minute." },
+      { name: "Harness Divine Power", desc: "Channel Divinity: recover one expended spell slot (up to half proficiency bonus rounded up)." }
+    ],
+    subclasses: [
+      { name: "Life Domain", desc: "Disciple of Life: healing spells restore extra HP equal to 2 + spell level." },
+      { name: "Light Domain", desc: "Warding Flare and Radiance of the Dawn — crowd control and radiant burst." },
+      { name: "War Domain", desc: "War Priest: bonus action weapon attack. Extra attack on Channel Divinity." },
+      { name: "Grave Domain", desc: "Path to the Grave: make a creature vulnerable to next hit. Lair of the undead fog world." }
+    ],
+    spells: {
+      slots: { 1: 4, 2: 2 },
+      known: [
+        { name: "Sacred Flame", level: "cantrip" },
+        { name: "Guidance", level: "cantrip" },
+        { name: "Spare the Dying", level: "cantrip" },
+        { name: "Healing Word", level: "1" },
+        { name: "Bless", level: "1" },
+        { name: "Cure Wounds", level: "1" },
+        { name: "Shield of Faith", level: "1" },
+        { name: "Spiritual Weapon", level: "2", isNew: true },
+        { name: "Hold Person", level: "2", isNew: true }
+      ]
+    },
+    savingThrows: ["Wisdom", "Charisma"]
+  },
+  {
+    id: "edrin",
+    name: "Edrin Valebright",
+    race: "Human",
+    class: "Paladin",
+    background: "Noble",
+    level: 3,
+    stats: { STR:16, DEX:10, CON:14, INT:10, WIS:12, CHA:16 },
+    hp: { base: 10, perLevel: 7, con: 2 },
+    proficiencies: ["All armor","Shields","Simple & martial weapons","Persuasion","Insight","Religion","Athletics"],
+    features: [
+      { name: "Divine Smite", desc: "Expend a spell slot on a hit to deal 2d8 radiant damage (+1d8 per slot level above 1st)." },
+      { name: "Lay on Hands", desc: "15 HP pool per long rest. Spend any amount to heal, or 5 HP to cure disease/poison." },
+      { name: "Divine Health", desc: "Immune to disease." }
+    ],
+    subclasses: [
+      { name: "Oath of Devotion", desc: "Sacred Weapon, Turn the Unholy. Classic holy warrior. Strong in fog-corrupted world." },
+      { name: "Oath of the Ancients", desc: "Nature's Wrath, Turn the Faithless. Protect the light — resonant with Heartroot trees." },
+      { name: "Oath of Vengeance", desc: "Vow of Enmity: advantage on attacks vs one target. Relentless pursuit." },
+      { name: "Oath of Glory", desc: "Inspiring Smite: distribute temp HP after smiting. Inspire the party." }
+    ],
+    spells: {
+      slots: { 1: 4 },
+      known: [
+        { name: "Bless", level: "1" },
+        { name: "Command", level: "1" },
+        { name: "Divine Favor", level: "1" },
+        { name: "Wrathful Smite", level: "1", isNew: true }
+      ]
+    },
+    savingThrows: ["Wisdom", "Charisma"]
+  },
+  {
+    id: "sable",
+    name: "Sable Thornscar",
+    race: "Tiefling",
+    class: "Sellsword (Fighter)",
+    background: "Mercenary",
+    level: 3,
+    stats: { STR:15, DEX:14, CON:13, INT:10, WIS:10, CHA:12 },
+    hp: { base: 10, perLevel: 6, con: 1 },
+    proficiencies: ["All armor","Shields","Simple & martial weapons","Athletics","Intimidation","Perception","Stealth"],
+    features: [
+      { name: "Action Surge", desc: "Once per short rest, take one additional action on your turn." },
+      { name: "Second Wind", desc: "Bonus action: regain 1d10 + Fighter level HP once per short rest." },
+      { name: "Infernal Legacy", desc: "Know Thaumaturgy cantrip. 3rd level: Hellish Rebuke (2nd level) 1/day." }
+    ],
+    subclasses: [
+      { name: "Champion", desc: "Improved Critical hits (19-20). Mercenary reliability." },
+      { name: "Battle Master", desc: "Superiority dice and maneuvers. A sellsword who fights smart." },
+      { name: "Eldritch Knight", desc: "Arcane magic alongside sword work. Tiefling heritage makes this flavorful." }
+    ],
+    spells: null,
+    savingThrows: ["Strength", "Constitution"]
+  },
+  {
+    id: "azrael",
+    name: "Azrael Cinderborn",
+    race: "Tiefling",
+    class: "Barbarian",
+    background: "Outlander",
+    level: 3,
+    stats: { STR:17, DEX:13, CON:16, INT:9, WIS:11, CHA:10 },
+    hp: { base: 12, perLevel: 8, con: 3 },
+    proficiencies: ["Light & medium armor","Shields","Simple & martial weapons","Athletics","Intimidation","Perception","Survival"],
+    features: [
+      { name: "Rage (3/long rest)", desc: "Bonus action: advantage on STR checks/saves, +2 damage, resistance to physical damage. Upgrades to 4 uses at level 5." },
+      { name: "Reckless Attack", desc: "Attack with advantage, but attacks against you have advantage until next turn." },
+      { name: "Danger Sense", desc: "Advantage on DEX saves against effects you can see (traps, spells, etc.)." }
+    ],
+    subclasses: [
+      { name: "Path of the Berserker", desc: "Frenzy: bonus action attack while raging. Extra attack, but Exhaustion after." },
+      { name: "Path of the Totem Warrior", desc: "Spirit animal bonuses. Bear: resistance to all damage while raging." },
+      { name: "Path of the Zealot", desc: "Divine Fury: extra radiant/necrotic damage while raging. Hard to kill." },
+      { name: "Path of Wild Magic", desc: "Surge of wild magic effects while raging. Chaotic and flavorful for a tiefling." }
+    ],
+    spells: null,
+    savingThrows: ["Strength", "Constitution"]
+  },
+  {
+    id: "liora",
+    name: "Liora Windstep",
+    race: "Elf",
+    class: "Ranger",
+    background: "Outlander",
+    level: 3,
+    stats: { STR:11, DEX:17, CON:13, INT:12, WIS:14, CHA:10 },
+    hp: { base: 10, perLevel: 6, con: 1 },
+    proficiencies: ["Light & medium armor","Simple & martial weapons","Shields","Animal Handling","Athletics","Perception","Stealth","Survival","Nature"],
+    features: [
+      { name: "Favored Enemy", desc: "Choose a favored enemy type — advantage on tracking, recall info, learn language." },
+      { name: "Natural Explorer", desc: "Choose a favored terrain — ignore difficult terrain, always alert, extra foraging." },
+      { name: "Primeval Awareness", desc: "Expend spell slot to sense favored enemies within 1 mile (6 miles in favored terrain)." }
+    ],
+    subclasses: [
+      { name: "Hunter", desc: "Hunter's Prey: Colossus Slayer, Giant Killer, or Horde Breaker. Versatile damage options." },
+      { name: "Beast Master", desc: "Ranger's Companion: bond with an animal companion that fights with you." },
+      { name: "Gloom Stalker", desc: "Dread Ambusher: extra attack on first turn, invisible in magical darkness. Ideal for the fog." },
+      { name: "Horizon Walker", desc: "Detect Portal, planar travel flavor. Interesting for a world with reality tears." }
+    ],
+    spells: {
+      slots: { 1: 3 },
+      known: [
+        { name: "Hunter's Mark", level: "1" },
+        { name: "Cure Wounds", level: "1" },
+        { name: "Fog Cloud", level: "1", isNew: true }
+      ]
+    },
+    savingThrows: ["Strength", "Dexterity"]
+  },
+  {
+    id: "rurik",
+    name: "Rurik Goldnote",
+    race: "Dwarf",
+    class: "Bard",
+    background: "Entertainer",
+    level: 3,
+    stats: { STR:10, DEX:13, CON:14, INT:12, WIS:10, CHA:17 },
+    hp: { base: 8, perLevel: 5, con: 2 },
+    proficiencies: ["Light armor","Simple weapons","Hand crossbows","Longswords","Rapiers","Shortswords","Three musical instruments","Persuasion","Performance","Deception","Insight","Perception"],
+    features: [
+      { name: "Bardic Inspiration (d6)", desc: "Your Bardic Inspiration die is a d6 at level 3 — it upgrades to d8 at level 5. Bonus action to give an ally +1d6." },
+      { name: "Jack of All Trades", desc: "Add half proficiency bonus to any ability check you're not proficient in." },
+      { name: "Song of Rest", desc: "During short rest, allies regain extra 1d6 HP when spending hit dice." }
+    ],
+    subclasses: [
+      { name: "College of Lore", desc: "Bonus proficiencies, Cutting Words reaction to subtract d6 from enemy rolls." },
+      { name: "College of Valor", desc: "Combat Inspiration and medium armor/martial weapons. Battle bard." },
+      { name: "College of Glamour", desc: "Mantle of Inspiration: give temp HP and free movement to allies. Fey-touched flavor." },
+      { name: "College of Spirits", desc: "Spiritual Focus: speak with spirits, Tales from Beyond. Atmospheric in a death-haunted world." }
+    ],
+    spells: {
+      slots: { 1: 4, 2: 2 },
+      known: [
+        { name: "Vicious Mockery", level: "cantrip" },
+        { name: "Prestidigitation", level: "cantrip" },
+        { name: "Healing Word", level: "1" },
+        { name: "Thunderwave", level: "1" },
+        { name: "Charm Person", level: "1" },
+        { name: "Dissonant Whispers", level: "1" },
+        { name: "Heat Metal", level: "2", isNew: true },
+        { name: "Suggestion", level: "2", isNew: true }
+      ]
+    },
+    savingThrows: ["Dexterity", "Charisma"]
+  },
+  {
+    id: "ashara",
+    name: "Ashara Solkindle",
+    race: "Fire Genasi",
+    class: "Cleric (Life)",
+    background: "Acolyte",
+    level: 3,
+    stats: { STR:10, DEX:12, CON:14, INT:11, WIS:17, CHA:13 },
+    hp: { base: 8, perLevel: 5, con: 2 },
+    proficiencies: ["Light & medium armor","Shields","Simple weapons","Medicine","Insight","Religion","Persuasion"],
+    features: [
+      { name: "Disciple of Life", desc: "Your healing spells restore extra HP equal to 2 + the spell's level." },
+      { name: "Channel Divinity (1/rest)", desc: "Use Channel Divinity once per short rest. Upgrades to 2 uses at level 6." },
+      { name: "Channel Divinity: Preserve Life", desc: "Restore up to 5× your cleric level in HP, divided among any creatures within 30ft (up to half their max HP each)." },
+      { name: "Blessed Healer", desc: "When you cast a healing spell on another creature, you regain 2 + spell level HP." }
+    ],    subclasses: [
+      { name: "Life Domain", desc: "Already chosen — your path is healing and preservation. Fitting for someone made to sustain life." }
+    ],
+    spells: {
+      slots: { 1: 4, 2: 2 },
+      known: [
+        { name: "Sacred Flame", level: "cantrip" },
+        { name: "Produce Flame", level: "cantrip" },
+        { name: "Guidance", level: "cantrip" },
+        { name: "Cure Wounds", level: "1" },
+        { name: "Healing Word", level: "1" },
+        { name: "Bless", level: "1" },
+        { name: "Bane", level: "1" },
+        { name: "Lesser Restoration", level: "2", isNew: true },
+        { name: "Prayer of Healing", level: "2", isNew: true },
+        { name: "Spiritual Weapon", level: "2", isNew: true }
+      ]
+    },
+    savingThrows: ["Wisdom", "Charisma"]
+  },
+  {
+    id: "lark",
+    name: "Lark Thistledown",
+    race: "Halfling",
+    class: "Bard",
+    background: "Folk Hero",
+    level: 3,
+    stats: { STR:8, DEX:17, CON:12, INT:13, WIS:11, CHA:16 },
+    hp: { base: 8, perLevel: 5, con: 1 },
+    proficiencies: ["Light armor","Simple weapons","Hand crossbows","Longswords","Rapiers","Shortswords","Three instruments","Persuasion","Performance","Stealth","Sleight of Hand","Acrobatics"],
+    features: [
+      { name: "Bardic Inspiration (d6)", desc: "Your Bardic Inspiration die is a d6 at level 3 — upgrades to d8 at level 5. Bonus action to give an ally +1d6." },
+      { name: "Lucky (Halfling)", desc: "When you roll a 1 on d20, reroll and take the new result." },
+      { name: "Naturally Stealthy", desc: "Can hide behind creatures larger than you." }
+    ],
+    subclasses: [
+      { name: "College of Lore", desc: "Cutting Words: subtract your Bardic Inspiration die from an enemy's roll as a reaction." },
+      { name: "College of Valor", desc: "Medium armor and martial weapons — a tiny warrior who inspires AND fights." },
+      { name: "College of Glamour", desc: "Mantle of Inspiration: temp HP and free movement to allies. Very halfling-flavored." },
+      { name: "College of Eloquence", desc: "Unsettling Words + Silver Tongue. Your words never fail — silver tongue diplomacy." }
+    ],
+    spells: {
+      slots: { 1: 4, 2: 2 },
+      known: [
+        { name: "Minor Illusion", level: "cantrip" },
+        { name: "Mage Hand", level: "cantrip" },
+        { name: "Healing Word", level: "1" },
+        { name: "Faerie Fire", level: "1" },
+        { name: "Hideous Laughter", level: "1" },
+        { name: "Sleep", level: "1" },
+        { name: "Invisibility", level: "2", isNew: true },
+        { name: "Shatter", level: "2", isNew: true }
+      ]
+    },
+    savingThrows: ["Dexterity", "Charisma"]
+  }
+];
+
+// ============================================================
+// HELPERS
+// ============================================================
+function mod(score) {
+  const m = Math.floor((score - 10) / 2);
+  return (m >= 0 ? "+" : "") + m;
+}
+
+function calcHP(char) {
+  const conBonus = Math.floor((char.stats.CON - 10) / 2);
+  return char.hp.base + (char.hp.perLevel * 2) + (conBonus * 3);
+}
+
+// ============================================================
+// BUILD CHARACTER BUTTONS
+// ============================================================
+const grid = document.getElementById('charGrid');
+CHARACTERS.forEach(c => {
+  const btn = document.createElement('button');
+  btn.className = 'char-btn';
+  btn.dataset.id = c.id;
+  btn.innerHTML = `${c.name}<span class="char-class">${c.race} ${c.class}</span>`;
+  btn.onclick = () => selectChar(c.id);
+  grid.appendChild(btn);
+});
+
+// ============================================================
+// BUILD ALL SHEETS
+// ============================================================
+const container = document.getElementById('sheetsContainer');
+CHARACTERS.forEach(c => {
+  container.appendChild(buildSheet(c));
+});
+
+function buildSheet(c) {
+  const div = document.createElement('div');
+  div.className = 'sheet';
+  div.id = `sheet-${c.id}`;
+
+  const hp = calcHP(c);
+  const prof = 2; // level 3
+
+  // Subclass section
+  const isFixed = c.subclasses.length === 1;
+  let subclassHTML = '';
+  if (isFixed) {
+    subclassHTML = `
+      <div class="feature-item">
+        <div class="feature-name">${c.subclasses[0].name}</div>
+        <div class="feature-desc">${c.subclasses[0].desc}</div>
+      </div>`;
+  } else {
+    subclassHTML = `<div class="subclass-grid">` + c.subclasses.map((s, i) => `
+      <div class="subclass-option" data-char="${c.id}" data-idx="${i}" onclick="selectSubclass('${c.id}', ${i}, this)">
+        <div class="subclass-radio"></div>
+        <div>
+          <div class="subclass-name">${s.name}</div>
+          <div class="subclass-desc">${s.desc}</div>
+        </div>
+      </div>`).join('') + `</div>`;
+  }
+
+  // Spells section
+  let spellsHTML = '';
+  if (c.spells) {
+    const slotsText = Object.entries(c.spells.slots).map(([lvl, n]) => `${n}× Level ${lvl}`).join(' &nbsp;·&nbsp; ');
+    const spellItems = c.spells.known.map(s => `
+      <div class="spell-item">
+        <span class="spell-level-badge ${s.level === 'cantrip' ? 'cantrip' : s.level === '1' ? 'lvl1' : 'lvl2'}">
+          ${s.level === 'cantrip' ? 'Cantrip' : `Level ${s.level}`}
+        </span>
+        <span class="spell-name">${s.name}</span>
+        ${s.isNew ? '<span class="spell-new">✦ NEW</span>' : ''}
+      </div>`).join('');
+
+    spellsHTML = `
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">✧</span>
+        <span class="section-title">Spells & Slots</span>
+      </div>
+      <div class="section-body">
+        <div class="field-group" style="margin-bottom:1rem;">
+          <span class="field-label">Spell Slots at Level 3</span>
+          <span class="field-value crystal">${slotsText}</span>
+        </div>
+        <div class="spell-list">${spellItems}</div>
+        <hr class="section-rule">
+        <div class="field-group" style="margin-top:0.8rem;">
+          <span class="field-label">Add a new spell (discuss with DM)</span>
+          <input type="text" placeholder="Spell name..." id="newspell-${c.id}">
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Features
+  const featuresHTML = c.features.map(f => `
+    <div class="feature-item">
+      <div class="feature-name">${f.name}</div>
+      <div class="feature-desc">${f.desc}</div>
+    </div>`).join('');
+
+  // Proficiencies
+  const profHTML = c.proficiencies.map(p => `<div class="prof-item">${p}</div>`).join('');
+
+  // Saving throws
+  const savesHTML = c.savingThrows.map(s => `<div class="prof-item">${s}</div>`).join('');
+
+  div.innerHTML = `
+    <div class="divider"><span>${c.name}</span></div>
+
+    <!-- Identity -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">◈</span>
+        <span class="section-title">Identity</span>
+      </div>
+      <div class="section-body">
+        <div class="identity-grid">
+          <div>
+            <div class="field-group"><span class="field-label">Name</span><span class="field-value">${c.name}</span></div>
+            <div class="field-group"><span class="field-label">Race</span><span class="field-value">${c.race}</span></div>
+            <div class="field-group"><span class="field-label">Class</span><span class="field-value gold">${c.class}</span></div>
+          </div>
+          <div>
+            <div class="field-group"><span class="field-label">Level</span><span class="field-value crystal">3</span></div>
+            <div class="field-group"><span class="field-label">Background</span><span class="field-value">${c.background}</span></div>
+            <div class="field-group"><span class="field-label">Proficiency Bonus</span><span class="field-value crystal">+${prof}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">⚔</span>
+        <span class="section-title">Ability Scores</span>
+      </div>
+      <div class="section-body">
+        <div class="stats-grid">
+          ${Object.entries(c.stats).map(([k,v]) => `
+          <div class="stat-box">
+            <div class="stat-name">${k}</div>
+            <div class="stat-score">${v}</div>
+            <div class="stat-mod">${mod(v)}</div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- HP & Combat -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">♥</span>
+        <span class="section-title">Hit Points & Combat</span>
+      </div>
+      <div class="section-body">
+        <div class="hp-row">
+          <div class="hp-box">
+            <div class="hp-label">Max HP (Est.)</div>
+            <div class="stat-score" style="color:var(--null)">${hp}</div>
+          </div>
+          <div class="hp-box">
+            <div class="hp-label">Current HP</div>
+            <input type="number" value="${hp}" min="0" max="${hp + 20}" id="hp-${c.id}">
+          </div>
+          <div class="hp-box">
+            <div class="hp-label">Temp HP</div>
+            <input type="number" value="0" min="0" id="thp-${c.id}">
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field-group">
+            <span class="field-label">Saving Throws (Proficient)</span>
+            <div style="margin-top:0.3rem">${savesHTML}</div>
+          </div>
+          <div class="field-group">
+            <span class="field-label">Armor Class</span>
+            <input type="number" value="13" min="8" max="25" id="ac-${c.id}" style="max-width:80px; margin-top:0.3rem">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subclass -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">✦</span>
+        <span class="section-title">${isFixed ? 'Subclass' : 'Choose Your Subclass'}</span>
+      </div>
+      <div class="section-body">
+        ${isFixed ? '' : '<p style="font-style:italic;color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;">This is a permanent choice. Read each option carefully. Ask your DM if you need help.</p>'}
+        ${subclassHTML}
+        <div id="subclass-selected-${c.id}" style="margin-top:0.8rem;display:none;">
+          <span class="field-label">Selected</span>
+          <span class="field-value gold" id="subclass-name-${c.id}"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Level 3 Features -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">◆</span>
+        <span class="section-title">Class Features at Level 3</span>
+      </div>
+      <div class="section-body">${featuresHTML}</div>
+    </div>
+
+    ${spellsHTML}
+
+    <!-- Proficiencies -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">◇</span>
+        <span class="section-title">Proficiencies</span>
+      </div>
+      <div class="section-body">
+        <div class="prof-grid">${profHTML}</div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">✎</span>
+        <span class="section-title">Notes & Character Goals for Act II</span>
+      </div>
+      <div class="section-body">
+        <textarea class="notes-area" id="notes-${c.id}" placeholder="What does your character want? What are they afraid of? Any questions for the DM?"></textarea>
+      </div>
+    </div>
+
+    <div class="save-row">
+      <button class="btn btn-primary" onclick="saveSheet('${c.id}')">Save My Sheet</button>
+      <button class="btn btn-secondary" onclick="printSheet()">Print / Save PDF</button>
+    </div>
+    <p class="save-note">Your answers will be saved in this browser. Screenshot or print to keep a permanent copy.</p>
+  `;
+
+  return div;
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function selectChar(id) {
+  document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.sheet').forEach(s => s.classList.remove('active'));
+  document.querySelector(`[data-id="${id}"]`).classList.add('active');
+  document.getElementById(`sheet-${id}`).classList.add('active');
+  document.getElementById(`sheet-${id}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function selectSubclass(charId, idx, el) {
+  const char = CHARACTERS.find(c => c.id === charId);
+  document.querySelectorAll(`[data-char="${charId}"]`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById(`subclass-selected-${charId}`).style.display = 'block';
+  document.getElementById(`subclass-name-${charId}`).textContent = char.subclasses[idx].name;
+  localStorage.setItem(`subclass-${charId}`, idx);
+}
+
+function saveSheet(id) {
+  const data = {
+    hp: document.getElementById(`hp-${id}`)?.value,
+    thp: document.getElementById(`thp-${id}`)?.value,
+    ac: document.getElementById(`ac-${id}`)?.value,
+    notes: document.getElementById(`notes-${id}`)?.value,
+    newspell: document.getElementById(`newspell-${id}`)?.value,
+    subclass: localStorage.getItem(`subclass-${id}`)
+  };
+  localStorage.setItem(`sheet-${id}`, JSON.stringify(data));
+
+  const btn = event.target;
+  btn.textContent = '✓ Saved';
+  btn.style.background = 'var(--heartroot)';
+  btn.style.borderColor = 'var(--heartroot)';
+  setTimeout(() => {
+    btn.textContent = 'Save My Sheet';
+    btn.style.background = '';
+    btn.style.borderColor = '';
+  }, 2000);
+}
+
+function printSheet() {
+  window.print();
+}
+
+// Restore saved data on load
+CHARACTERS.forEach(c => {
+  const saved = localStorage.getItem(`sheet-${c.id}`);
+  if (saved) {
+    try {
+      const data = JSON.parse(saved);
+      if (data.hp && document.getElementById(`hp-${c.id}`)) document.getElementById(`hp-${c.id}`).value = data.hp;
+      if (data.thp && document.getElementById(`thp-${c.id}`)) document.getElementById(`thp-${c.id}`).value = data.thp;
+      if (data.ac && document.getElementById(`ac-${c.id}`)) document.getElementById(`ac-${c.id}`).value = data.ac;
+      if (data.notes && document.getElementById(`notes-${c.id}`)) document.getElementById(`notes-${c.id}`).value = data.notes;
+      if (data.newspell && document.getElementById(`newspell-${c.id}`)) document.getElementById(`newspell-${c.id}`).value = data.newspell;
+      if (data.subclass !== null && data.subclass !== undefined) {
+        const el = document.querySelector(`[data-char="${c.id}"][data-idx="${data.subclass}"]`);
+        if (el) selectSubclass(c.id, parseInt(data.subclass), el);
+      }
+    } catch(e) {}
+  }
+});
+</script>
+</body>
+</html>
