@@ -1,2041 +1,1420 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Crystal Obelisk — Character Sheets</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crystal Obelisk — Level Up to 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1a1410;
-    --parchment: #f7f0dc;
-    --parchment-mid: #ede3c4;
-    --parchment-dark: #d9cca8;
-    --gold: #9a7212;
-    --gold-light: #c49a28;
-    --red: #7a1e1e;
-    --fade: #7a6e58;
-    --crystal: #2a6e85;
-    --crystal-light: #4a9eba;
+    --fog: #0a0c12;
+    --deep: #10131e;
+    --panel: #161927;
+    --border: #2a3050;
+    --crystal: #7ec8e3;
+    --crystal-dim: #3a7a94;
+    --gold: #c9a84c;
+    --gold-dim: #7a6030;
+    --void: #8b5cf6;
+    --null: #ef4444;
+    --heartroot: #4ade80;
+    --text: #e8e0d0;
+    --text-dim: #8a8070;
+    --glow: rgba(126,200,227,0.15);
+    --new: #a78bfa;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+- { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    background: var(--parchment);
-    color: var(--ink);
-    font-family: 'Crimson Pro', Georgia, serif;
-    font-size: 16px;
-    min-height: 100vh;
-    padding-bottom: 120px;
-    background-image:
-      radial-gradient(ellipse at 10% 0%, rgba(154,114,18,0.1) 0%, transparent 40%),
-      radial-gradient(ellipse at 90% 100%, rgba(42,110,133,0.07) 0%, transparent 40%);
-  }
+body {
+background: var(–fog);
+color: var(–text);
+font-family: ‘Crimson Pro’, Georgia, serif;
+min-height: 100vh;
+}
 
-  header {
-    background: var(--ink);
-    padding: 18px 20px 14px;
-    text-align: center;
-    border-bottom: 3px solid var(--gold);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background:
+radial-gradient(ellipse at 20% 20%, rgba(126,200,227,0.04) 0%, transparent 50%),
+radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.04) 0%, transparent 50%);
+pointer-events: none;
+z-index: 0;
+}
 
-  header h1 {
-    font-family: 'Cinzel', serif;
-    font-size: 0.95rem;
-    color: var(--gold-light);
-    letter-spacing: 0.15em;
-    font-weight: 600;
-  }
+.container {
+max-width: 860px;
+margin: 0 auto;
+padding: 2rem 1.5rem 5rem;
+position: relative;
+z-index: 1;
+}
 
-  header p {
-    font-size: 0.7rem;
-    color: var(--crystal-light);
-    letter-spacing: 0.1em;
-    margin-top: 3px;
-    font-family: 'Cinzel', serif;
-  }
+/* HEADER */
+.campaign-header {
+text-align: center;
+padding: 2.5rem 0 2rem;
+}
 
-  .selector-wrap {
-    padding: 14px 16px;
-    background: var(--parchment-mid);
-    border-bottom: 1px solid var(--parchment-dark);
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
+.campaign-header::before {
+content: ‘✦’;
+display: block;
+font-size: 1.4rem;
+color: var(–crystal);
+margin-bottom: 0.8rem;
+animation: pulse 3s ease-in-out infinite;
+}
 
-  .selector-wrap label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    color: var(--gold);
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
+@keyframes pulse {
+0%, 100% { opacity: 0.5; transform: scale(1); }
+50% { opacity: 1; transform: scale(1.2); }
+}
 
-  select {
-    flex: 1;
-    background: var(--parchment);
-    border: 1px solid var(--parchment-dark);
-    border-radius: 4px;
-    padding: 8px 10px;
-    font-family: 'Cinzel', serif;
-    font-size: 0.75rem;
-    color: var(--ink);
-    letter-spacing: 0.05em;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a7212' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    cursor: pointer;
-  }
+.campaign-title {
+font-family: ‘Cinzel Decorative’, serif;
+font-size: clamp(1.4rem, 4vw, 2rem);
+color: var(–crystal);
+letter-spacing: 0.05em;
+text-shadow: 0 0 30px rgba(126,200,227,0.4);
+margin-bottom: 0.4rem;
+}
 
-  .sheet { display: none; padding: 16px; animation: fadeIn 0.2s ease; }
-  .sheet.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.campaign-subtitle {
+font-family: ‘Cinzel’, serif;
+font-size: 0.8rem;
+color: var(–gold);
+letter-spacing: 0.2em;
+text-transform: uppercase;
+}
 
-  .char-header {
-    text-align: center;
-    padding: 16px 0 12px;
-    border-bottom: 2px solid var(--parchment-dark);
-    margin-bottom: 16px;
-  }
+.fog-banner {
+background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(126,200,227,0.05));
+border: 1px solid rgba(139,92,246,0.2);
+padding: 1rem 1.2rem;
+margin: 1.5rem 0 2rem;
+font-style: italic;
+color: var(–text-dim);
+font-size: 0.95rem;
+line-height: 1.6;
+text-align: center;
+}
+.fog-banner strong { color: var(–void); font-style: normal; font-family: ‘Cinzel’, serif; font-size: 0.75rem; letter-spacing: 0.1em; }
 
-  .char-name { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--ink); font-weight: 700; letter-spacing: 0.05em; }
-  .char-subtitle { font-size: 0.9rem; color: var(--fade); font-style: italic; margin-top: 2px; }
+.edition-badge {
+display: inline-block;
+font-family: ‘Cinzel’, serif;
+font-size: 0.6rem;
+letter-spacing: 0.15em;
+color: var(–heartroot);
+border: 1px solid rgba(74,222,128,0.3);
+padding: 0.15rem 0.6rem;
+margin-top: 0.5rem;
+background: rgba(74,222,128,0.06);
+}
 
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 14px;
-  }
+/* STEP INDICATOR */
+.step-indicator {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0;
+margin-bottom: 2rem;
+flex-wrap: wrap;
+}
 
-  .stat-box { background: var(--ink); border-radius: 6px; padding: 10px 6px; text-align: center; }
-  .stat-label { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--gold-light); text-transform: uppercase; display: block; margin-bottom: 4px; }
-  .stat-value { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700; color: var(--parchment); }
+.step-dot {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 0.3rem;
+cursor: pointer;
+}
 
-  .ac-prof-row { display: flex; gap: 8px; margin-bottom: 14px; }
-  .ac-box { flex: 1; background: var(--parchment-mid); border: 1px solid var(--parchment-dark); border-radius: 6px; padding: 10px; text-align: center; }
-  .ac-box .stat-label { color: var(--gold); margin-bottom: 4px; }
-  .ac-box .stat-value { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700; color: var(--ink); }
+.step-circle {
+width: 32px;
+height: 32px;
+border-radius: 50%;
+border: 2px solid var(–border);
+background: var(–deep);
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: ‘Cinzel’, serif;
+font-size: 0.7rem;
+color: var(–text-dim);
+transition: all 0.3s;
+}
 
-  .hp-section { background: var(--parchment-mid); border: 1px solid var(--parchment-dark); border-radius: 8px; padding: 14px; margin-bottom: 14px; }
-  .hp-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-  .hp-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; min-width: 50px; }
-  .hp-controls { display: flex; align-items: center; gap: 8px; flex: 1; }
-  .hp-btn { background: var(--ink); color: var(--gold-light); border: none; width: 32px; height: 32px; border-radius: 4px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.1s; }
-  .hp-btn:active { background: #333; }
-  .hp-current { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--red); min-width: 40px; text-align: center; }
-  .hp-max { font-size: 0.85rem; color: var(--fade); }
+.step-dot.active .step-circle {
+border-color: var(–crystal);
+color: var(–crystal);
+background: rgba(126,200,227,0.1);
+box-shadow: 0 0 12px rgba(126,200,227,0.2);
+}
 
-  .rest-row { display: flex; gap: 8px; margin-top: 4px; }
-  .rest-btn { flex: 1; padding: 8px; border: 1px solid var(--parchment-dark); border-radius: 4px; background: var(--parchment); font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--ink); cursor: pointer; text-transform: uppercase; transition: background 0.15s; }
-  .rest-btn.short { border-color: var(--gold); color: var(--gold); }
-  .rest-btn.long { border-color: var(--red); color: var(--red); }
+.step-dot.done .step-circle {
+border-color: var(–heartroot);
+color: var(–heartroot);
+background: rgba(74,222,128,0.08);
+}
 
-  .block { background: var(--parchment-mid); border: 1px solid var(--parchment-dark); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
-  .block-title { background: var(--ink); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.15em; padding: 7px 14px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
-  .block-title .arrow { transition: transform 0.2s; font-size: 0.8rem; }
-  .block-title.open .arrow { transform: rotate(180deg); }
-  .block-body { padding: 12px 14px; display: none; }
-  .block-body.open { display: block; }
+.step-label {
+font-family: ‘Cinzel’, serif;
+font-size: 0.5rem;
+letter-spacing: 0.1em;
+color: var(–text-dim);
+text-transform: uppercase;
+text-align: center;
+max-width: 60px;
+}
 
-  .saves-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .save-item { display: flex; align-items: center; gap: 6px; }
-  .save-name { font-size: 0.75rem; color: var(--fade); flex: 1; }
-  .save-val { font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 600; color: var(--ink); min-width: 28px; text-align: right; }
-  .save-val.prof { color: var(--red); }
+.step-dot.active .step-label { color: var(–crystal); }
+.step-dot.done .step-label { color: var(–heartroot); }
 
-  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
-  .skill-item { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px dashed var(--parchment-dark); font-size: 0.82rem; color: var(--fade); }
-  .skill-item:last-child { border-bottom: none; }
-  .skill-item.skill-prof { color: var(--ink); font-weight: 600; }
-  .skill-val { font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700; color: var(--crystal); }
-  .skill-item.skill-prof .skill-val { color: var(--red); }
+.step-line {
+width: 40px;
+height: 2px;
+background: var(–border);
+margin-bottom: 1.2rem;
+transition: background 0.3s;
+}
 
-  .check-list { list-style: none; }
-  .check-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--parchment-dark); cursor: pointer; border-radius: 4px; }
-  .check-item:last-child { border-bottom: none; }
-  .check-item.used { background: #f5e8e8; padding-left: 6px; padding-right: 6px; }
-  .check-box { width: 18px; height: 18px; border: 1.5px solid var(--parchment-dark); border-radius: 3px; background: var(--parchment); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; transition: all 0.15s; }
-  .check-item.used .check-box { background: #c47a7a; border-color: #c47a7a; }
-  .check-item.used .check-box::after { content: '✕'; font-size: 0.65rem; color: white; }
-  .check-label { font-size: 0.9rem; line-height: 1.3; flex: 1; }
-  .check-item.used .check-label { text-decoration: line-through; color: var(--fade); }
-  .check-sub { font-size: 0.75rem; color: var(--fade); font-style: italic; display: block; margin-top: 1px; }
+.step-line.done { background: var(–heartroot); }
 
-  .subclass-hint { font-size: 0.8rem; color: var(--fade); font-style: italic; margin-bottom: 10px; }
-  .subclass-picker { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
-  .subclass-option { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--parchment-dark); border-radius: 6px; cursor: pointer; background: var(--parchment); transition: all 0.15s; }
-  .subclass-option:hover { border-color: var(--gold); }
-  .subclass-option.selected { border-color: var(--gold); background: #fdf6e3; }
-  .subclass-radio { width: 14px; height: 14px; border: 1.5px solid var(--parchment-dark); border-radius: 50%; flex-shrink: 0; background: white; transition: all 0.15s; }
-  .subclass-option.selected .subclass-radio { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 4px rgba(154,114,18,0.4); }
-  .subclass-opt-name { font-family: 'Cinzel', serif; font-size: 0.78rem; color: var(--ink); letter-spacing: 0.05em; }
-  .subclass-option.selected .subclass-opt-name { color: var(--gold); }
-  .subclass-feats { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--parchment-dark); }
+/* STEP PANELS */
+.step-panel { display: none; animation: fadeIn 0.3s ease; }
+.step-panel.active { display: block; }
 
-  .spell-meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.78rem; color: var(--fade); margin-bottom: 10px; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.05em; }
-  .spell-list { display: grid; gap: 4px; }
-  .spell-row { font-size: 0.88rem; padding: 4px 8px; background: var(--parchment); border: 1px solid var(--parchment-dark); border-radius: 4px; display: flex; align-items: center; gap: 6px; }
-  .new-spell { font-family: 'Cinzel', serif; font-size: 0.55rem; background: var(--crystal); color: white; padding: 1px 5px; border-radius: 3px; letter-spacing: 0.05em; flex-shrink: 0; }
-  .field-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 4px; margin-top: 2px; }
-  .spell-input { width: 100%; background: var(--parchment); border: 1px solid var(--parchment-dark); border-radius: 4px; padding: 6px 10px; font-family: 'Crimson Pro', serif; font-size: 0.9rem; color: var(--ink); }
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(6px); }
+to { opacity: 1; transform: translateY(0); }
+}
 
-  .inventory-area { width: 100%; background: var(--parchment); border: 1px solid var(--parchment-dark); border-radius: 4px; padding: 10px; font-family: 'Crimson Pro', serif; font-size: 0.9rem; color: var(--ink); min-height: 100px; resize: vertical; line-height: 1.5; }
-  .export-btn { margin-top: 8px; width: 100%; padding: 8px; background: var(--ink); color: var(--gold-light); border: none; border-radius: 4px; font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.1em; cursor: pointer; text-transform: uppercase; }
+/* SECTION */
+.section {
+background: var(–panel);
+border: 1px solid var(–border);
+margin-bottom: 1.5rem;
+overflow: hidden;
+position: relative;
+}
 
-  .dice-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink); border-top: 2px solid var(--gold); padding: 10px 16px 14px; z-index: 100; }
-  .dice-bar-title { font-family: 'Cinzel', serif; font-size: 0.6rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; text-align: center; }
-  .dice-buttons { display: flex; gap: 6px; justify-content: center; margin-bottom: 8px; }
-  .dice-btn { background: #2a2218; border: 1px solid var(--gold); color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 0.7rem; padding: 6px 10px; border-radius: 4px; cursor: pointer; transition: background 0.1s; }
-  .dice-btn:active { background: #3a3228; }
-  .dice-result { text-align: center; font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--parchment); letter-spacing: 0.05em; min-height: 20px; }
-  .roll-num { color: var(--gold-light); font-size: 1.1rem; font-weight: 700; }
+.section::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 2px;
+background: linear-gradient(90deg, transparent, var(–crystal-dim), transparent);
+}
 
-  @keyframes rollPop {
-    0% { transform: scale(0.8); opacity: 0.4; }
-    60% { transform: scale(1.15); }
-    100% { transform: scale(1); opacity: 1; }
-  }
+.section-header {
+background: var(–deep);
+border-bottom: 1px solid var(–border);
+padding: 0.75rem 1.2rem;
+display: flex;
+align-items: center;
+gap: 0.7rem;
+}
+
+.section-icon { color: var(–crystal); font-size: 0.85rem; }
+
+.section-title {
+font-family: ‘Cinzel’, serif;
+font-size: 0.72rem;
+letter-spacing: 0.15em;
+color: var(–crystal);
+text-transform: uppercase;
+}
+
+.section-body { padding: 1.2rem; }
+
+/* CHARACTER SELECTOR */
+.char-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+gap: 0.6rem;
+}
+
+.char-btn {
+background: var(–deep);
+border: 1px solid var(–border);
+color: var(–text-dim);
+font-family: ‘Crimson Pro’, serif;
+font-size: 0.95rem;
+padding: 0.7rem 0.8rem;
+cursor: pointer;
+transition: all 0.2s;
+text-align: left;
+}
+
+.char-btn:hover { border-color: var(–crystal-dim); color: var(–text); background: rgba(126,200,227,0.04); }
+.char-btn.active { border-color: var(–crystal); color: var(–crystal); background: rgba(126,200,227,0.08); }
+
+.char-btn .char-sub {
+display: block;
+font-size: 0.72rem;
+color: var(–gold-dim);
+font-style: italic;
+margin-top: 0.15rem;
+}
+.char-btn.active .char-sub { color: var(–gold); }
+
+/* NAV BUTTONS */
+.nav-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 2rem;
+gap: 1rem;
+flex-wrap: wrap;
+}
+
+.btn {
+font-family: ‘Cinzel’, serif;
+font-size: 0.7rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+padding: 0.75rem 1.8rem;
+border: 1px solid;
+cursor: pointer;
+transition: all 0.2s;
+background: none;
+}
+
+.btn-next { border-color: var(–crystal); color: var(–crystal); }
+.btn-next:hover { background: rgba(126,200,227,0.1); box-shadow: 0 0 16px rgba(126,200,227,0.2); }
+
+.btn-back { border-color: var(–border); color: var(–text-dim); }
+.btn-back:hover { border-color: var(–text-dim); color: var(–text); }
+
+.btn-finish { border-color: var(–gold); color: var(–gold); }
+.btn-finish:hover { background: rgba(201,168,76,0.1); box-shadow: 0 0 16px rgba(201,168,76,0.2); }
+
+/* STAT PROGRESSION */
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(6, 1fr);
+gap: 0.5rem;
+}
+
+@media(max-width:500px) { .stats-grid { grid-template-columns: repeat(3,1fr); } }
+
+.stat-box {
+background: var(–deep);
+border: 1px solid var(–border);
+padding: 0.6rem 0.3rem;
+text-align: center;
+}
+
+.stat-name {
+font-family: ‘Cinzel’, serif;
+font-size: 0.52rem;
+letter-spacing: 0.1em;
+color: var(–text-dim);
+text-transform: uppercase;
+margin-bottom: 0.3rem;
+}
+
+.stat-score {
+font-size: 1.5rem;
+color: var(–crystal);
+font-family: ‘Cinzel’, serif;
+font-weight: 700;
+line-height: 1;
+}
+
+.stat-mod {
+font-size: 0.72rem;
+color: var(–gold);
+margin-top: 0.15rem;
+}
+
+.stat-change {
+font-size: 0.65rem;
+color: var(–text-dim);
+margin-top: 0.2rem;
+font-style: italic;
+}
+
+.stat-change.upgraded { color: var(–heartroot); }
+
+/* HP DISPLAY */
+.hp-progression {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 1rem;
+margin-bottom: 1rem;
+}
+
+.hp-box {
+background: var(–deep);
+border: 1px solid var(–border);
+padding: 0.8rem;
+text-align: center;
+}
+
+.hp-box-label {
+font-family: ‘Cinzel’, serif;
+font-size: 0.58rem;
+letter-spacing: 0.12em;
+color: var(–text-dim);
+text-transform: uppercase;
+margin-bottom: 0.4rem;
+}
+
+.hp-box-value {
+font-family: ‘Cinzel’, serif;
+font-size: 1.5rem;
+font-weight: 700;
+color: var(–null);
+line-height: 1;
+}
+
+.hp-box-value.new-val { color: var(–heartroot); }
+
+.hp-formula {
+font-size: 0.8rem;
+color: var(–text-dim);
+font-style: italic;
+margin-top: 0.3rem;
+}
+
+/* SUBCLASS PICKER */
+.subclass-grid { display: grid; gap: 0.6rem; }
+
+.subclass-option {
+background: var(–deep);
+border: 1px solid var(–border);
+padding: 0.9rem 1rem;
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: flex-start;
+gap: 0.8rem;
+}
+
+.subclass-option:hover { border-color: var(–crystal-dim); background: rgba(126,200,227,0.04); }
+.subclass-option.selected { border-color: var(–gold); background: rgba(201,168,76,0.06); }
+
+.subclass-radio {
+width: 14px;
+height: 14px;
+border: 1.5px solid var(–border);
+border-radius: 50%;
+flex-shrink: 0;
+margin-top: 3px;
+transition: all 0.2s;
+background: var(–fog);
+}
+
+.subclass-option.selected .subclass-radio { border-color: var(–gold); background: var(–gold); }
+
+.subclass-name { font-family: ‘Cinzel’, serif; font-size: 0.85rem; color: var(–text); margin-bottom: 0.2rem; }
+.subclass-option.selected .subclass-name { color: var(–gold); }
+.subclass-desc { font-size: 0.85rem; color: var(–text-dim); font-style: italic; line-height: 1.4; }
+
+.subclass-features-reveal {
+display: none;
+margin-top: 0.6rem;
+padding-top: 0.6rem;
+border-top: 1px solid var(–border);
+}
+
+.subclass-option.selected .subclass-features-reveal { display: block; }
+
+.sub-feature { margin-bottom: 0.5rem; }
+.sub-feature:last-child { margin-bottom: 0; }
+.sub-feature-name { font-family: ‘Cinzel’, serif; font-size: 0.72rem; color: var(–gold); letter-spacing: 0.08em; margin-bottom: 0.15rem; }
+.sub-feature-desc { font-size: 0.82rem; color: var(–text-dim); line-height: 1.4; font-style: italic; }
+
+/* FEATURES */
+.feature-item {
+border-left: 2px solid var(–crystal-dim);
+padding: 0.6rem 0 0.6rem 1rem;
+margin-bottom: 0.8rem;
+}
+.feature-item:last-child { margin-bottom: 0; }
+.feature-item.new-feature { border-left-color: var(–new); }
+
+.feature-name { font-family: ‘Cinzel’, serif; font-size: 0.78rem; color: var(–crystal); letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+.feature-item.new-feature .feature-name { color: var(–new); }
+.feature-desc { font-size: 0.9rem; color: var(–text-dim); line-height: 1.5; font-style: italic; }
+
+.new-tag {
+display: inline-block;
+font-family: ‘Cinzel’, serif;
+font-size: 0.52rem;
+letter-spacing: 0.1em;
+color: var(–new);
+border: 1px solid rgba(167,139,250,0.3);
+padding: 0.1rem 0.35rem;
+margin-left: 0.4rem;
+vertical-align: middle;
+background: rgba(167,139,250,0.06);
+}
+
+/* SPELL LIST */
+.spell-list { display: grid; gap: 0.4rem; }
+
+.spell-item {
+display: flex;
+align-items: center;
+gap: 0.6rem;
+padding: 0.4rem 0.6rem;
+background: var(–deep);
+border: 1px solid var(–border);
+font-size: 0.92rem;
+}
+
+.spell-item.new-spell { border-left: 2px solid var(–new); }
+
+.spell-badge {
+font-family: ‘Cinzel’, serif;
+font-size: 0.55rem;
+padding: 0.1rem 0.4rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+flex-shrink: 0;
+}
+
+.b-cantrip { background: rgba(74,222,128,0.1); color: var(–heartroot); border: 1px solid rgba(74,222,128,0.2); }
+.b-1 { background: rgba(126,200,227,0.1); color: var(–crystal); border: 1px solid rgba(126,200,227,0.2); }
+.b-2 { background: rgba(201,168,76,0.1); color: var(–gold); border: 1px solid rgba(201,168,76,0.2); }
+.b-3 { background: rgba(167,139,250,0.1); color: var(–void); border: 1px solid rgba(167,139,250,0.2); }
+
+.spell-name { flex: 1; color: var(–text); }
+.spell-new-tag { font-size: 0.6rem; color: var(–new); font-family: ‘Cinzel’, serif; letter-spacing: 0.1em; flex-shrink: 0; }
+
+.slots-display {
+display: flex;
+gap: 0.8rem;
+flex-wrap: wrap;
+margin-bottom: 0.8rem;
+}
+
+.slot-chip {
+background: var(–deep);
+border: 1px solid var(–border);
+padding: 0.3rem 0.7rem;
+font-family: ‘Cinzel’, serif;
+font-size: 0.65rem;
+letter-spacing: 0.1em;
+color: var(–crystal);
+}
+
+.slot-chip.new-slot { border-color: rgba(167,139,250,0.4); color: var(–new); background: rgba(167,139,250,0.06); }
+
+/* PROFICIENCIES */
+.prof-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 0.35rem;
+}
+
+.prof-item {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.88rem;
+color: var(–text-dim);
+}
+
+.prof-item::before { content: ‘◆’; font-size: 0.45rem; color: var(–crystal); flex-shrink: 0; }
+
+/* SUMMARY CARD */
+.summary-highlight {
+background: linear-gradient(135deg, rgba(126,200,227,0.06), rgba(201,168,76,0.04));
+border: 1px solid var(–crystal-dim);
+padding: 1.2rem;
+margin-bottom: 1.5rem;
+position: relative;
+}
+
+.summary-highlight::before {
+content: ‘✦’;
+position: absolute;
+top: -0.6rem;
+left: 50%;
+transform: translateX(-50%);
+background: var(–panel);
+padding: 0 0.5rem;
+color: var(–crystal);
+font-size: 0.8rem;
+}
+
+.summary-name {
+font-family: ‘Cinzel Decorative’, serif;
+font-size: 1.3rem;
+color: var(–crystal);
+margin-bottom: 0.2rem;
+text-align: center;
+}
+
+.summary-class {
+font-family: ‘Cinzel’, serif;
+font-size: 0.7rem;
+letter-spacing: 0.2em;
+color: var(–gold);
+text-align: center;
+text-transform: uppercase;
+}
+
+.summary-subclass {
+font-family: ‘Cinzel’, serif;
+font-size: 0.75rem;
+letter-spacing: 0.1em;
+color: var(–new);
+text-align: center;
+margin-top: 0.3rem;
+}
+
+.divider {
+display: flex;
+align-items: center;
+gap: 0.8rem;
+margin: 1.2rem 0 1rem;
+opacity: 0.4;
+}
+.divider::before, .divider::after { content: ‘’; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(–crystal), transparent); }
+.divider span { font-family: ‘Cinzel’, serif; font-size: 0.6rem; color: var(–crystal); letter-spacing: 0.3em; white-space: nowrap; }
+
+/* 2024 NOTES */
+.rules-note {
+background: rgba(74,222,128,0.05);
+border: 1px solid rgba(74,222,128,0.2);
+border-left: 3px solid var(–heartroot);
+padding: 0.6rem 0.8rem;
+margin-bottom: 0.6rem;
+font-size: 0.82rem;
+color: var(–text-dim);
+line-height: 1.5;
+}
+.rules-note strong { color: var(–heartroot); font-style: normal; }
+
+hr.rule { border: none; border-top: 1px solid var(–border); margin: 1rem 0; opacity: 0.5; }
+
+.field-label {
+font-family: ‘Cinzel’, serif;
+font-size: 0.62rem;
+letter-spacing: 0.15em;
+color: var(–text-dim);
+text-transform: uppercase;
+margin-bottom: 0.3rem;
+display: block;
+}
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media(max-width:500px) { .two-col { grid-template-columns: 1fr; } }
+
+/* WEAPON MASTERY (2024) */
+.mastery-grid { display: grid; gap: 0.5rem; }
+.mastery-item {
+background: var(–deep);
+border: 1px solid var(–border);
+border-left: 2px solid var(–heartroot);
+padding: 0.6rem 0.8rem;
+}
+.mastery-weapon { font-family: ‘Cinzel’, serif; font-size: 0.75rem; color: var(–heartroot); margin-bottom: 0.2rem; }
+.mastery-desc { font-size: 0.85rem; color: var(–text-dim); font-style: italic; line-height: 1.4; }
+
+.no-char-msg {
+text-align: center;
+font-style: italic;
+color: var(–text-dim);
+padding: 2rem;
+font-size: 0.95rem;
+}
 </style>
+
 </head>
 <body>
+<div class="container">
 
-<header>
-  <h1>Crystal Obelisk — Character Sheets</h1>
-  <p>Act II · Level 3</p>
-</header>
-
-<div class="selector-wrap">
-  <label>Character</label>
-  <select onchange="switchChar(this.value)">
-    <option value="seris">Seris Dawnblade — Fighter</option>
-<option value="korrin">Korrin Ashfang — Rogue</option>
-<option value="haldor">Haldor Brightshield — Cleric</option>
-<option value="edrin">Edrin Valebright — Paladin</option>
-<option value="sable">Sable Thornscar — Fighter</option>
-<option value="azrael">Azrael Cinderborn — Barbarian</option>
-<option value="liora">Liora Windstep — Ranger</option>
-<option value="rurik">Rurik Goldnote — Bard</option>
-<option value="ashara">Ashara Solkindle — Cleric (Life)</option>
-<option value="lark">Lark Thistledown — Bard</option>
-  </select>
-</div>
-
-<div class="sheet" id="sheet-seris">
-  <div class="char-header">
-    <div class="char-name">Seris Dawnblade</div>
-    <div class="char-subtitle">Level 3 Human Fighter · Soldier</div>
+  <div class="campaign-header">
+    <h1 class="campaign-title">Crystal Obelisk</h1>
+    <p class="campaign-subtitle">Level Up · 2 → 3</p>
+    <div class="edition-badge">✦ 2024 Player's Handbook Rules</div>
   </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+2</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">-1</span></div>
 
+  <div class="fog-banner">
+    <strong>Act II Begins</strong><br>
+    You survived Azurite Pointe. You survived Sunfall. The road to Sanctus lies ahead and something watches from the trees.<br><br>
+    <em>You are no longer ordinary. Choose who you become.</em>
   </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">16</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-seris">28</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('seris',-1)">−</button>
-        <span class="hp-current" id="hp-seris">28</span>
-        <button class="hp-btn" onclick="changeHP('seris',1)">+</button>
-        <span class="hp-max">/ 28</span>
+
+  <!-- STEP INDICATOR -->
+
+  <div class="step-indicator" id="stepIndicator"></div>
+
+  <!-- STEP PANELS -->
+
+  <div class="step-panel active" id="step-0">
+    <div class="section">
+      <div class="section-header"><span class="section-icon">◈</span><span class="section-title">Who Are You?</span></div>
+      <div class="section-body">
+        <p style="font-style:italic;color:var(--text-dim);margin-bottom:1rem;font-size:0.95rem;">Select your character to begin your level up journey.</p>
+        <div class="char-grid" id="charGrid"></div>
       </div>
     </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('seris',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('seris',true)">Long Rest</button>
+    <div class="nav-row">
+      <div></div>
+      <button class="btn btn-next" onclick="nextStep()">Choose Subclass →</button>
     </div>
   </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR ✦</span><span class="save-val prof">+5</span></div>
-<div class="save-item"><span class="save-name">DEX</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">CON ✦</span><span class="save-val prof">+4</span></div>
-<div class="save-item"><span class="save-name">INT</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">WIS</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">CHA</span><span class="save-val">-1</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ Athletics <em>(STR)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Perception <em>(WIS)</em></span><span class="skill-val">+3</span></div>
-<div class="skill-item skill-prof"><span>✦ Intimidation <em>(CHA)</em></span><span class="skill-val">+1</span></div>
-<div class="skill-item skill-prof"><span>✦ Survival <em>(WIS)</em></span><span class="skill-val">+3</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-seris"><div class="subclass-option" data-char="seris" data-idx="0" onclick="selectSubclass('seris',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Champion</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="seris" data-idx="1" onclick="selectSubclass('seris',1,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Battle Master</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="seris" data-idx="2" onclick="selectSubclass('seris',2,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Eldritch Knight</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-seris-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Improved Critical
-                <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> Your weapon attacks score a critical hit on a roll of 19 or 20 instead of only 20.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-seris-1" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Combat Superiority
-                <span class="check-sub"><strong>When:</strong> 4 dice (d8), refresh on short rest<br><strong>Effect:</strong> Learn 3 maneuvers. Spend a die to add it to attacks, damage, or special moves like Trip Attack, Disarming Attack, or Precision Attack.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Know Your Enemy
-                <span class="check-sub"><strong>When:</strong> 1 minute of observation<br><strong>Effect:</strong> Learn how a creature compares to you in STR, DEX, CON, AC, HP, or class levels.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-seris-2" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Spellcasting (INT)
-                <span class="check-sub"><strong>When:</strong> 2 first-level spell slots<br><strong>Effect:</strong> Learn 2 Wizard cantrips + 3 first-level spells (2 must be abjuration or evocation).</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Weapon Bond
-                <span class="check-sub"><strong>When:</strong> Ritual, 1 hour<br><strong>Effect:</strong> Bond with up to 2 weapons. Can't be disarmed. Teleport them to your hand as a bonus action.</span>
-              </div>
-            </li>
-</ul>
 
+  <div class="step-panel" id="step-1">
+    <div id="subclassPanel"></div>
+    <div class="nav-row">
+      <button class="btn btn-back" onclick="prevStep()">← Back</button>
+      <button class="btn btn-next" onclick="nextStep()">See New Stats →</button>
     </div>
   </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Action Surge
-            <span class="check-sub"><strong>When:</strong> Once per short rest<br><strong>Effect:</strong> Take one additional full action on your turn — attack again, dash, cast a spell, anything. Resets on short or long rest.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Second Wind
-            <span class="check-sub"><strong>When:</strong> Bonus action, once per short rest<br><strong>Effect:</strong> Roll 1d10 + 3. You instantly regain that many HP. Use it even mid-fight.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Fighting Style
-            <span class="check-sub"><strong>When:</strong> Passive — always active<br><strong>Effect:</strong> Choose one: Great Weapon (+reroll 1s and 2s on damage), Defense (+1 AC in armor), Dueling (+2 damage with one-handed weapon), or Protection (impose disadvantage on attacks vs allies).</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-seris" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('seris','Seris Dawnblade')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-<div class="sheet" id="sheet-korrin">
-  <div class="char-header">
-    <div class="char-name">Korrin Ashfang</div>
-    <div class="char-subtitle">Level 3 Half-Orc Rogue · Charlatan</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">+2</span></div>
 
-  </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">14</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-korrin">22</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('korrin',-1)">−</button>
-        <span class="hp-current" id="hp-korrin">22</span>
-        <button class="hp-btn" onclick="changeHP('korrin',1)">+</button>
-        <span class="hp-max">/ 22</span>
-      </div>
-    </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('korrin',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('korrin',true)">Long Rest</button>
+  <div class="step-panel" id="step-2">
+    <div id="statsPanel"></div>
+    <div class="nav-row">
+      <button class="btn btn-back" onclick="prevStep()">← Back</button>
+      <button class="btn btn-next" onclick="nextStep()">New Features →</button>
     </div>
   </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">DEX ✦</span><span class="save-val prof">+5</span></div>
-<div class="save-item"><span class="save-name">CON</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">INT ✦</span><span class="save-val prof">+2</span></div>
-<div class="save-item"><span class="save-name">WIS</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">CHA</span><span class="save-val">+2</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ Stealth <em>(DEX)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Sleight of Hand <em>(DEX)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Deception <em>(CHA)</em></span><span class="skill-val">+4</span></div>
-<div class="skill-item skill-prof"><span>✦ Athletics <em>(STR)</em></span><span class="skill-val">+3</span></div>
-<div class="skill-item"><span>Perception <em>(WIS)</em></span><span class="skill-val">+0</span></div>
-<div class="skill-item"><span>Insight <em>(WIS)</em></span><span class="skill-val">+0</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-korrin"><div class="subclass-option" data-char="korrin" data-idx="0" onclick="selectSubclass('korrin',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Thief</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="korrin" data-idx="1" onclick="selectSubclass('korrin',1,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Assassin</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="korrin" data-idx="2" onclick="selectSubclass('korrin',2,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Arcane Trickster</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-korrin-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Fast Hands
-                <span class="check-sub"><strong>When:</strong> Bonus action<br><strong>Effect:</strong> Use Cunning Action to also: make a Sleight of Hand check, use thieves' tools, or use/interact with an object.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Second Story Work
-                <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> Climbing speed equals your walking speed. Running jump distance increases by +3 feet (DEX mod).</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-korrin-1" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Assassinate
-                <span class="check-sub"><strong>When:</strong> On your first turn vs creatures who haven't acted<br><strong>Effect:</strong> You have advantage on attack rolls. Any hit against a surprised creature is an automatic critical hit.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Infiltration Expertise
-                <span class="check-sub"><strong>When:</strong> Downtime — 25gp, 7 days<br><strong>Effect:</strong> Create a false identity with documentation and history that holds up to scrutiny.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-korrin-2" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Spellcasting (INT)
-                <span class="check-sub"><strong>When:</strong> 2 first-level spell slots<br><strong>Effect:</strong> Learn Mage Hand cantrip + 2 enchantment or illusion spells.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Mage Hand Legerdemain
-                <span class="check-sub"><strong>When:</strong> Passive upgrade to Mage Hand<br><strong>Effect:</strong> Your Mage Hand is invisible and can pick locks, disarm traps, and stash items remotely.</span>
-              </div>
-            </li>
-</ul>
 
+  <div class="step-panel" id="step-3">
+    <div id="featuresPanel"></div>
+    <div class="nav-row">
+      <button class="btn btn-back" onclick="prevStep()">← Back</button>
+      <button class="btn btn-next" onclick="nextStep()" id="spellsBtn">Spells & Slots →</button>
     </div>
   </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Sneak Attack
-            <span class="check-sub"><strong>When:</strong> Once per turn, on any hit with advantage OR adjacent ally<br><strong>Effect:</strong> Deal extra 2d6 damage. You don't need advantage if a friendly creature is next to the target and you don't have disadvantage.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Cunning Action
-            <span class="check-sub"><strong>When:</strong> Bonus action<br><strong>Effect:</strong> Dash, Disengage, or Hide as a bonus action every turn.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Steady Aim
-            <span class="check-sub"><strong>When:</strong> Bonus action (optional)<br><strong>Effect:</strong> Gain advantage on your next attack this turn, but your speed drops to 0.</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-korrin" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('korrin','Korrin Ashfang')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-<div class="sheet" id="sheet-haldor">
-  <div class="char-header">
-    <div class="char-name">Haldor Brightshield</div>
-    <div class="char-subtitle">Level 3 Dwarf Cleric · Acolyte</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">+2</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">+0</span></div>
 
-  </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">17</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-haldor">26</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('haldor',-1)">−</button>
-        <span class="hp-current" id="hp-haldor">26</span>
-        <button class="hp-btn" onclick="changeHP('haldor',1)">+</button>
-        <span class="hp-max">/ 26</span>
-      </div>
-    </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('haldor',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('haldor',true)">Long Rest</button>
+  <div class="step-panel" id="step-4">
+    <div id="spellsPanel"></div>
+    <div class="nav-row">
+      <button class="btn btn-back" onclick="prevStep()">← Back</button>
+      <button class="btn btn-finish" onclick="nextStep()">See Summary ✦</button>
     </div>
   </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR</span><span class="save-val">+2</span></div>
-<div class="save-item"><span class="save-name">DEX</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">CON</span><span class="save-val">+3</span></div>
-<div class="save-item"><span class="save-name">INT</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">WIS ✦</span><span class="save-val prof">+5</span></div>
-<div class="save-item"><span class="save-name">CHA ✦</span><span class="save-val prof">+2</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ History <em>(INT)</em></span><span class="skill-val">+2</span></div>
-<div class="skill-item skill-prof"><span>✦ Insight <em>(WIS)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Medicine <em>(WIS)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Religion <em>(INT)</em></span><span class="skill-val">+2</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-haldor"><div class="subclass-option" data-char="haldor" data-idx="0" onclick="selectSubclass('haldor',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Life Domain</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="haldor" data-idx="1" onclick="selectSubclass('haldor',1,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Light Domain</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="haldor" data-idx="2" onclick="selectSubclass('haldor',2,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">War Domain</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="haldor" data-idx="3" onclick="selectSubclass('haldor',3,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Grave Domain</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-haldor-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Disciple of Life
-                <span class="check-sub"><strong>When:</strong> Passive — on any healing spell<br><strong>Effect:</strong> Healing spells restore extra HP equal to 2 + the spell's level. A 1st-level Cure Wounds heals +3 extra.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Preserve Life
-                <span class="check-sub"><strong>When:</strong> Channel Divinity action<br><strong>Effect:</strong> Restore a pool of 15 HP divided among any creatures within 30ft. Each creature can only be healed up to half their max HP.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-haldor-1" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Warding Flare
-                <span class="check-sub"><strong>When:</strong> Reaction, WIS mod times per long rest<br><strong>Effect:</strong> When a creature attacks you, impose disadvantage on the roll by flashing divine light in their eyes.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Radiance of the Dawn
-                <span class="check-sub"><strong>When:</strong> Channel Divinity action<br><strong>Effect:</strong> Dispel magical darkness within 30ft. Each hostile creature within 30ft takes 2d10 + 3 radiant damage (CON save for half).</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-haldor-2" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">War Priest
-                <span class="check-sub"><strong>When:</strong> Bonus action, WIS mod times per long rest<br><strong>Effect:</strong> After using the Attack action, make one weapon attack as a bonus action.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Guided Strike
-                <span class="check-sub"><strong>When:</strong> Channel Divinity reaction<br><strong>Effect:</strong> Add +10 to an attack roll after seeing the roll but before knowing if it hits.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-haldor-3" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Circle of Mortality
-                <span class="check-sub"><strong>When:</strong> Passive — on healing spells targeting 0 HP creatures<br><strong>Effect:</strong> Healing spells on creatures at 0 HP restore the maximum possible amount. Spare the Dying becomes a bonus action with 30ft range.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Path to the Grave
-                <span class="check-sub"><strong>When:</strong> Channel Divinity action<br><strong>Effect:</strong> Touch a creature to curse it. The next time it takes damage before your next turn, it is vulnerable to all of that damage.</span>
-              </div>
-            </li>
-</ul>
 
+  <div class="step-panel" id="step-5">
+    <div id="summaryPanel"></div>
+    <div class="nav-row">
+      <button class="btn btn-back" onclick="prevStep()">← Back</button>
+      <button class="btn btn-finish" onclick="window.print()">Print / Save PDF</button>
     </div>
   </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Channel Divinity
-            <span class="check-sub"><strong>When:</strong> 1 use per short rest<br><strong>Effect:</strong> Choose Turn Undead OR your domain ability. Resets on short rest.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Turn Undead
-            <span class="check-sub"><strong>When:</strong> Channel Divinity action<br><strong>Effect:</strong> All undead within 30ft must make a WIS save or flee from you for 1 minute. They can't willingly move closer.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Spellcasting (WIS)
-            <span class="check-sub"><strong>When:</strong> 4 level-1 slots, 2 level-2 slots<br><strong>Effect:</strong> You prepare spells each long rest. Wisdom is your spellcasting ability. Spell save DC 13. Spell attack +5.</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-    <div class="block">
-      <div class="block-title" onclick="toggleBlock(this)">Spells <span class="arrow">▼</span></div>
-      <div class="block-body">
-        <div class="spell-meta">
-          <span>Slots: 4 × Level 1 &nbsp;·&nbsp; 2 × Level 2</span>
-          <span>Save DC: 13</span>
-          <span>Atk: +5</span>
-        </div>
-        <div class="spell-list"><div class="spell-row">Sacred Flame (cantrip)</div><div class="spell-row">Guidance (cantrip)</div><div class="spell-row">Spare the Dying (cantrip)</div><div class="spell-row">Healing Word</div><div class="spell-row">Bless</div><div class="spell-row">Cure Wounds</div><div class="spell-row">Shield of Faith</div><div class="spell-row"><span class=new-spell>NEW</span> Spiritual Weapon</div><div class="spell-row"><span class=new-spell>NEW</span> Hold Person</div></div>
-        <div style="margin-top:10px">
-          <label class="field-label">New spell to add (ask DM)</label>
-          <input type="text" class="spell-input" id="newspell-haldor" placeholder="Spell name...">
-        </div>
-      </div>
-    </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-haldor" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('haldor','Haldor Brightshield')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-<div class="sheet" id="sheet-edrin">
-  <div class="char-header">
-    <div class="char-name">Edrin Valebright</div>
-    <div class="char-subtitle">Level 3 Human Paladin · Noble</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+2</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">+3</span></div>
 
-  </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">18</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-edrin">31</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('edrin',-1)">−</button>
-        <span class="hp-current" id="hp-edrin">31</span>
-        <button class="hp-btn" onclick="changeHP('edrin',1)">+</button>
-        <span class="hp-max">/ 31</span>
-      </div>
-    </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('edrin',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('edrin',true)">Long Rest</button>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR</span><span class="save-val">+3</span></div>
-<div class="save-item"><span class="save-name">DEX</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">CON</span><span class="save-val">+2</span></div>
-<div class="save-item"><span class="save-name">INT</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">WIS ✦</span><span class="save-val prof">+3</span></div>
-<div class="save-item"><span class="save-name">CHA ✦</span><span class="save-val prof">+5</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ Persuasion <em>(CHA)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Insight <em>(WIS)</em></span><span class="skill-val">+3</span></div>
-<div class="skill-item skill-prof"><span>✦ Religion <em>(INT)</em></span><span class="skill-val">+2</span></div>
-<div class="skill-item skill-prof"><span>✦ Athletics <em>(STR)</em></span><span class="skill-val">+5</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-edrin"><div class="subclass-option" data-char="edrin" data-idx="0" onclick="selectSubclass('edrin',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Oath of Devotion</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="edrin" data-idx="1" onclick="selectSubclass('edrin',1,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Oath of the Ancients</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="edrin" data-idx="2" onclick="selectSubclass('edrin',2,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Oath of Vengeance</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="edrin" data-idx="3" onclick="selectSubclass('edrin',3,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Oath of Glory</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-edrin-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Sacred Weapon
-                <span class="check-sub"><strong>When:</strong> Channel Divinity bonus action, 1 minute<br><strong>Effect:</strong> Add your CHA modifier (+3) to all attack rolls with one weapon. The weapon glows bright light 20ft.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Turn the Unholy
-                <span class="check-sub"><strong>When:</strong> Channel Divinity action<br><strong>Effect:</strong> Fiends and undead within 30ft must pass a WIS save (DC 14) or flee for 1 minute.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Oath Spells
-                <span class="check-sub"><strong>When:</strong> Always prepared<br><strong>Effect:</strong> Level 1: Protection from Evil and Good, Sanctuary. Level 2: Lesser Restoration, Zone of Truth.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-edrin-1" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Nature's Wrath
-                <span class="check-sub"><strong>When:</strong> Channel Divinity action<br><strong>Effect:</strong> Spectral vines restrain a creature within 10ft until it passes a STR or DEX save (DC 14).</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Turn the Faithless
-                <span class="check-sub"><strong>When:</strong> Channel Divinity action<br><strong>Effect:</strong> Fey and fiends within 30ft must pass WIS save (DC 14) or be turned for 1 minute.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Oath Spells
-                <span class="check-sub"><strong>When:</strong> Always prepared<br><strong>Effect:</strong> Level 1: Ensnaring Strike, Speak with Animals. Level 2: Moonbeam, Misty Step.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-edrin-2" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Vow of Enmity
-                <span class="check-sub"><strong>When:</strong> Channel Divinity bonus action, 1 minute<br><strong>Effect:</strong> Choose one creature within 10ft. You have advantage on all attack rolls against it.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Abjure Enemy
-                <span class="check-sub"><strong>When:</strong> Channel Divinity action<br><strong>Effect:</strong> One creature within 60ft must pass WIS save (DC 14) or be frightened with speed 0 for 1 minute.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Oath Spells
-                <span class="check-sub"><strong>When:</strong> Always prepared<br><strong>Effect:</strong> Level 1: Bane, Hunter's Mark. Level 2: Hold Person, Misty Step.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-edrin-3" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Inspiring Smite
-                <span class="check-sub"><strong>When:</strong> Channel Divinity, after Divine Smite<br><strong>Effect:</strong> Distribute up to 2d8 + 3 temporary HP among creatures within 30ft including yourself.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Peerless Athlete
-                <span class="check-sub"><strong>When:</strong> Channel Divinity action, 10 minutes<br><strong>Effect:</strong> Advantage on Athletics and Acrobatics. Double carrying capacity. +10ft to jumps.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Oath Spells
-                <span class="check-sub"><strong>When:</strong> Always prepared<br><strong>Effect:</strong> Level 1: Guiding Bolt, Heroism. Level 2: Enhance Ability, Magic Weapon.</span>
-              </div>
-            </li>
-</ul>
-
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Divine Smite
-            <span class="check-sub"><strong>When:</strong> When you hit with a melee weapon attack<br><strong>Effect:</strong> Expend a spell slot to deal extra radiant damage: 2d8 for a 1st-level slot, +1d8 per slot level above 1st. +1d8 extra vs undead or fiends.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Lay on Hands
-            <span class="check-sub"><strong>When:</strong> Action, 15 HP pool per long rest<br><strong>Effect:</strong> Restore any amount of HP from your pool by touch. Or spend 5 HP to cure one disease or poison.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Divine Health
-            <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> You are immune to disease.</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-    <div class="block">
-      <div class="block-title" onclick="toggleBlock(this)">Spells <span class="arrow">▼</span></div>
-      <div class="block-body">
-        <div class="spell-meta">
-          <span>Slots: 4 × Level 1</span>
-          <span>Save DC: 14</span>
-          <span>Atk: +6</span>
-        </div>
-        <div class="spell-list"><div class="spell-row">Bless</div><div class="spell-row">Command</div><div class="spell-row">Divine Favor</div><div class="spell-row"><span class=new-spell>NEW</span> Wrathful Smite</div></div>
-        <div style="margin-top:10px">
-          <label class="field-label">New spell to add (ask DM)</label>
-          <input type="text" class="spell-input" id="newspell-edrin" placeholder="Spell name...">
-        </div>
-      </div>
-    </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-edrin" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('edrin','Edrin Valebright')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-<div class="sheet" id="sheet-sable">
-  <div class="char-header">
-    <div class="char-name">Sable Thornscar</div>
-    <div class="char-subtitle">Level 3 Tiefling Fighter · Mercenary</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">+2</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+2</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">+1</span></div>
-
-  </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">15</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-sable">25</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('sable',-1)">−</button>
-        <span class="hp-current" id="hp-sable">25</span>
-        <button class="hp-btn" onclick="changeHP('sable',1)">+</button>
-        <span class="hp-max">/ 25</span>
-      </div>
-    </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('sable',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('sable',true)">Long Rest</button>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR ✦</span><span class="save-val prof">+4</span></div>
-<div class="save-item"><span class="save-name">DEX</span><span class="save-val">+2</span></div>
-<div class="save-item"><span class="save-name">CON ✦</span><span class="save-val prof">+3</span></div>
-<div class="save-item"><span class="save-name">INT</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">WIS</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">CHA</span><span class="save-val">+1</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ Athletics <em>(STR)</em></span><span class="skill-val">+4</span></div>
-<div class="skill-item skill-prof"><span>✦ Intimidation <em>(CHA)</em></span><span class="skill-val">+3</span></div>
-<div class="skill-item skill-prof"><span>✦ Perception <em>(WIS)</em></span><span class="skill-val">+2</span></div>
-<div class="skill-item"><span>Stealth <em>(DEX)</em></span><span class="skill-val">+2</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-sable"><div class="subclass-option" data-char="sable" data-idx="0" onclick="selectSubclass('sable',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Champion</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="sable" data-idx="1" onclick="selectSubclass('sable',1,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Battle Master</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="sable" data-idx="2" onclick="selectSubclass('sable',2,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Eldritch Knight</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-sable-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Improved Critical
-                <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> Critical hit on 19 or 20.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-sable-1" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Combat Superiority
-                <span class="check-sub"><strong>When:</strong> 4d8 refresh on short rest<br><strong>Effect:</strong> Learn 3 maneuvers.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Know Your Enemy
-                <span class="check-sub"><strong>When:</strong> 1 minute<br><strong>Effect:</strong> Compare stats with target creature.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-sable-2" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Spellcasting
-                <span class="check-sub"><strong>When:</strong> 2 first-level slots<br><strong>Effect:</strong> 2 cantrips + 3 spells from Wizard list.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Weapon Bond
-                <span class="check-sub"><strong>When:</strong> Ritual<br><strong>Effect:</strong> Summon bonded weapon to hand as bonus action.</span>
-              </div>
-            </li>
-</ul>
-
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Action Surge
-            <span class="check-sub"><strong>When:</strong> Once per short rest<br><strong>Effect:</strong> Take one additional full action on your turn.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Second Wind
-            <span class="check-sub"><strong>When:</strong> Bonus action, once per short rest<br><strong>Effect:</strong> Roll 1d10 + 3. Regain that many HP instantly.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Infernal Legacy
-            <span class="check-sub"><strong>When:</strong> Passive / 1/day<br><strong>Effect:</strong> Know Thaumaturgy cantrip. Cast Hellish Rebuke as a 2nd-level spell once per long rest (reaction when damaged; 3d10 fire damage, DEX save).</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-sable" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('sable','Sable Thornscar')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-<div class="sheet" id="sheet-azrael">
-  <div class="char-header">
-    <div class="char-name">Azrael Cinderborn</div>
-    <div class="char-subtitle">Level 3 Tiefling Barbarian · Outlander</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">-1</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">+0</span></div>
-
-  </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">14</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-azrael">37</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('azrael',-1)">−</button>
-        <span class="hp-current" id="hp-azrael">37</span>
-        <button class="hp-btn" onclick="changeHP('azrael',1)">+</button>
-        <span class="hp-max">/ 37</span>
-      </div>
-    </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('azrael',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('azrael',true)">Long Rest</button>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR ✦</span><span class="save-val prof">+5</span></div>
-<div class="save-item"><span class="save-name">DEX</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">CON ✦</span><span class="save-val prof">+5</span></div>
-<div class="save-item"><span class="save-name">INT</span><span class="save-val">-1</span></div>
-<div class="save-item"><span class="save-name">WIS</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">CHA</span><span class="save-val">+0</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ Athletics <em>(STR)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Intimidation <em>(CHA)</em></span><span class="skill-val">+2</span></div>
-<div class="skill-item skill-prof"><span>✦ Perception <em>(WIS)</em></span><span class="skill-val">+2</span></div>
-<div class="skill-item skill-prof"><span>✦ Survival <em>(WIS)</em></span><span class="skill-val">+2</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-azrael"><div class="subclass-option" data-char="azrael" data-idx="0" onclick="selectSubclass('azrael',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Path of the Berserker</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="azrael" data-idx="1" onclick="selectSubclass('azrael',1,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Path of the Totem Warrior</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="azrael" data-idx="2" onclick="selectSubclass('azrael',2,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Path of the Zealot</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="azrael" data-idx="3" onclick="selectSubclass('azrael',3,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Path of Wild Magic</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-azrael-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Frenzy
-                <span class="check-sub"><strong>When:</strong> While raging — choose when you enter rage<br><strong>Effect:</strong> Each turn of your rage, make one melee weapon attack as a bonus action. When rage ends, gain 1 level of Exhaustion (disadvantage on ability checks).</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-azrael-1" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Spirit Seeker
-                <span class="check-sub"><strong>When:</strong> Ritual casting<br><strong>Effect:</strong> Cast Beast Sense and Speak with Animals as rituals (10 minutes, no slot needed).</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Totem Spirit
-                <span class="check-sub"><strong>When:</strong> Choose your animal at level 3<br><strong>Effect:</strong> Bear: resistance to ALL damage types while raging except psychic. Eagle: Dash as bonus action while raging; ranged attacks vs you have disadvantage. Wolf: your allies have advantage on melee attacks vs creatures within 5ft of you while you rage.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-azrael-2" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Divine Fury
-                <span class="check-sub"><strong>When:</strong> Passive while raging<br><strong>Effect:</strong> On your first hit each turn while raging, deal extra 1d6 + 1 radiant or necrotic damage (your choice when you take this path).</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Warrior of the Gods
-                <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> Spells that return you to life (Revivify, Raise Dead, etc.) require no material components when cast on you.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-azrael-3" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Magic Awareness
-                <span class="check-sub"><strong>When:</strong> Action, spend 1 rage use<br><strong>Effect:</strong> Until end of next turn, sense location and school of any spell or magic item within 60ft.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Wild Surge
-                <span class="check-sub"><strong>When:</strong> Automatic when you rage<br><strong>Effect:</strong> Roll a d8 on the Wild Magic table. Random effects include: teleporting 30ft, spectral claw attacks, emitting bright light, friends getting temp HP.</span>
-              </div>
-            </li>
-</ul>
-
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Rage
-            <span class="check-sub"><strong>When:</strong> Bonus action, 3 uses per long rest<br><strong>Effect:</strong> Until end of next turn: advantage on STR checks and saves, +2 bonus to damage, resistance to bludgeoning/piercing/slashing damage. Lasts 1 minute. Ends if you don't attack or take damage each turn.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Reckless Attack
-            <span class="check-sub"><strong>When:</strong> Before your first attack on your turn<br><strong>Effect:</strong> Give yourself advantage on all STR-based melee attacks this turn. BUT attacks against you also have advantage until your next turn.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Danger Sense
-            <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> Advantage on DEX saving throws against effects you can see — traps, spells, environmental hazards. Doesn't work if blinded or incapacitated.</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-azrael" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('azrael','Azrael Cinderborn')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-<div class="sheet" id="sheet-liora">
-  <div class="char-header">
-    <div class="char-name">Liora Windstep</div>
-    <div class="char-subtitle">Level 3 Elf Ranger · Outlander</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+2</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">+0</span></div>
-
-  </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">15</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-liora">24</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('liora',-1)">−</button>
-        <span class="hp-current" id="hp-liora">24</span>
-        <button class="hp-btn" onclick="changeHP('liora',1)">+</button>
-        <span class="hp-max">/ 24</span>
-      </div>
-    </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('liora',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('liora',true)">Long Rest</button>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR ✦</span><span class="save-val prof">+2</span></div>
-<div class="save-item"><span class="save-name">DEX ✦</span><span class="save-val prof">+5</span></div>
-<div class="save-item"><span class="save-name">CON</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">INT</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">WIS</span><span class="save-val">+2</span></div>
-<div class="save-item"><span class="save-name">CHA</span><span class="save-val">+0</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ Perception <em>(WIS)</em></span><span class="skill-val">+4</span></div>
-<div class="skill-item skill-prof"><span>✦ Stealth <em>(DEX)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Survival <em>(WIS)</em></span><span class="skill-val">+4</span></div>
-<div class="skill-item skill-prof"><span>✦ Nature <em>(INT)</em></span><span class="skill-val">+3</span></div>
-<div class="skill-item"><span>Athletics <em>(STR)</em></span><span class="skill-val">+0</span></div>
-<div class="skill-item"><span>Animal Handling <em>(WIS)</em></span><span class="skill-val">+2</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-liora"><div class="subclass-option" data-char="liora" data-idx="0" onclick="selectSubclass('liora',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Hunter</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="liora" data-idx="1" onclick="selectSubclass('liora',1,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Beast Master</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="liora" data-idx="2" onclick="selectSubclass('liora',2,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Gloom Stalker</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="liora" data-idx="3" onclick="selectSubclass('liora',3,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Horizon Walker</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-liora-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Hunter's Prey
-                <span class="check-sub"><strong>When:</strong> Passive — choose one option<br><strong>Effect:</strong> Colossus Slayer: deal extra 1d8 on a hit against a creature below its max HP (once per turn). Giant Killer: reaction attack when Large+ creature misses you. Horde Breaker: one extra attack on a different creature within 5ft of your target, once per turn.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-liora-1" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Ranger's Companion
-                <span class="check-sub"><strong>When:</strong> Bonds with a beast of CR 1/4 or lower<br><strong>Effect:</strong> The beast acts on your initiative. Command it as a bonus action. It uses your proficiency bonus. If it dies, you can bond a new one after a long rest.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-liora-2" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Dread Ambusher
-                <span class="check-sub"><strong>When:</strong> On your first turn of combat<br><strong>Effect:</strong> Your speed increases by 10ft this turn. You can make one extra weapon attack — and that attack deals +1d8 damage.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Umbral Sight
-                <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> Gain darkvision 60ft. In darkness, you are invisible to creatures relying on darkvision to see you.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-liora-3" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Detect Portal
-                <span class="check-sub"><strong>When:</strong> Action<br><strong>Effect:</strong> Sense direction and distance of any planar portal within 1 mile until end of next turn.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Planar Warrior
-                <span class="check-sub"><strong>When:</strong> Bonus action before attacking<br><strong>Effect:</strong> Choose a creature within 30ft. Your next attack deals +1d8 force damage and all its damage becomes force.</span>
-              </div>
-            </li>
-</ul>
-
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Favored Enemy
-            <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> Choose an enemy type (undead, beasts, humanoids, etc). Advantage on tracking them and recalling information. Learn one language they speak.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Natural Explorer
-            <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> Choose a terrain type (forest, coast, etc). You can't get lost, always forage for 2, difficult terrain doesn't slow you, and you're never surprised while alert.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Primeval Awareness
-            <span class="check-sub"><strong>When:</strong> Action, expend a spell slot<br><strong>Effect:</strong> Sense the presence and direction of your favored enemies within 1 mile (6 miles in your favored terrain) until end of next turn.</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-    <div class="block">
-      <div class="block-title" onclick="toggleBlock(this)">Spells <span class="arrow">▼</span></div>
-      <div class="block-body">
-        <div class="spell-meta">
-          <span>Slots: 3 × Level 1</span>
-          <span>Save DC: 12</span>
-          <span>Atk: +4</span>
-        </div>
-        <div class="spell-list"><div class="spell-row">Hunter's Mark</div><div class="spell-row">Cure Wounds</div><div class="spell-row"><span class=new-spell>NEW</span> Fog Cloud</div></div>
-        <div style="margin-top:10px">
-          <label class="field-label">New spell to add (ask DM)</label>
-          <input type="text" class="spell-input" id="newspell-liora" placeholder="Spell name...">
-        </div>
-      </div>
-    </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-liora" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('liora','Liora Windstep')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-<div class="sheet" id="sheet-rurik">
-  <div class="char-header">
-    <div class="char-name">Rurik Goldnote</div>
-    <div class="char-subtitle">Level 3 Dwarf Bard · Entertainer</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+2</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">+3</span></div>
-
-  </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">13</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-rurik">24</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('rurik',-1)">−</button>
-        <span class="hp-current" id="hp-rurik">24</span>
-        <button class="hp-btn" onclick="changeHP('rurik',1)">+</button>
-        <span class="hp-max">/ 24</span>
-      </div>
-    </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('rurik',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('rurik',true)">Long Rest</button>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">DEX ✦</span><span class="save-val prof">+3</span></div>
-<div class="save-item"><span class="save-name">CON</span><span class="save-val">+2</span></div>
-<div class="save-item"><span class="save-name">INT</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">WIS</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">CHA ✦</span><span class="save-val prof">+5</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ Persuasion <em>(CHA)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Performance <em>(CHA)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Deception <em>(CHA)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Insight <em>(WIS)</em></span><span class="skill-val">+2</span></div>
-<div class="skill-item skill-prof"><span>✦ Perception <em>(WIS)</em></span><span class="skill-val">+2</span></div>
-<div class="skill-item"><span>History <em>(INT)</em></span><span class="skill-val">+1</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-rurik"><div class="subclass-option" data-char="rurik" data-idx="0" onclick="selectSubclass('rurik',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">College of Lore</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="rurik" data-idx="1" onclick="selectSubclass('rurik',1,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">College of Valor</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="rurik" data-idx="2" onclick="selectSubclass('rurik',2,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">College of Glamour</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="rurik" data-idx="3" onclick="selectSubclass('rurik',3,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">College of Spirits</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-rurik-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Bonus Proficiencies
-                <span class="check-sub"><strong>When:</strong> Immediately<br><strong>Effect:</strong> Gain proficiency in 3 skills of your choice.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Cutting Words
-                <span class="check-sub"><strong>When:</strong> Reaction — when creature within 60ft makes a roll<br><strong>Effect:</strong> Expend a Bardic Inspiration die to subtract it from an enemy's attack roll, ability check, or damage roll. Declared after the roll, before the outcome.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-rurik-1" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Bonus Proficiencies
-                <span class="check-sub"><strong>When:</strong> Immediately<br><strong>Effect:</strong> Gain proficiency with medium armor, shields, and martial weapons.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Combat Inspiration
-                <span class="check-sub"><strong>When:</strong> Upgrade to Bardic Inspiration<br><strong>Effect:</strong> Creatures with your die can also add it to a weapon damage roll OR subtract it from one attack roll against them as a reaction.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-rurik-2" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Mantle of Inspiration
-                <span class="check-sub"><strong>When:</strong> Bonus action, spend Bardic Inspiration<br><strong>Effect:</strong> Give up to 5 creatures temp HP equal to your roll + CHA mod (+3). Each can immediately move up to their speed without provoking opportunity attacks.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Enthralling Performance
-                <span class="check-sub"><strong>When:</strong> 1 minute performance<br><strong>Effect:</strong> Charm up to CHA mod (3) humanoids within 60ft for 1 hour. WIS save to resist (DC 13).</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-rurik-3" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Guiding Whispers
-                <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> You learn the Guidance cantrip. Its range is 60ft for you instead of touch.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Spiritual Focus
-                <span class="check-sub"><strong>When:</strong> Passive while using a focus item<br><strong>Effect:</strong> When you cast a bard spell using a candle, crystal ball, skull, or similar, add 1d6 to one damage or healing roll.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Tales from Beyond
-                <span class="check-sub"><strong>When:</strong> Spend Bardic Inspiration, reaction<br><strong>Effect:</strong> Roll a d6 on the Spirit Tales table — random powerful effects channeled from spirits of the dead.</span>
-              </div>
-            </li>
-</ul>
-
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Bardic Inspiration
-            <span class="check-sub"><strong>When:</strong> Bonus action, CHA mod times per long rest (3)<br><strong>Effect:</strong> Give one creature within 60ft a d6 inspiration die. They can add it to one attack roll, ability check, or saving throw within 10 minutes. It upgrades to d8 at level 5.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Jack of All Trades
-            <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> Add half your proficiency bonus (+1) to any ability check you're not proficient in.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Song of Rest
-            <span class="check-sub"><strong>When:</strong> During a short rest<br><strong>Effect:</strong> If you play music during a short rest, allies who spend hit dice regain an extra 1d6 HP.</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-    <div class="block">
-      <div class="block-title" onclick="toggleBlock(this)">Spells <span class="arrow">▼</span></div>
-      <div class="block-body">
-        <div class="spell-meta">
-          <span>Slots: 4 × Level 1 &nbsp;·&nbsp; 2 × Level 2</span>
-          <span>Save DC: 13</span>
-          <span>Atk: +5</span>
-        </div>
-        <div class="spell-list"><div class="spell-row">Vicious Mockery (cantrip)</div><div class="spell-row">Prestidigitation (cantrip)</div><div class="spell-row">Healing Word</div><div class="spell-row">Thunderwave</div><div class="spell-row">Charm Person</div><div class="spell-row">Dissonant Whispers</div><div class="spell-row"><span class=new-spell>NEW</span> Heat Metal</div><div class="spell-row"><span class=new-spell>NEW</span> Suggestion</div></div>
-        <div style="margin-top:10px">
-          <label class="field-label">New spell to add (ask DM)</label>
-          <input type="text" class="spell-input" id="newspell-rurik" placeholder="Spell name...">
-        </div>
-      </div>
-    </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-rurik" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('rurik','Rurik Goldnote')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-<div class="sheet" id="sheet-ashara">
-  <div class="char-header">
-    <div class="char-name">Ashara Solkindle</div>
-    <div class="char-subtitle">Level 3 Fire Genasi Cleric (Life) · Acolyte</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+2</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">+1</span></div>
-
-  </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">16</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-ashara">24</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('ashara',-1)">−</button>
-        <span class="hp-current" id="hp-ashara">24</span>
-        <button class="hp-btn" onclick="changeHP('ashara',1)">+</button>
-        <span class="hp-max">/ 24</span>
-      </div>
-    </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('ashara',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('ashara',true)">Long Rest</button>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">DEX</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">CON</span><span class="save-val">+2</span></div>
-<div class="save-item"><span class="save-name">INT</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">WIS ✦</span><span class="save-val prof">+5</span></div>
-<div class="save-item"><span class="save-name">CHA ✦</span><span class="save-val prof">+3</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ Medicine <em>(WIS)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Insight <em>(WIS)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Religion <em>(INT)</em></span><span class="skill-val">+2</span></div>
-<div class="skill-item skill-prof"><span>✦ Persuasion <em>(CHA)</em></span><span class="skill-val">+3</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-ashara"><div class="subclass-option" data-char="ashara" data-idx="0" onclick="selectSubclass('ashara',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">Life Domain (chosen)</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-ashara-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Spellcasting (WIS)
-                <span class="check-sub"><strong>When:</strong> 4 level-1 slots, 2 level-2 slots<br><strong>Effect:</strong> Spell save DC 13. Spell attack +5. Life domain spells always prepared: Bless, Cure Wounds (1st); Lesser Restoration, Spiritual Weapon (2nd).</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Turn Undead
-                <span class="check-sub"><strong>When:</strong> Channel Divinity action<br><strong>Effect:</strong> Undead within 30ft must pass WIS save (DC 13) or flee for 1 minute.</span>
-              </div>
-            </li>
-</ul>
-
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Disciple of Life
-            <span class="check-sub"><strong>When:</strong> Passive — on any healing spell<br><strong>Effect:</strong> Whenever you use a spell of 1st level or higher to restore HP, the creature regains extra HP equal to 2 + the spell's level. A 1st-level Cure Wounds heals +3 extra.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Channel Divinity: Preserve Life
-            <span class="check-sub"><strong>When:</strong> Channel Divinity action, 1 use per short rest<br><strong>Effect:</strong> Restore a pool of 15 HP divided among any creatures within 30ft. Each can only be healed up to half their max HP per use.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Blessed Healer
-            <span class="check-sub"><strong>When:</strong> Passive — when healing others<br><strong>Effect:</strong> When you cast a healing spell on another creature, you also regain 2 + the spell's level HP yourself.</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-    <div class="block">
-      <div class="block-title" onclick="toggleBlock(this)">Spells <span class="arrow">▼</span></div>
-      <div class="block-body">
-        <div class="spell-meta">
-          <span>Slots: 4 × Level 1 &nbsp;·&nbsp; 2 × Level 2</span>
-          <span>Save DC: 13</span>
-          <span>Atk: +5</span>
-        </div>
-        <div class="spell-list"><div class="spell-row">Sacred Flame (cantrip)</div><div class="spell-row">Produce Flame (cantrip)</div><div class="spell-row">Guidance (cantrip)</div><div class="spell-row">Cure Wounds</div><div class="spell-row">Healing Word</div><div class="spell-row">Bless</div><div class="spell-row">Bane</div><div class="spell-row"><span class=new-spell>NEW</span> Lesser Restoration</div><div class="spell-row"><span class=new-spell>NEW</span> Prayer of Healing</div><div class="spell-row"><span class=new-spell>NEW</span> Spiritual Weapon</div></div>
-        <div style="margin-top:10px">
-          <label class="field-label">New spell to add (ask DM)</label>
-          <input type="text" class="spell-input" id="newspell-ashara" placeholder="Spell name...">
-        </div>
-      </div>
-    </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-ashara" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('ashara','Ashara Solkindle')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-<div class="sheet" id="sheet-lark">
-  <div class="char-header">
-    <div class="char-name">Lark Thistledown</div>
-    <div class="char-subtitle">Level 3 Halfling Bard · Folk Hero</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box"><span class="stat-label">STR</span><span class="stat-value">-1</span></div>
-<div class="stat-box"><span class="stat-label">DEX</span><span class="stat-value">+3</span></div>
-<div class="stat-box"><span class="stat-label">CON</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">INT</span><span class="stat-value">+1</span></div>
-<div class="stat-box"><span class="stat-label">WIS</span><span class="stat-value">+0</span></div>
-<div class="stat-box"><span class="stat-label">CHA</span><span class="stat-value">+3</span></div>
-
-  </div>
-  <div class="ac-prof-row">
-    <div class="ac-box"><span class="stat-label">AC</span><span class="stat-value">13</span></div>
-    <div class="ac-box"><span class="stat-label">HP Max</span><span class="stat-value" id="hpmax-lark">21</span></div>
-    <div class="ac-box"><span class="stat-label">Prof</span><span class="stat-value">+2</span></div>
-  </div>
-  <div class="hp-section">
-    <div class="hp-row">
-      <span class="hp-label">HP</span>
-      <div class="hp-controls">
-        <button class="hp-btn" onclick="changeHP('lark',-1)">−</button>
-        <span class="hp-current" id="hp-lark">21</span>
-        <button class="hp-btn" onclick="changeHP('lark',1)">+</button>
-        <span class="hp-max">/ 21</span>
-      </div>
-    </div>
-    <div class="rest-row">
-      <button class="rest-btn short" onclick="doRest('lark',false)">Short Rest</button>
-      <button class="rest-btn long" onclick="doRest('lark',true)">Long Rest</button>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Saving Throws <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <div class="saves-grid"><div class="save-item"><span class="save-name">STR</span><span class="save-val">-1</span></div>
-<div class="save-item"><span class="save-name">DEX ✦</span><span class="save-val prof">+5</span></div>
-<div class="save-item"><span class="save-name">CON</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">INT</span><span class="save-val">+1</span></div>
-<div class="save-item"><span class="save-name">WIS</span><span class="save-val">+0</span></div>
-<div class="save-item"><span class="save-name">CHA ✦</span><span class="save-val prof">+5</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Skills <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <div class="skills-grid"><div class="skill-item skill-prof"><span>✦ Persuasion <em>(CHA)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Performance <em>(CHA)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Stealth <em>(DEX)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Sleight of Hand <em>(DEX)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item skill-prof"><span>✦ Acrobatics <em>(DEX)</em></span><span class="skill-val">+5</span></div>
-<div class="skill-item"><span>Perception <em>(WIS)</em></span><span class="skill-val">+0</span></div>
-</div>
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Choose Your Subclass <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <p class="subclass-hint">Tap to select. This is permanent — read carefully or ask your DM.</p>
-      <div class="subclass-picker" id="subpicker-lark"><div class="subclass-option" data-char="lark" data-idx="0" onclick="selectSubclass('lark',0,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">College of Lore</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="lark" data-idx="1" onclick="selectSubclass('lark',1,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">College of Valor</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="lark" data-idx="2" onclick="selectSubclass('lark',2,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">College of Glamour</div>
-          </div>
-        </div>
-<div class="subclass-option" data-char="lark" data-idx="3" onclick="selectSubclass('lark',3,this)">
-          <div class="subclass-radio"></div>
-          <div>
-            <div class="subclass-opt-name">College of Eloquence</div>
-          </div>
-        </div>
-</div>
-      <ul class="check-list subclass-feats" id="subfeats-lark-0" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Bonus Proficiencies
-                <span class="check-sub"><strong>When:</strong> Immediately<br><strong>Effect:</strong> Gain proficiency in 3 skills of your choice.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Cutting Words
-                <span class="check-sub"><strong>When:</strong> Reaction when creature makes a roll within 60ft<br><strong>Effect:</strong> Expend a Bardic Inspiration die to subtract it from an attack roll, ability check, or damage roll. Declared after seeing the roll.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-lark-1" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Bonus Proficiencies
-                <span class="check-sub"><strong>When:</strong> Immediately<br><strong>Effect:</strong> Gain proficiency with medium armor, shields, and martial weapons.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Combat Inspiration
-                <span class="check-sub"><strong>When:</strong> Upgrade to Bardic Inspiration<br><strong>Effect:</strong> Creatures can also add the die to weapon damage OR subtract it from one incoming attack as a reaction.</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-lark-2" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Mantle of Inspiration
-                <span class="check-sub"><strong>When:</strong> Bonus action, spend Bardic Inspiration<br><strong>Effect:</strong> Give up to 5 creatures temp HP equal to your roll + CHA mod (+3). Each can move up to their speed for free without provoking attacks of opportunity.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Enthralling Performance
-                <span class="check-sub"><strong>When:</strong> 1 minute performance<br><strong>Effect:</strong> Charm up to 3 humanoids within 60ft for 1 hour. WIS save to resist (DC 13).</span>
-              </div>
-            </li>
-</ul>
-<ul class="check-list subclass-feats" id="subfeats-lark-3" style="display:none"><li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Silver Tongue
-                <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> On Persuasion and Deception checks, treat any roll of 1-9 as a 10. You never truly fail these checks.</span>
-              </div>
-            </li>
-<li class="check-item" onclick="toggleCheck(this)">
-              <div class="check-box"></div>
-              <div class="check-label">Unsettling Words
-                <span class="check-sub"><strong>When:</strong> Bonus action, spend Bardic Inspiration<br><strong>Effect:</strong> Choose a creature within 60ft. Subtract your Bardic Inspiration die from the next saving throw it makes before your next turn.</span>
-              </div>
-            </li>
-</ul>
-
-    </div>
-  </div>
-  <div class="block">
-    <div class="block-title open" onclick="toggleBlock(this)">Class Features <span class="arrow">▼</span></div>
-    <div class="block-body open">
-      <ul class="check-list"><li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Bardic Inspiration
-            <span class="check-sub"><strong>When:</strong> Bonus action, CHA mod times per long rest (3)<br><strong>Effect:</strong> Give one creature within 60ft a d6 inspiration die. They can add it to one attack roll, ability check, or saving throw within 10 minutes.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Lucky (Halfling)
-            <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> When you roll a 1 on a d20, reroll it and use the new result.</span>
-          </div>
-        </li>
-<li class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-label">Naturally Stealthy
-            <span class="check-sub"><strong>When:</strong> Passive<br><strong>Effect:</strong> You can attempt to hide even when obscured only by a creature that is at least one size larger than you.</span>
-          </div>
-        </li>
-</ul>
-    </div>
-  </div>
-  
-    <div class="block">
-      <div class="block-title" onclick="toggleBlock(this)">Spells <span class="arrow">▼</span></div>
-      <div class="block-body">
-        <div class="spell-meta">
-          <span>Slots: 4 × Level 1 &nbsp;·&nbsp; 2 × Level 2</span>
-          <span>Save DC: 13</span>
-          <span>Atk: +5</span>
-        </div>
-        <div class="spell-list"><div class="spell-row">Minor Illusion (cantrip)</div><div class="spell-row">Mage Hand (cantrip)</div><div class="spell-row">Healing Word</div><div class="spell-row">Faerie Fire</div><div class="spell-row">Hideous Laughter</div><div class="spell-row">Sleep</div><div class="spell-row"><span class=new-spell>NEW</span> Invisibility</div><div class="spell-row"><span class=new-spell>NEW</span> Shatter</div></div>
-        <div style="margin-top:10px">
-          <label class="field-label">New spell to add (ask DM)</label>
-          <input type="text" class="spell-input" id="newspell-lark" placeholder="Spell name...">
-        </div>
-      </div>
-    </div>
-  <div class="block">
-    <div class="block-title" onclick="toggleBlock(this)">Notes — Act II <span class="arrow">▼</span></div>
-    <div class="block-body">
-      <textarea class="inventory-area" id="notes-lark" placeholder="Goals, fears, questions for the DM..."></textarea>
-      <button class="export-btn" onclick="exportNotes('lark','Lark Thistledown')">⬇ Copy Notes</button>
-    </div>
-  </div>
-</div>
-
-<div class="dice-bar">
-  <div class="dice-bar-title">🎲 Dice Roller</div>
-  <div class="dice-buttons">
-    <button class="dice-btn" onclick="rollDice(4)">d4</button>
-    <button class="dice-btn" onclick="rollDice(6)">d6</button>
-    <button class="dice-btn" onclick="rollDice(8)">d8</button>
-    <button class="dice-btn" onclick="rollDice(10)">d10</button>
-    <button class="dice-btn" onclick="rollDice(12)">d12</button>
-    <button class="dice-btn" onclick="rollDice(20)">d20</button>
-    <button class="dice-btn" onclick="rollDice(100)">d100</button>
-  </div>
-  <div class="dice-result" id="dice-result">Tap a die to roll</div>
 </div>
 
 <script>
-  const maxHP = { seris: 28, korrin: 22, haldor: 26, edrin: 31, sable: 25, azrael: 37, liora: 24, rurik: 24, ashara: 24, lark: 21 };
-  const currentHP = { seris: 28, korrin: 22, haldor: 26, edrin: 31, sable: 25, azrael: 37, liora: 24, rurik: 24, ashara: 24, lark: 21 };
-
-  function switchChar(id) {
-    document.querySelectorAll('.sheet').forEach(s => s.classList.remove('active'));
-    document.getElementById('sheet-' + id).classList.add('active');
-  }
-  // Show first sheet
-  document.querySelector('.sheet').classList.add('active');
-
-  function changeHP(char, delta) {
-    currentHP[char] = Math.max(0, Math.min(maxHP[char], currentHP[char] + delta));
-    document.getElementById('hp-' + char).textContent = currentHP[char];
-  }
-
-  function doRest(char, isLong) {
-    const sheet = document.getElementById('sheet-' + char);
-    if (isLong) {
-      currentHP[char] = maxHP[char];
-      document.getElementById('hp-' + char).textContent = currentHP[char];
-      sheet.querySelectorAll('.check-item.used').forEach(i => i.classList.remove('used'));
-      alert('Long rest complete! All HP and features restored.');
-    } else {
-      sheet.querySelectorAll('.check-item.used').forEach(item => {
-        const txt = item.querySelector('.check-label').textContent;
-        if (txt.includes('Action Surge') || txt.includes('Second Wind') || txt.includes('Channel Divinity') || txt.includes('Preserve Life') || txt.includes('Turn Undead') || txt.includes('War Priest') || txt.includes('Warding Flare')) {
-          item.classList.remove('used');
-        }
-      });
-      alert('Short rest taken. Action Surge, Second Wind, and Channel Divinity reset.');
+// ═══════════════════════════════════════════════════════════════
+// CHARACTER DATA  — 2024 5e rules
+// ═══════════════════════════════════════════════════════════════
+const CHARS = [
+  {
+    id: "seris",
+    name: "Seris Dawnblade",
+    race: "Human",
+    class: "Fighter",
+    background: "Soldier",
+    statsOld: { STR:16, DEX:13, CON:14, INT:10, WIS:12, CHA:8 },
+    statsNew: { STR:16, DEX:13, CON:14, INT:10, WIS:12, CHA:8 },
+    hpOld: 22, // lv2 est
+    hpNew: 28, // lv3 est (10 + 6 avg + 6 avg + 2+2+2 con)
+    hpDie: "d10",
+    savingThrows: ["Strength +5", "Constitution +4"],
+    proficiencies: ["All armor & shields","Simple & martial weapons","Athletics +5","Perception +3","Intimidation +1","Survival +3"],
+    // 2024: Weapon Mastery
+    weaponMastery: [
+      { weapon: "Longsword — Sap", desc: "On a hit, the target has disadvantage on its next attack roll before the start of your next turn." },
+      { weapon: "Shield — Push (if using)", desc: "On a hit, you can push the target 5 ft. away if it is Large or smaller." }
+    ],
+    classFeatures: [
+      { name: "Action Surge", desc: "Once per short rest, take one additional action on your turn. At level 17 you gain two uses.", isNew: true },
+      { name: "Second Wind", desc: "Bonus action: regain 1d10 + Fighter level HP. Recharges on short or long rest." },
+      { name: "Weapon Mastery (2 weapons)", desc: "You know Mastery properties for 2 weapons. You can change your mastered weapons after a long rest.", isNew: true, is2024: true }
+    ],
+    subclasses: [
+      { name: "Champion", desc: "Simple, brutal, reliable. Never goes wrong.", features: [
+        { name: "Improved Critical", desc: "Your weapon attacks score a critical hit on a roll of 19 or 20." },
+        { name: "Remarkable Athlete", desc: "Add half your proficiency bonus to STR, DEX, or CON checks not already proficient. Running jump distance also increases by STR modifier." }
+      ]},
+      { name: "Battle Master", desc: "Tactical superiority — maneuvers that control the battlefield.", features: [
+        { name: "Combat Superiority", desc: "Gain 4 Superiority Dice (d8). Learn 3 maneuvers (Disarming Attack, Trip Attack, Precision Attack, etc). Dice refresh on short rest." },
+        { name: "Student of War", desc: "Gain proficiency with one type of artisan's tools." },
+        { name: "Know Your Enemy", desc: "Spend 1 minute studying a creature to compare your STR, DEX, CON, AC, HP, or class levels." }
+      ]},
+      { name: "Eldritch Knight", desc: "Arcane magic woven into your fighting style.", features: [
+        { name: "Spellcasting (INT)", desc: "Learn 2 Wizard cantrips + 3 1st-level spells (2 must be Abjuration or Evocation). Gain 2 first-level spell slots." },
+        { name: "Weapon Bond", desc: "Bond up to 2 weapons as a ritual. You can't be disarmed and can teleport them to your hand as a bonus action." }
+      ]}
+    ],
+    spells: null
+  },
+  {
+    id: "edrin",
+    name: "Edrin Valebright",
+    race: "Human",
+    class: "Paladin",
+    background: "Noble",
+    statsOld: { STR:16, DEX:10, CON:14, INT:10, WIS:12, CHA:16 },
+    statsNew: { STR:16, DEX:10, CON:14, INT:10, WIS:12, CHA:16 },
+    hpOld: 24,
+    hpNew: 31,
+    hpDie: "d10",
+    savingThrows: ["Wisdom +3", "Charisma +5"],
+    proficiencies: ["All armor & shields","Simple & martial weapons","Persuasion +7","Insight +3","Religion +2","Athletics +5"],
+    weaponMastery: [
+      { weapon: "Longsword — Sap", desc: "On a hit, the target has disadvantage on its next attack roll before the start of your next turn." },
+      { weapon: "Warhammer — Push", desc: "On a hit, you can push the target 5 ft. away if it is Large or smaller." }
+    ],
+    classFeatures: [
+      { name: "Divine Smite", desc: "Expend a spell slot on a hit: deal 2d8 radiant damage (+1d8 per slot level above 1st, max 5d8). Extra 1d8 against undead or fiends." },
+      { name: "Lay on Hands (15 HP pool)", desc: "Touch to restore HP from a 15-point pool. Spend 5 HP to cure one disease or poison. Replenishes on long rest." },
+      { name: "Channel Divinity (1/rest)", desc: "Use your Sacred Weapon or subclass channel options once per short/long rest.", isNew: true },
+      { name: "Spellcasting", desc: "Gain access to 1st-level spell slots (see spells section). Prepared spells = CHA mod + half Paladin level." }
+    ],
+    subclasses: [
+      { name: "Oath of Devotion", desc: "Holy warrior — radiant light and protection. The classic.", features: [
+        { name: "Sacred Weapon (Channel Divinity)", desc: "Imbue a weapon with divine energy for 1 minute. Add CHA modifier to attack rolls and the weapon emits bright light (20ft)." },
+        { name: "Oath Spells", desc: "Always prepared: Protection from Evil and Good, Sanctuary (1st), Lesser Restoration, Zone of Truth (2nd)." }
+      ]},
+      { name: "Oath of the Ancients", desc: "Nature's champion — protect the light in a dying world.", features: [
+        { name: "Nature's Wrath (Channel Divinity)", desc: "Vines erupt from the ground, restraining a creature within 10ft (STR or DEX save to escape each turn)." },
+        { name: "Oath Spells", desc: "Always prepared: Ensnaring Strike, Speak with Animals (1st), Moonbeam, Misty Step (2nd)." }
+      ]},
+      { name: "Oath of Vengeance", desc: "Relentless pursuit. For a soldier who's seen enough loss.", features: [
+        { name: "Vow of Enmity (Channel Divinity)", desc: "Grant yourself advantage on attacks against one creature within 10ft for 1 minute." },
+        { name: "Oath Spells", desc: "Always prepared: Bane, Hunter's Mark (1st), Hold Person, Misty Step (2nd)." }
+      ]},
+      { name: "Oath of Glory", desc: "Inspire greatness in others — lead from the front.", features: [
+        { name: "Inspiring Smite (Channel Divinity)", desc: "After Divine Smite, distribute up to 2d8 + Paladin level temp HP among willing creatures within 30ft." },
+        { name: "Oath Spells", desc: "Always prepared: Guiding Bolt, Heroism (1st), Enhance Ability, Magic Weapon (2nd)." }
+      ]}
+    ],
+    spells: {
+      slotsOld: { 1: 0 },
+      slotsNew: { 1: 3 },
+      newSlots: [1],
+      known: [
+        { name: "Divine Smite", level: "1", isNew: true, note: "Always available via class feature" },
+        { name: "Wrathful Smite", level: "1" },
+        { name: "Shield of Faith", level: "1" },
+        { name: "Bless", level: "1" },
+        { name: "Cure Wounds", level: "1" }
+      ]
+    }
+  },
+  {
+    id: "liora",
+    name: "Liora Windstep",
+    race: "Wood Elf",
+    class: "Ranger",
+    background: "Outlander",
+    statsOld: { STR:11, DEX:17, CON:13, INT:12, WIS:14, CHA:10 },
+    statsNew: { STR:11, DEX:17, CON:13, INT:12, WIS:14, CHA:10 },
+    hpOld: 19,
+    hpNew: 25,
+    hpDie: "d10",
+    savingThrows: ["Strength +2", "Dexterity +5"],
+    proficiencies: ["Light & medium armor","Shields","Simple & martial weapons","Animal Handling +4","Athletics +2","Perception +6","Stealth +7","Survival +6","Nature +3"],
+    weaponMastery: [
+      { weapon: "Longbow — Slow", desc: "On a hit, the target's Speed decreases by 10 ft. until the start of your next turn." },
+      { weapon: "Shortsword — Vex", desc: "On a hit, you gain advantage on your next attack against that target before the end of your next turn." }
+    ],
+    classFeatures: [
+      { name: "Favored Enemy", desc: "Choose a type of favored enemy (undead are an obvious choice). Advantage on Survival checks to track, recall lore, and learn their language." },
+      { name: "Favored Terrain", desc: "Choose a favored terrain (Forest). Ignore difficult terrain, always alert for ambush, extra info from foraging." },
+      { name: "Primeval Awareness", desc: "Expend a spell slot to sense your favored enemy type within 1 mile (6 miles in favored terrain).", isNew: true }
+    ],
+    subclasses: [
+      { name: "Hunter", desc: "Versatile damage options for any situation.", features: [
+        { name: "Hunter's Prey", desc: "Choose one: Colossus Slayer (1d8 extra to injured targets), Giant Killer (reaction attack when Large+ misses you), or Horde Breaker (one extra attack on adjacent target per turn)." }
+      ]},
+      { name: "Gloom Stalker", desc: "The fog is your home. You were built for this world.", features: [
+        { name: "Dread Ambusher", desc: "On your first combat turn, speed +10ft and one extra weapon attack that deals +1d8 damage." },
+        { name: "Umbral Sight", desc: "Gain darkvision 60ft (or +60ft). While in darkness, creatures using darkvision cannot see you." },
+        { name: "Gloom Stalker Spells", desc: "Always prepared: Disguise Self (1st), Rope Trick (2nd)." }
+      ]},
+      { name: "Beast Master", desc: "Bond with a companion who fights alongside you.", features: [
+        { name: "Primal Companion (2024)", desc: "Summon a magical Beast of the Land, Sea, or Sky. CR 1/4. Uses your proficiency bonus. Acts on your turn — bonus action to command." }
+      ]},
+      { name: "Horizon Walker", desc: "Sense planar rifts — relevant in a world where reality tears.", features: [
+        { name: "Detect Portal", desc: "Sense planar portals within 1 mile as an action." },
+        { name: "Planar Warrior", desc: "Before attacking, one hit converts all damage to force and adds 1d8 force damage." }
+      ]}
+    ],
+    spells: {
+      slotsOld: { 1: 2 },
+      slotsNew: { 1: 3 },
+      newSlots: [],
+      known: [
+        { name: "Hunter's Mark", level: "1" },
+        { name: "Cure Wounds", level: "1" },
+        { name: "Fog Cloud", level: "1" },
+        { name: "Ensnaring Strike", level: "1", isNew: true }
+      ]
+    }
+  },
+  {
+    id: "rurik",
+    name: "Rurik Goldnote",
+    race: "Dwarf",
+    class: "Bard",
+    background: "Entertainer",
+    statsOld: { STR:10, DEX:13, CON:14, INT:12, WIS:10, CHA:17 },
+    statsNew: { STR:10, DEX:13, CON:14, INT:12, WIS:10, CHA:17 },
+    hpOld: 20,
+    hpNew: 25,
+    hpDie: "d8",
+    savingThrows: ["Dexterity +3", "Charisma +5"],
+    proficiencies: ["Light armor","Simple weapons","Hand crossbows, longswords, rapiers, shortswords","Three instruments","Persuasion +7","Performance +7","Deception +7","Insight +4","Perception +4"],
+    weaponMastery: null,
+    classFeatures: [
+      { name: "Bardic Inspiration (d6)", desc: "Bonus action: give an ally a d6 they can add to an attack roll, ability check, or saving throw. You have CHA modifier uses (3). Recharges on long rest." },
+      { name: "Jack of All Trades", desc: "Add half proficiency bonus (+1) to any ability check not already proficient." },
+      { name: "Song of Rest", desc: "During a short rest, allies who hear you play regain extra 1d6 HP when spending hit dice." },
+      { name: "Expertise (2 skills)", desc: "Double proficiency bonus for 2 chosen skills.", isNew: true }
+    ],
+    subclasses: [
+      { name: "College of Lore", desc: "Secrets, mockery, and psychological warfare.", features: [
+        { name: "Bonus Proficiencies", desc: "Gain proficiency in 3 skills of your choice." },
+        { name: "Cutting Words", desc: "Reaction: when a creature within 60ft makes an attack, ability check, or damage roll, subtract your Bardic Inspiration die from the result." }
+      ]},
+      { name: "College of Valor", desc: "A bard who fights as well as they perform.", features: [
+        { name: "Bonus Proficiencies", desc: "Medium armor, shields, and martial weapons." },
+        { name: "Combat Inspiration", desc: "Creatures with your Bardic Inspiration can add the die to a weapon damage roll OR to AC against one attack." }
+      ]},
+      { name: "College of Glamour", desc: "Fey magic and overwhelming presence.", features: [
+        { name: "Mantle of Inspiration", desc: "Bonus action: spend Bardic Inspiration to give up to 5 creatures temp HP (the roll + CHA mod). Each can immediately move up to their speed without provoking opportunity attacks." },
+        { name: "Enthralling Performance", desc: "Perform 1 minute to charm up to CHA mod humanoids within 60ft for 1 hour (WIS save negates)." }
+      ]},
+      { name: "College of Spirits", desc: "Channel the voices of the dead. Very on brand for this campaign.", features: [
+        { name: "Guiding Whispers", desc: "Learn Guidance. Its range becomes 60ft for you." },
+        { name: "Spiritual Focus", desc: "When casting a bard spell through a ritual object (skull, candle, etc.), add 1d6 to one damage or healing roll." },
+        { name: "Tales from Beyond", desc: "Spend Bardic Inspiration to roll on the Spirit Tales table — powerful random magical effects channeled through deceased spirits." }
+      ]}
+    ],
+    spells: {
+      slotsOld: { 1: 3, 2: 0 },
+      slotsNew: { 1: 4, 2: 2 },
+      newSlots: [2],
+      known: [
+        { name: "Vicious Mockery", level: "cantrip" },
+        { name: "Prestidigitation", level: "cantrip" },
+        { name: "Healing Word", level: "1" },
+        { name: "Thunderwave", level: "1" },
+        { name: "Charm Person", level: "1" },
+        { name: "Dissonant Whispers", level: "1" },
+        { name: "Heat Metal", level: "2", isNew: true },
+        { name: "Suggestion", level: "2", isNew: true }
+      ]
+    }
+  },
+  {
+    id: "ashara",
+    name: "Ashara Solkindle",
+    race: "Fire Genasi",
+    class: "Cleric",
+    background: "Acolyte",
+    statsOld: { STR:10, DEX:12, CON:14, INT:11, WIS:17, CHA:13 },
+    statsNew: { STR:10, DEX:12, CON:14, INT:11, WIS:17, CHA:13 },
+    hpOld: 20,
+    hpNew: 25,
+    hpDie: "d8",
+    savingThrows: ["Wisdom +5", "Charisma +3"],
+    proficiencies: ["Light & medium armor","Shields","Simple weapons","Medicine +7","Insight +7","Religion +4","Persuasion +3"],
+    weaponMastery: null,
+    classFeatures: [
+      { name: "Channel Divinity (1/rest)", desc: "Use once per short or long rest. Options depend on your chosen domain." },
+      { name: "Turn Undead", desc: "Channel Divinity: undead within 30ft must succeed a WIS save or be turned for 1 minute." },
+      { name: "Harness Divine Power", desc: "Channel Divinity: recover one expended spell slot of 1st or 2nd level.", isNew: true }
+    ],
+    subclasses: [
+      { name: "Life Domain", desc: "Healing and preservation. The world needs people like you.", features: [
+        { name: "Disciple of Life", desc: "Healing spells restore extra HP equal to 2 + spell level." },
+        { name: "Preserve Life (Channel Divinity)", desc: "Restore HP equal to 5× cleric level among any creatures within 30ft (up to half their max HP each)." },
+        { name: "Domain Spells", desc: "Always prepared: Bless, Cure Wounds (1st), Lesser Restoration, Spiritual Weapon (2nd)." }
+      ]},
+      { name: "Light Domain", desc: "Radiant destruction and protective flares.", features: [
+        { name: "Warding Flare", desc: "Reaction: impose disadvantage on an attack against you. WIS mod uses per long rest." },
+        { name: "Radiance of the Dawn (Channel Divinity)", desc: "Dispel magical darkness within 30ft. Hostile creatures take 2d10 + cleric level radiant (CON save for half)." },
+        { name: "Domain Spells", desc: "Always prepared: Burning Hands, Faerie Fire (1st), Flaming Sphere, Scorching Ray (2nd)." }
+      ]},
+      { name: "War Domain", desc: "Bless your allies and punish your enemies.", features: [
+        { name: "War Priest", desc: "WIS mod times per long rest: make one bonus action weapon attack when you use the Attack action." },
+        { name: "Guided Strike (Channel Divinity)", desc: "Add +10 to one attack roll after rolling but before knowing the result." },
+        { name: "Domain Spells", desc: "Always prepared: Divine Favor, Shield of Faith (1st), Magic Weapon, Spiritual Weapon (2nd)." }
+      ]},
+      { name: "Grave Domain", desc: "Stand between the living and the dead — extremely relevant here.", features: [
+        { name: "Circle of Mortality", desc: "Healing spells on creatures at 0 HP restore maximum possible HP. Spare the Dying has 30ft range and is a bonus action." },
+        { name: "Path to the Grave (Channel Divinity)", desc: "Touch a creature to curse it: next damage it takes before your next turn, it is vulnerable to all of that damage." },
+        { name: "Domain Spells", desc: "Always prepared: Bane, False Life (1st), Gentle Repose, Ray of Enfeeblement (2nd)." }
+      ]},
+      { name: "Trickery Domain", desc: "Illusion and deception — a fire genasi you'd never expect.", features: [
+        { name: "Blessing of the Trickster", desc: "Touch a willing creature (not yourself) to give advantage on Stealth for 1 hour." },
+        { name: "Invoke Duplicity (Channel Divinity)", desc: "Create an illusory duplicate within 30ft for 1 minute. You can cast spells as if occupying its space." },
+        { name: "Domain Spells", desc: "Always prepared: Charm Person, Disguise Self (1st), Mirror Image, Pass without Trace (2nd)." }
+      ]},
+      { name: "Tempest Domain", desc: "Thunder and lightning — rare and powerful in a fog-covered world.", features: [
+        { name: "Thunderbolt Strike", desc: "When you deal lightning damage to a Large or smaller creature, push it up to 10ft away." },
+        { name: "Destructive Wrath (Channel Divinity)", desc: "Maximize the damage of a lightning or thunder damage roll instead of rolling." },
+        { name: "Domain Spells", desc: "Always prepared: Fog Cloud, Thunderwave (1st), Gust of Wind, Shatter (2nd)." }
+      ]},
+      { name: "Nature Domain", desc: "The heartroot lives. So do you.", features: [
+        { name: "Acolyte of Nature", desc: "Learn a druid cantrip. Gain proficiency in Animal Handling, Nature, or Survival." },
+        { name: "Charm Animals and Plants (Channel Divinity)", desc: "Charm beasts and plant creatures within 30ft (WIS save). Lasts 1 minute." },
+        { name: "Domain Spells", desc: "Always prepared: Animal Friendship, Speak with Animals (1st), Barkskin, Spike Growth (2nd)." }
+      ]},
+      { name: "Knowledge Domain", desc: "What you know can save lives.", features: [
+        { name: "Blessings of Knowledge", desc: "Learn two languages and gain proficiency in two of: Arcana, History, Nature, or Religion. Double proficiency on those two skills." },
+        { name: "Knowledge of the Ages (Channel Divinity)", desc: "Gain proficiency in any skill or tool for 10 minutes." },
+        { name: "Domain Spells", desc: "Always prepared: Command, Identify (1st), Augury, Suggestion (2nd)." }
+      ]}
+    ],
+    spells: {
+      slotsOld: { 1: 3, 2: 0 },
+      slotsNew: { 1: 4, 2: 2 },
+      newSlots: [2],
+      known: [
+        { name: "Sacred Flame", level: "cantrip" },
+        { name: "Produce Flame", level: "cantrip" },
+        { name: "Guidance", level: "cantrip" },
+        { name: "Cure Wounds", level: "1" },
+        { name: "Healing Word", level: "1" },
+        { name: "Bless", level: "1" },
+        { name: "Bane", level: "1" },
+        { name: "Lesser Restoration", level: "2", isNew: true },
+        { name: "Prayer of Healing", level: "2", isNew: true },
+        { name: "Spiritual Weapon", level: "2", isNew: true }
+      ]
+    }
+  },
+  {
+    id: "lark",
+    name: "Lark Thistledown",
+    race: "Halfling",
+    class: "Bard",
+    background: "Folk Hero",
+    statsOld: { STR:8, DEX:17, CON:12, INT:13, WIS:11, CHA:16 },
+    statsNew: { STR:8, DEX:17, CON:12, INT:13, WIS:11, CHA:16 },
+    hpOld: 18,
+    hpNew: 23,
+    hpDie: "d8",
+    savingThrows: ["Dexterity +5", "Charisma +5"],
+    proficiencies: ["Light armor","Simple weapons & bard weapons","Three instruments","Persuasion +7","Performance +7","Stealth +7","Sleight of Hand +7","Acrobatics +5"],
+    weaponMastery: null,
+    classFeatures: [
+      { name: "Bardic Inspiration (d6)", desc: "Bonus action: give an ally a d6 they can add to any d20 roll. CHA mod uses (3). Long rest recharge." },
+      { name: "Jack of All Trades", desc: "Add +1 (half proficiency) to any ability check you're not proficient in." },
+      { name: "Song of Rest", desc: "Allies regain extra 1d6 HP when spending hit dice during a short rest." },
+      { name: "Lucky (Halfling)", desc: "Roll a 1 on any d20? Reroll and use the new result." },
+      { name: "Expertise (2 skills)", desc: "Double proficiency for 2 skills of your choice.", isNew: true }
+    ],
+    subclasses: [
+      { name: "College of Lore", desc: "Knowledge, mockery, and perfect timing.", features: [
+        { name: "Bonus Proficiencies", desc: "Gain proficiency in 3 skills of your choice." },
+        { name: "Cutting Words", desc: "Reaction: a creature within 60ft makes a roll — subtract your Bardic Inspiration die from it." }
+      ]},
+      { name: "College of Valor", desc: "A tiny warrior who fights as hard as they perform.", features: [
+        { name: "Bonus Proficiencies", desc: "Medium armor, shields, and martial weapons." },
+        { name: "Combat Inspiration", desc: "Creatures with your Bardic Inspiration can add the die to a damage roll OR to AC against one attack." }
+      ]},
+      { name: "College of Glamour", desc: "Halfling charm amplified by fey magic.", features: [
+        { name: "Mantle of Inspiration", desc: "Bonus action: spend Bardic Inspiration — up to 5 creatures get temp HP (roll + CHA mod) and can move without provoking opportunity attacks." },
+        { name: "Enthralling Performance", desc: "1 minute performance charms up to CHA mod humanoids within 60ft for 1 hour." }
+      ]},
+      { name: "College of Eloquence", desc: "Your words always land. Perfectly suited for Lark's personality.", features: [
+        { name: "Silver Tongue", desc: "Minimum roll of 10 on Persuasion and Deception checks — treat any roll below 10 as a 10." },
+        { name: "Unsettling Words", desc: "Bonus action: spend Bardic Inspiration to subtract the die from the target's next saving throw before your next turn." }
+      ]}
+    ],
+    spells: {
+      slotsOld: { 1: 3, 2: 0 },
+      slotsNew: { 1: 4, 2: 2 },
+      newSlots: [2],
+      known: [
+        { name: "Minor Illusion", level: "cantrip" },
+        { name: "Mage Hand", level: "cantrip" },
+        { name: "Healing Word", level: "1" },
+        { name: "Faerie Fire", level: "1" },
+        { name: "Hideous Laughter", level: "1" },
+        { name: "Sleep", level: "1" },
+        { name: "Invisibility", level: "2", isNew: true },
+        { name: "Shatter", level: "2", isNew: true }
+      ]
     }
   }
+];
 
-  function toggleCheck(item) { item.classList.toggle('used'); }
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let currentStep = 0;
+let selectedCharId = null;
+let selectedSubclassIdx = null;
+const TOTAL_STEPS = 6;
+const STEP_LABELS = ["Character", "Subclass", "Stats", "Features", "Spells", "Summary"];
 
-  function toggleBlock(header) {
-    header.classList.toggle('open');
-    header.nextElementSibling.classList.toggle('open');
-  }
+// ═══════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════
+function mod(s) { const m = Math.floor((s-10)/2); return (m>=0?"+":"")+m; }
+function getChar() { return CHARS.find(c => c.id === selectedCharId); }
 
-  function selectSubclass(charId, idx, el) {
-    const picker = document.getElementById('subpicker-' + charId);
-    picker.querySelectorAll('.subclass-option').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-    // Hide all subclass feature lists for this char
-    document.querySelectorAll(`[id^="subfeats-${charId}-"]`).forEach(d => d.style.display = 'none');
-    // Show selected one
-    const target = document.getElementById(`subfeats-${charId}-${idx}`);
-    if (target) target.style.display = 'block';
-    localStorage.setItem('subclass-' + charId, idx);
-  }
-
-  function exportNotes(char, name) {
-    const text = document.getElementById('notes-' + char).value || '(empty)';
-    const full = name + ' — Notes\n' + '='.repeat(30) + '\n' + text;
-    navigator.clipboard.writeText(full)
-      .then(() => alert('Copied! Paste into your notes app to save.'))
-      .catch(() => alert('Select and copy the text manually.'));
-  }
-
-  function rollDice(sides) {
-    const result = Math.floor(Math.random() * sides) + 1;
-    const el = document.getElementById('dice-result');
-    el.innerHTML = `d${sides} → <span class="roll-num">${result}</span>`;
-    el.style.animation = 'none';
-    el.offsetHeight;
-    el.style.animation = 'rollPop 0.25s ease';
-  }
-
-  // Restore saved subclass selections
-  document.querySelectorAll('.subclass-option').forEach(el => {
-    const charId = el.dataset.char;
-    const idx = el.dataset.idx;
-    const saved = localStorage.getItem('subclass-' + charId);
-    if (saved !== null && saved == idx) {
-      selectSubclass(charId, parseInt(idx), el);
+// ═══════════════════════════════════════════════════════════════
+// STEP INDICATOR
+// ═══════════════════════════════════════════════════════════════
+function buildStepIndicator() {
+  const el = document.getElementById('stepIndicator');
+  el.innerHTML = '';
+  STEP_LABELS.forEach((label, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'step-dot' + (i === currentStep ? ' active' : '') + (i < currentStep ? ' done' : '');
+    dot.innerHTML = `
+      <div class="step-circle">${i < currentStep ? '✓' : i+1}</div>
+      <div class="step-label">${label}</div>`;
+    el.appendChild(dot);
+    if (i < STEP_LABELS.length - 1) {
+      const line = document.createElement('div');
+      line.className = 'step-line' + (i < currentStep ? ' done' : '');
+      el.appendChild(line);
     }
   });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CHARACTER SELECTOR
+// ═══════════════════════════════════════════════════════════════
+const grid = document.getElementById('charGrid');
+CHARS.forEach(c => {
+  const btn = document.createElement('button');
+  btn.className = 'char-btn';
+  btn.dataset.id = c.id;
+  btn.innerHTML = `${c.name}<span class="char-sub">${c.race} ${c.class}</span>`;
+  btn.onclick = () => selectChar(c.id, btn);
+  grid.appendChild(btn);
+});
+
+function selectChar(id, btn) {
+  document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedCharId = id;
+  selectedSubclassIdx = null;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BUILD SUBCLASS PANEL
+// ═══════════════════════════════════════════════════════════════
+function buildSubclassPanel() {
+  const c = getChar();
+  if (!c) { document.getElementById('subclassPanel').innerHTML = '<p class="no-char-msg">Please select a character first.</p>'; return; }
+
+  const html = `
+    <div class="section">
+      <div class="section-header"><span class="section-icon">✦</span><span class="section-title">Choose Your Subclass — ${c.name}</span></div>
+      <div class="section-body">
+        <p style="font-style:italic;color:var(--text-dim);font-size:0.92rem;margin-bottom:1rem;">This is a permanent choice. Read each option carefully. Click to select and reveal features.</p>
+        <div class="subclass-grid" id="subclassGrid">
+          ${c.subclasses.map((s, i) => `
+            <div class="subclass-option ${selectedSubclassIdx === i ? 'selected' : ''}" data-idx="${i}" onclick="selectSubclass(${i}, this)">
+              <div class="subclass-radio"></div>
+              <div style="flex:1">
+                <div class="subclass-name">${s.name}</div>
+                <div class="subclass-desc">${s.desc}</div>
+                <div class="subclass-features-reveal">
+                  ${s.features.map(f => `
+                    <div class="sub-feature">
+                      <div class="sub-feature-name">${f.name}</div>
+                      <div class="sub-feature-desc">${f.desc}</div>
+                    </div>`).join('<hr class="rule">')}
+                </div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+
+  document.getElementById('subclassPanel').innerHTML = html;
+}
+
+function selectSubclass(idx, el) {
+  document.querySelectorAll('#subclassGrid .subclass-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSubclassIdx = idx;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BUILD STATS PANEL
+// ═══════════════════════════════════════════════════════════════
+function buildStatsPanel() {
+  const c = getChar();
+  if (!c) return;
+
+  const statsHTML = Object.entries(c.statsNew).map(([k, v]) => {
+    const old = c.statsOld[k];
+    const changed = v !== old;
+    return `
+      <div class="stat-box">
+        <div class="stat-name">${k}</div>
+        <div class="stat-score">${v}</div>
+        <div class="stat-mod">${mod(v)}</div>
+        <div class="stat-change ${changed ? 'upgraded' : ''}">${changed ? old + ' → ' + v : 'no change'}</div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('statsPanel').innerHTML = `
+    <div class="section">
+      <div class="section-header"><span class="section-icon">⚔</span><span class="section-title">Ability Scores — ${c.name}</span></div>
+      <div class="section-body">
+        <div class="rules-note"><strong>2024 Note:</strong> Ability Score Improvements (ASI) come at levels 4, 8, 12, 16, and 19. No changes to ability scores at level 3.</div>
+        <div class="stats-grid">${statsHTML}</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><span class="section-icon">♥</span><span class="section-title">Hit Points</span></div>
+      <div class="section-body">
+        <div class="hp-progression">
+          <div class="hp-box">
+            <div class="hp-box-label">Level 2 HP</div>
+            <div class="hp-box-value">${c.hpOld}</div>
+          </div>
+          <div class="hp-box">
+            <div class="hp-box-label">HP Gained</div>
+            <div class="hp-box-value new-val">+${c.hpNew - c.hpOld}</div>
+            <div class="hp-formula">${c.hpDie} avg + CON mod</div>
+          </div>
+          <div class="hp-box">
+            <div class="hp-box-label">Level 3 HP</div>
+            <div class="hp-box-value new-val">${c.hpNew}</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div>
+            <span class="field-label">Saving Throws (Proficient)</span>
+            <div style="margin-top:0.4rem;display:grid;gap:0.3rem;">
+              ${c.savingThrows.map(s => `<div class="prof-item">${s}</div>`).join('')}
+            </div>
+          </div>
+          <div>
+            <span class="field-label">Proficiency Bonus</span>
+            <div style="font-family:'Cinzel',serif;font-size:1.4rem;color:var(--crystal);margin-top:0.4rem;">+2</div>
+          </div>
+        </div>
+        ${c.weaponMastery ? `
+        <hr class="rule">
+        <div class="rules-note"><strong>2024 — Weapon Mastery:</strong> Each weapon you're proficient with has a special Mastery property. You know 2 at level 3 and can swap them after a long rest.</div>
+        <span class="field-label" style="margin-bottom:0.5rem;display:block;">Your Weapon Masteries</span>
+        <div class="mastery-grid">
+          ${c.weaponMastery.map(w => `
+            <div class="mastery-item">
+              <div class="mastery-weapon">${w.weapon}</div>
+              <div class="mastery-desc">${w.desc}</div>
+            </div>`).join('')}
+        </div>` : ''}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><span class="section-icon">◇</span><span class="section-title">Proficiencies</span></div>
+      <div class="section-body">
+        <div class="prof-grid">
+          ${c.proficiencies.map(p => `<div class="prof-item">${p}</div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BUILD FEATURES PANEL
+// ═══════════════════════════════════════════════════════════════
+function buildFeaturesPanel() {
+  const c = getChar();
+  if (!c) return;
+  const sub = selectedSubclassIdx !== null ? c.subclasses[selectedSubclassIdx] : null;
+
+  const classFeatsHTML = c.classFeatures.map(f => `
+    <div class="feature-item ${f.isNew ? 'new-feature' : ''}">
+      <div class="feature-name">${f.name}${f.isNew ? '<span class="new-tag">NEW</span>' : ''}${f.is2024 ? '<span class="new-tag" style="border-color:rgba(74,222,128,0.4);color:var(--heartroot);background:rgba(74,222,128,0.06);">2024</span>' : ''}</div>
+      <div class="feature-desc">${f.desc}</div>
+    </div>`).join('');
+
+  const subHTML = sub ? `
+    <div class="section">
+      <div class="section-header"><span class="section-icon">✦</span><span class="section-title">${sub.name} — Subclass Features</span></div>
+      <div class="section-body">
+        ${sub.features.map(f => `
+          <div class="feature-item new-feature">
+            <div class="feature-name">${f.name}<span class="new-tag">NEW</span></div>
+            <div class="feature-desc">${f.desc}</div>
+          </div>`).join('')}
+      </div>
+    </div>` : `<div class="section"><div class="section-body"><p class="no-char-msg" style="padding:1rem;">Go back and select a subclass first.</p></div></div>`;
+
+  document.getElementById('featuresPanel').innerHTML = `
+    <div class="section">
+      <div class="section-header"><span class="section-icon">◆</span><span class="section-title">Class Features at Level 3</span></div>
+      <div class="section-body">${classFeatsHTML}</div>
+    </div>
+    ${subHTML}`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BUILD SPELLS PANEL
+// ═══════════════════════════════════════════════════════════════
+function buildSpellsPanel() {
+  const c = getChar();
+  if (!c) return;
+
+  if (!c.spells) {
+    document.getElementById('spellsPanel').innerHTML = `
+      <div class="section">
+        <div class="section-header"><span class="section-icon">✧</span><span class="section-title">Spells — ${c.name}</span></div>
+        <div class="section-body">
+          <p style="font-style:italic;color:var(--text-dim);font-size:0.95rem;">
+            ${c.class === 'Fighter' ? 'Fighters don\'t have spells at level 3 unless you chose Eldritch Knight. If you did, talk to your DM about which spells to add.' : 'No spells at this level — check your subclass features for any special abilities.'}
+          </p>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const s = c.spells;
+  const slotsHTML = Object.entries(s.slotsNew).map(([lvl, n]) => {
+    const oldCount = s.slotsOld[lvl] || 0;
+    const isNew = s.newSlots.includes(parseInt(lvl));
+    return `<div class="slot-chip ${isNew ? 'new-slot' : ''}">${n}× Level ${lvl}${isNew ? ' ✦ NEW' : ''} (was ${oldCount})</div>`;
+  }).join('');
+
+  const spellsHTML = s.known.map(sp => {
+    const badgeClass = sp.level === 'cantrip' ? 'b-cantrip' : `b-${sp.level}`;
+    const label = sp.level === 'cantrip' ? 'Cantrip' : `Level ${sp.level}`;
+    return `
+      <div class="spell-item ${sp.isNew ? 'new-spell' : ''}">
+        <span class="spell-badge ${badgeClass}">${label}</span>
+        <span class="spell-name">${sp.name}${sp.note ? ` <em style="font-size:0.78rem;color:var(--text-dim);">(${sp.note})</em>` : ''}</span>
+        ${sp.isNew ? '<span class="spell-new-tag">✦ NEW</span>' : ''}
+      </div>`;
+  }).join('');
+
+  document.getElementById('spellsPanel').innerHTML = `
+    <div class="section">
+      <div class="section-header"><span class="section-icon">✧</span><span class="section-title">Spells & Slots — ${c.name}</span></div>
+      <div class="section-body">
+        <span class="field-label" style="margin-bottom:0.5rem;display:block;">Spell Slots at Level 3</span>
+        <div class="slots-display">${slotsHTML}</div>
+        <hr class="rule">
+        <span class="field-label" style="margin-bottom:0.5rem;display:block;">Your Spell List</span>
+        <div class="spell-list">${spellsHTML}</div>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BUILD SUMMARY PANEL
+// ═══════════════════════════════════════════════════════════════
+function buildSummaryPanel() {
+  const c = getChar();
+  if (!c) return;
+  const sub = selectedSubclassIdx !== null ? c.subclasses[selectedSubclassIdx] : null;
+
+  const statsHTML = Object.entries(c.statsNew).map(([k,v]) => `
+    <div class="stat-box">
+      <div class="stat-name">${k}</div>
+      <div class="stat-score">${v}</div>
+      <div class="stat-mod">${mod(v)}</div>
+    </div>`).join('');
+
+  document.getElementById('summaryPanel').innerHTML = `
+    <div class="summary-highlight">
+      <div class="summary-name">${c.name}</div>
+      <div class="summary-class">${c.race} ${c.class} · Level 3</div>
+      ${sub ? `<div class="summary-subclass">✦ ${sub.name}</div>` : ''}
+    </div>
+
+    <div class="section">
+      <div class="section-header"><span class="section-icon">⚔</span><span class="section-title">Final Stats</span></div>
+      <div class="section-body">
+        <div class="stats-grid">${statsHTML}</div>
+        <div class="divider"><span>Hit Points</span></div>
+        <div style="text-align:center;font-family:'Cinzel',serif;font-size:2rem;color:var(--null);font-weight:700;">${c.hpNew}</div>
+        <div style="text-align:center;font-size:0.8rem;color:var(--text-dim);font-style:italic;margin-top:0.2rem;">Max HP at Level 3 (estimated)</div>
+      </div>
+    </div>
+
+    ${sub ? `
+    <div class="section">
+      <div class="section-header"><span class="section-icon">✦</span><span class="section-title">Your Subclass</span></div>
+      <div class="section-body">
+        <div class="feature-item new-feature">
+          <div class="feature-name">${sub.name}</div>
+          <div class="feature-desc">${sub.desc}</div>
+        </div>
+        ${sub.features.map(f => `
+          <div class="feature-item new-feature" style="margin-top:0.6rem;">
+            <div class="feature-name">${f.name}</div>
+            <div class="feature-desc">${f.desc}</div>
+          </div>`).join('')}
+      </div>
+    </div>` : ''}
+
+    <div class="section">
+      <div class="section-header"><span class="section-icon">◈</span><span class="section-title">Ready for Act II</span></div>
+      <div class="section-body">
+        <p style="font-style:italic;color:var(--text-dim);line-height:1.7;font-size:0.95rem;">
+          The camp is quiet. The moon is full. Somewhere ahead, Sanctus glows through the trees — the last city, the safe place, the lie you haven't been told yet.<br><br>
+          You are level 3. You have a name, a subclass, and a reason to keep going.<br><br>
+          <em>That's enough. For now.</em>
+        </p>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════
+function showStep(step) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`step-${step}`).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  buildStepIndicator();
+}
+
+function nextStep() {
+  if (currentStep === 0 && !selectedCharId) {
+    alert('Please select your character first.');
+    return;
+  }
+
+  currentStep++;
+
+  // Build the panel we're navigating TO
+  if (currentStep === 1) buildSubclassPanel();
+  if (currentStep === 2) buildStatsPanel();
+  if (currentStep === 3) buildFeaturesPanel();
+  if (currentStep === 4) buildSpellsPanel();
+  if (currentStep === 5) buildSummaryPanel();
+
+  showStep(currentStep);
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    // Rebuild the panel we're going back to
+    if (currentStep === 1) buildSubclassPanel();
+    if (currentStep === 2) buildStatsPanel();
+    if (currentStep === 3) buildFeaturesPanel();
+    if (currentStep === 4) buildSpellsPanel();
+    showStep(currentStep);
+  }
+}
+
+// Init
+buildStepIndicator();
 </script>
+
 </body>
 </html>
