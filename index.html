@@ -17,14 +17,14 @@
   --kairon:#8ab4a8;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
+html{}
 body{background:var(--fog);color:var(--text);font-family:'Crimson Pro',Georgia,serif;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+body::before{content:'';position:fixed;top:0;right:0;bottom:0;left:0;pointer-events:none;z-index:0;
   background:radial-gradient(ellipse 60% 50% at 10% 5%,rgba(126,200,227,.04) 0%,transparent 60%),
              radial-gradient(ellipse 50% 60% at 90% 95%,rgba(155,127,244,.04) 0%,transparent 60%);}
 
 /* ── NAV ── */
-.topnav{position:sticky;top:0;z-index:100;background:rgba(8,11,16,.96);border-bottom:1px solid var(–border);display:flex;align-items:center;backdrop-filter:blur(8px);}
+.topnav{position:sticky;top:0;z-index:100;background:rgba(8,11,16,.96);border-bottom:1px solid var(–border);display:flex;align-items:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
 .topnav-brand{font-family:‘Cinzel Decorative’,serif;font-size:.72rem;color:var(–crystal);padding:.65rem 1rem;border-right:1px solid var(–border);white-space:nowrap;flex-shrink:0;text-shadow:0 0 16px rgba(126,200,227,.4);}
 .nav-tabs{display:flex;flex:1;overflow-x:auto;}
 .nav-tab{padding:.65rem .85rem;font-family:‘Cinzel’,serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(–text-dim);background:none;border:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;flex-shrink:0;border-right:1px solid var(–border);}
@@ -673,21 +673,21 @@ CONDITIONS PAGE
       <div class="res-block">
         <div class="res-lbl">Second Wind — 2 uses (Short Rest)</div>
         <div class="pip-row">
-          <div class="pip g" id="sw0-seris" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip g" id="sw1-seris" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip g" id="sw0-seris">✦</div>
+          <div class="pip g" id="sw1-seris">✦</div>
         </div>
         <div class="res-note">Bonus Action: heal 1d10+3. Regain 1 use per Short Rest, both on Long Rest.</div>
       </div>
       <div class="res-block">
         <div class="res-lbl">Action Surge — 1 use (Short Rest)</div>
-        <div class="pip-row"><div class="pip" id="as0-seris" onclick="this.classList.toggle('spent')">✦</div></div>
+        <div class="pip-row"><div class="pip" id="as0-seris">✦</div></div>
         <div class="res-note">Take an extra Action. <strong>Cannot be a Magic action</strong> (no spellcasting).</div>
       </div>
     </div>
     <div class="death-row">
-      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div>
-      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div>
-      <button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button>
+      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div>
+      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div>
+      <button class="insp">☆ Inspiration</button>
     </div>
   </div></div>
 
@@ -805,8 +805,8 @@ CONDITIONS PAGE
       <div class="res-block">
         <div class="res-lbl">Channel Divinity — 2 uses (Short Rest)</div>
         <div class="pip-row">
-          <div class="pip g" id="cd0-edrin" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip g" id="cd1-edrin" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip g" id="cd0-edrin">✦</div>
+          <div class="pip g" id="cd1-edrin">✦</div>
         </div>
         <div class="res-note">Options: Sacred Weapon (when you Attack), Divine Sense (BA), Abjure Foes (Action). Regain 1 per Short Rest.</div>
       </div>
@@ -824,18 +824,18 @@ CONDITIONS PAGE
       <div class="res-block">
         <div class="res-lbl">Spell Slots — 1st Level (Long Rest)</div>
         <div class="pip-row" id="edrin-s1">
-          <div class="pip" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip">✦</div>
+          <div class="pip">✦</div>
+          <div class="pip">✦</div>
           <div class="pip rb" onclick="resetPips('edrin-s1')">↺</div>
         </div>
         <div class="res-note">Spell DC 13 · Spell attack +5 · CHA-based. Prepare 4 spells + oath spells free.</div>
       </div>
     </div>
     <div class="death-row">
-      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div>
-      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div>
-      <button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button>
+      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div>
+      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div>
+      <button class="insp">☆ Inspiration</button>
     </div>
   </div></div>
 
@@ -914,11 +914,11 @@ CONDITIONS PAGE
     <div class="div"></div>
     <div class="res-row">
       <div class="res-block"><div class="res-lbl">Spell Slots — 1st Level (Long Rest)</div>
-        <div class="pip-row" id="liora-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('liora-s1')">↺</div></div>
+        <div class="pip-row" id="liora-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('liora-s1')">↺</div></div>
         <div class="res-note">Spell DC 12 · Spell attack +4 · WIS-based</div>
       </div>
     </div>
-    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div><button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button></div>
+    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div><button class="insp">☆ Inspiration</button></div>
   </div></div>
   <div class="sec open"><div class="sec-head" onclick="togSec(this)"><div class="sec-title">◈ Stats</div><div class="sec-arrow">▶</div></div><div class="sec-body">
     <div class="ab-grid"><div class="ab-box"><div class="ab-name">STR</div><div class="ab-score">11</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">DEX</div><div class="ab-score">17</div><div class="ab-mod">+3</div></div><div class="ab-box"><div class="ab-name">CON</div><div class="ab-score">13</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">INT</div><div class="ab-score">12</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">WIS</div><div class="ab-score">14</div><div class="ab-mod">+2</div></div><div class="ab-box"><div class="ab-name">CHA</div><div class="ab-score">10</div><div class="ab-mod">+0</div></div></div>
@@ -957,21 +957,21 @@ CONDITIONS PAGE
     <div class="res-row">
       <div class="res-block"><div class="res-lbl">Bardic Inspiration d6 — 3 uses (Long Rest)</div>
         <div class="pip-row" id="rurik-bi">
-          <div class="pip g" onclick="this.classList.toggle('spent')">d6</div>
-          <div class="pip g" onclick="this.classList.toggle('spent')">d6</div>
-          <div class="pip g" onclick="this.classList.toggle('spent')">d6</div>
+          <div class="pip g">d6</div>
+          <div class="pip g">d6</div>
+          <div class="pip g">d6</div>
         </div>
         <div class="res-note">BA: give an ally a d6 to add to any roll (after rolling, before outcome). Lore: use as <strong>Cutting Words</strong> reaction to subtract from an enemy's roll instead.</div>
       </div>
       <div class="res-block"><div class="res-lbl">Spell Slots</div>
         <div class="res-lbl" style="margin-top:.25rem;color:var(--crystal)">1st (×4)</div>
-        <div class="pip-row" id="rurik-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('rurik-s1')">↺</div></div>
+        <div class="pip-row" id="rurik-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('rurik-s1')">↺</div></div>
         <div class="res-lbl" style="margin-top:.3rem;color:var(--gold)">2nd (×2)</div>
-        <div class="pip-row" id="rurik-s2"><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('rurik-s2')">↺</div></div>
+        <div class="pip-row" id="rurik-s2"><div class="pip g">✦</div><div class="pip g">✦</div><div class="pip rb" onclick="resetPips('rurik-s2')">↺</div></div>
         <div class="res-note">Spell DC 13 · Spell attack +5 · CHA-based</div>
       </div>
     </div>
-    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div><button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button></div>
+    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div><button class="insp">☆ Inspiration</button></div>
   </div></div>
   <div class="sec open"><div class="sec-head" onclick="togSec(this)"><div class="sec-title">◈ Stats</div><div class="sec-arrow">▶</div></div><div class="sec-body">
     <div class="ab-grid"><div class="ab-box"><div class="ab-name">STR</div><div class="ab-score">10</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">DEX</div><div class="ab-score">13</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">CON</div><div class="ab-score">14</div><div class="ab-mod">+2</div></div><div class="ab-box"><div class="ab-name">INT</div><div class="ab-score">12</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">WIS</div><div class="ab-score">10</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">CHA</div><div class="ab-score">17</div><div class="ab-mod">+3</div></div></div>
@@ -1012,18 +1012,18 @@ CONDITIONS PAGE
     <div class="div"></div>
     <div class="res-row">
       <div class="res-block"><div class="res-lbl">Channel Divinity — 2 uses (Short Rest)</div>
-        <div class="pip-row"><div class="pip g" id="cd0-ashara" onclick="this.classList.toggle('spent')">✦</div><div class="pip g" id="cd1-ashara" onclick="this.classList.toggle('spent')">✦</div></div>
+        <div class="pip-row"><div class="pip g" id="cd0-ashara">✦</div><div class="pip g" id="cd1-ashara">✦</div></div>
         <div class="res-note">Turn Undead · Preserve Life (heal 15 HP among nearby allies) · Harness Divine Power (regain a slot)</div>
       </div>
       <div class="res-block"><div class="res-lbl">Spell Slots</div>
         <div class="res-lbl" style="margin-top:.25rem;color:var(--crystal)">1st (×4)</div>
-        <div class="pip-row" id="ashara-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('ashara-s1')">↺</div></div>
+        <div class="pip-row" id="ashara-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('ashara-s1')">↺</div></div>
         <div class="res-lbl" style="margin-top:.3rem;color:var(--gold)">2nd (×2)</div>
-        <div class="pip-row" id="ashara-s2"><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('ashara-s2')">↺</div></div>
+        <div class="pip-row" id="ashara-s2"><div class="pip g">✦</div><div class="pip g">✦</div><div class="pip rb" onclick="resetPips('ashara-s2')">↺</div></div>
         <div class="res-note">Spell DC 13 · WIS-based · Prepare 6 spells + domain free</div>
       </div>
     </div>
-    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div><button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button></div>
+    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div><button class="insp">☆ Inspiration</button></div>
   </div></div>
   <div class="sec open"><div class="sec-head" onclick="togSec(this)"><div class="sec-title">◈ Stats</div><div class="sec-arrow">▶</div></div><div class="sec-body">
     <div class="ab-grid"><div class="ab-box"><div class="ab-name">STR</div><div class="ab-score">10</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">DEX</div><div class="ab-score">12</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">CON</div><div class="ab-score">14</div><div class="ab-mod">+2</div></div><div class="ab-box"><div class="ab-name">INT</div><div class="ab-score">11</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">WIS</div><div class="ab-score">17</div><div class="ab-mod">+3</div></div><div class="ab-box"><div class="ab-name">CHA</div><div class="ab-score">13</div><div class="ab-mod">+1</div></div></div>
@@ -1068,21 +1068,21 @@ CONDITIONS PAGE
     <div class="res-row">
       <div class="res-block"><div class="res-lbl">Bardic Inspiration d6 — 3 uses (Long Rest)</div>
         <div class="pip-row" id="lark-bi">
-          <div class="pip v" onclick="this.classList.toggle('spent')">d6</div>
-          <div class="pip v" onclick="this.classList.toggle('spent')">d6</div>
-          <div class="pip v" onclick="this.classList.toggle('spent')">d6</div>
+          <div class="pip v">d6</div>
+          <div class="pip v">d6</div>
+          <div class="pip v">d6</div>
         </div>
         <div class="res-note">BA: give ally a d6. Glamour: spend a die as BA for <strong>Mantle of Inspiration</strong> — up to 5 allies each get temp HP + a free move.</div>
       </div>
       <div class="res-block"><div class="res-lbl">Spell Slots</div>
         <div class="res-lbl" style="margin-top:.25rem;color:var(--crystal)">1st (×4)</div>
-        <div class="pip-row" id="lark-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('lark-s1')">↺</div></div>
+        <div class="pip-row" id="lark-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('lark-s1')">↺</div></div>
         <div class="res-lbl" style="margin-top:.3rem;color:var(--lark)">2nd (×2)</div>
-        <div class="pip-row" id="lark-s2"><div class="pip v" onclick="this.classList.toggle('spent')">✦</div><div class="pip v" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('lark-s2')">↺</div></div>
+        <div class="pip-row" id="lark-s2"><div class="pip v">✦</div><div class="pip v">✦</div><div class="pip rb" onclick="resetPips('lark-s2')">↺</div></div>
         <div class="res-note">Spell DC 13 · Spell attack +5 · CHA-based</div>
       </div>
     </div>
-    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div><button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button></div>
+    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div><button class="insp">☆ Inspiration</button></div>
   </div></div>
   <div class="sec open"><div class="sec-head" onclick="togSec(this)"><div class="sec-title">◈ Stats</div><div class="sec-arrow">▶</div></div><div class="sec-body">
     <div class="ab-grid"><div class="ab-box"><div class="ab-name">STR</div><div class="ab-score">8</div><div class="ab-mod">−1</div></div><div class="ab-box"><div class="ab-name">DEX</div><div class="ab-score">17</div><div class="ab-mod">+3</div></div><div class="ab-box"><div class="ab-name">CON</div><div class="ab-score">12</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">INT</div><div class="ab-score">13</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">WIS</div><div class="ab-score">11</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">CHA</div><div class="ab-score">16</div><div class="ab-mod">+3</div></div></div>
@@ -1144,33 +1144,33 @@ CONDITIONS PAGE
       <div class="res-block">
         <div class="res-lbl">Wild Shape — 2 uses (Short Rest)</div>
         <div class="pip-row" id="kairon-ws">
-          <div class="pip" style="border-color:rgba(138,180,168,.4);color:var(--kairon)" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip" style="border-color:rgba(138,180,168,.4);color:var(--kairon)" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip" style="border-color:rgba(138,180,168,.4);color:var(--kairon)">✦</div>
+          <div class="pip" style="border-color:rgba(138,180,168,.4);color:var(--kairon)">✦</div>
         </div>
         <div class="res-note">Use an Action to activate <strong>Symbiotic Entity</strong> (zombie shift) — costs 1 use. Or transform into a beast (CR ½ or lower, no fly/swim speed). Both regain on Short or Long Rest.</div>
       </div>
       <div class="res-block">
         <div class="res-lbl">Breath Weapon — 3 uses (Long Rest)</div>
         <div class="pip-row" id="kairon-bw">
-          <div class="pip g" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip g" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip g" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip g">✦</div>
+          <div class="pip g">✦</div>
+          <div class="pip g">✦</div>
         </div>
         <div class="res-note">Action: 30ft line. <strong>2d10 necrotic</strong>. CON save DC 12 — half on success. Regains on Long Rest. Uses = Proficiency Bonus (currently 3).</div>
       </div>
       <div class="res-block">
         <div class="res-lbl">Spell Slots</div>
         <div class="res-lbl" style="margin-top:.25rem;color:var(--crystal)">1st (×4)</div>
-        <div class="pip-row" id="kairon-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('kairon-s1')">↺</div></div>
+        <div class="pip-row" id="kairon-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('kairon-s1')">↺</div></div>
         <div class="res-lbl" style="margin-top:.3rem;color:var(--gold)">2nd (×2)</div>
-        <div class="pip-row" id="kairon-s2"><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('kairon-s2')">↺</div></div>
+        <div class="pip-row" id="kairon-s2"><div class="pip g">✦</div><div class="pip g">✦</div><div class="pip rb" onclick="resetPips('kairon-s2')">↺</div></div>
         <div class="res-note">Spell DC 13 · Spell attack +5 · WIS-based · Prepare 6 spells + subclass spells free</div>
       </div>
     </div>
     <div class="death-row">
-      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div>
-      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div>
-      <button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button>
+      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div>
+      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div>
+      <button class="insp">☆ Inspiration</button>
     </div>
   </div></div>
 
@@ -1321,125 +1321,13 @@ CONDITIONS PAGE
 </div>
 </div>
 
-<!-- Firebase SDK -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-
 <script>
-// ═══ FIREBASE INIT ═══
-const firebaseConfig = {
-  apiKey: "AIzaSyCr7VndAE_yHmoxXWDQ5LOWCDfH1F3k99k",
-  authDomain: "dungeonsanddaddies-d152f.firebaseapp.com",
-  databaseURL: "https://dungeonsanddaddies-d152f-default-rtdb.firebaseio.com",
-  projectId: "dungeonsanddaddies-d152f",
-  storageBucket: "dungeonsanddaddies-d152f.firebasestorage.app",
-  messagingSenderId: "406069529434",
-  appId: "1:406069529434:web:6afa3a1801bb492ea60163"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
 // ═══ DATA ═══
 const CHARS = ['seris','edrin','liora','rurik','ashara','lark','kairon'];
 const MAX_HP = {seris:28,edrin:31,liora:25,rurik:25,ashara:25,lark:23,kairon:24};
 const conditions = {seris:[],edrin:[],liora:[],rurik:[],ashara:[],lark:[],kairon:[]};
 let lohPool = 15;
-let _suppressSync = 0; // counter not boolean — safe for overlapping async callbacks
 
-function _suppress(fn){ _suppressSync++; fn(); _suppressSync--; }
-
-// ═══ SYNC HELPERS ═══
-function fbSet(path, val){ db.ref(path).set(val); }
-function fbGet(path, cb){ db.ref(path).on('value', snap => cb(snap.val())); }
-
-// Write HP & tmp for a char
-function syncWriteHP(c, hp, tmp){
-  if(_suppressSync) return;
-  fbSet('party/'+c+'/hp', hp);
-  fbSet('party/'+c+'/tmp', tmp);
-}
-function syncWritePip(pipId, spent){
-  if(_suppressSync) return;
-  fbSet('pips/'+pipId, spent);
-}
-function syncWriteConds(c){
-  if(_suppressSync) return;
-  fbSet('conditions/'+c, conditions[c].length ? conditions[c] : null);
-}
-function syncWriteLOH(val){
-  if(_suppressSync) return;
-  fbSet('loh', val);
-}
-function syncWriteDot(id, on){
-  if(_suppressSync) return;
-  fbSet('dots/'+id, on);
-}
-
-// ═══ FIREBASE LISTENERS ═══
-function initFirebaseListeners(){
-  CHARS.forEach(c => {
-    db.ref('party/'+c+'/hp').on('value', snap => {
-      const val = snap.val();
-      if(val === null) return;
-      _suppress(() => setHP(c, val));
-    });
-    db.ref('party/'+c+'/tmp').on('value', snap => {
-      const val = snap.val();
-      if(val === null) return;
-      _suppress(() => setTmp(c, val ?? 0));
-    });
-  });
-
-  db.ref('pips').on('value', snap => {
-    const data = snap.val() || {};
-    _suppress(() => {
-      Object.entries(data).forEach(([id, spent]) => {
-        const el = document.getElementById(id);
-        if(el){ spent ? el.classList.add('spent') : el.classList.remove('spent'); }
-      });
-    });
-  });
-
-  db.ref('conditions').on('value', snap => {
-    const data = snap.val() || {};
-    _suppress(() => {
-      CHARS.forEach(c => {
-        conditions[c] = data[c] || [];
-        buildCondChips(c);
-      });
-    });
-  });
-
-  db.ref('loh').on('value', snap => {
-    const val = snap.val();
-    if(val === null) return;
-    _suppress(() => {
-      lohPool = val;
-      const lv = document.getElementById('loh-val');
-      const lf = document.getElementById('loh-fill');
-      if(lv) lv.textContent = lohPool;
-      if(lf) lf.style.width = Math.round(lohPool/15*100)+'%';
-    });
-  });
-
-  db.ref('dots').on('value', snap => {
-    const data = snap.val() || {};
-    _suppress(() => {
-      Object.entries(data).forEach(([id, on]) => {
-        const el = document.getElementById(id);
-        if(!el) return;
-        if(el.classList.contains('insp')){
-          on ? el.classList.add('on') : el.classList.remove('on');
-          el.textContent = on ? '★ Inspired' : '☆ Inspiration';
-        } else {
-          on ? el.classList.add('on') : el.classList.remove('on');
-        }
-      });
-    });
-  });
-}
 
 const CONDS = [
   {name:'Blinded', color:'var(--null)',
@@ -1529,25 +1417,23 @@ function showPage(id, btn) {
     const t = document.querySelector(`.nav-tab[onclick*="'${id}'"]`);
     if (t) t.classList.add('active');
   }
-  window.scrollTo({top:0,behavior:'smooth'});
+  try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
 }
 
 // ═══ HP — TEMP FIRST ═══
-function getHP(c){ return parseInt(document.getElementById('ob-'+c+'-hp')?.value) || 0; }
-function getTmp(c){ return parseInt(document.getElementById('ob-'+c+'-tmp')?.value) || 0; }
-function getAmt(pfx,c){ return Math.abs(parseInt(document.getElementById(pfx+c+'-amt')?.value) || 1); }
+function getHP(c){ return parseInt((document.getElementById('ob-'+c+'-hp')||{}).value) || 0; }
+function getTmp(c){ return parseInt((document.getElementById('ob-'+c+'-tmp')||{}).value) || 0; }
+function getAmt(pfx,c){ return Math.abs(parseInt((document.getElementById(pfx+c+'-amt')||{}).value) || 1); }
 
 function setHP(c, val){
   val = Math.max(0, Math.min(MAX_HP[c], val));
   ['ob-','det-'].forEach(p => { const el = document.getElementById(p+c+'-hp'); if(el) el.value = val; });
   const bar = document.getElementById('ob-'+c+'-bar');
   if(bar) bar.style.width = Math.round(val / MAX_HP[c] * 100) + '%';
-  syncWriteHP(c, val, getTmp(c));
 }
 function setTmp(c, val){
   val = Math.max(0, val);
   ['ob-','det-'].forEach(p => { const el = document.getElementById(p+c+'-tmp'); if(el) el.value = val; });
-  syncWriteHP(c, getHP(c), val);
 }
 
 function applyDmg(c, dmg) {
@@ -1579,23 +1465,19 @@ function ovSyncHP(c){
   const v = parseInt(document.getElementById('ob-'+c+'-hp').value)||0;
   const el=document.getElementById('det-'+c+'-hp'); if(el) el.value=v;
   const bar=document.getElementById('ob-'+c+'-bar'); if(bar) bar.style.width=Math.round(v/MAX_HP[c]*100)+'%';
-  syncWriteHP(c, v, getTmp(c));
 }
 function detSyncHP(c){
   const v = parseInt(document.getElementById('det-'+c+'-hp').value)||0;
   const el=document.getElementById('ob-'+c+'-hp'); if(el) el.value=v;
   const bar=document.getElementById('ob-'+c+'-bar'); if(bar) bar.style.width=Math.round(v/MAX_HP[c]*100)+'%';
-  syncWriteHP(c, v, getTmp(c));
 }
 function ovSyncTmp(c){
   const v = parseInt(document.getElementById('ob-'+c+'-tmp').value)||0;
   const el=document.getElementById('det-'+c+'-tmp'); if(el) el.value=v;
-  syncWriteHP(c, getHP(c), v);
 }
 function detSyncTmp(c){
   const v = parseInt(document.getElementById('det-'+c+'-tmp').value)||0;
   const el=document.getElementById('ob-'+c+'-tmp'); if(el) el.value=v;
-  syncWriteHP(c, getHP(c), v);
 }
 
 function fullHP(c, max){ setHP(c, max); }
@@ -1606,14 +1488,12 @@ function adjLOH(dir){
   else { const amt = Math.abs(parseInt(document.getElementById('loh-amt').value)||5); lohPool = Math.max(0, Math.min(15, lohPool + dir * amt)); document.getElementById('loh-amt').value = ''; }
   document.getElementById('loh-val').textContent = lohPool;
   document.getElementById('loh-fill').style.width = Math.round(lohPool/15*100)+'%';
-  syncWriteLOH(lohPool);
 }
 
 // ═══ PIPS ═══
 function resetPips(id){
   document.getElementById(id).querySelectorAll('.pip:not(.rb)').forEach(p => {
     p.classList.remove('spent');
-    syncWritePip(p.id, false);
   });
 }
 
@@ -1646,7 +1526,6 @@ function toggleCond(char, name){
   const i = arr.indexOf(name);
   if (i === -1) arr.push(name); else arr.splice(i,1);
   buildCondChips(char);
-  syncWriteConds(char);
 }
 
 function updateOvConds(char){
@@ -1693,18 +1572,15 @@ function doLongRest(char, max){
   setHP(char, max); setTmp(char, 0);
   document.querySelectorAll('#page-'+char+' .pip:not(.rb)').forEach(p => {
     p.classList.remove('spent');
-    if(p.id) syncWritePip(p.id, false);
   });
   document.querySelectorAll('#page-'+char+' .ds-dot').forEach(d => {
     d.classList.remove('on');
-    if(d.id) syncWriteDot(d.id, false);
   });
   document.querySelectorAll('#page-'+char+' .insp').forEach(b => {
     b.classList.remove('on'); b.textContent='☆ Inspiration';
-    if(b.id) syncWriteDot(b.id, false);
   });
-  if(char==='edrin'){ lohPool=15; syncWriteLOH(15); document.getElementById('loh-val').textContent=15; document.getElementById('loh-fill').style.width='100%'; }
-  conditions[char] = []; buildCondChips(char); syncWriteConds(char);
+  if(char==='edrin'){ lohPool=15; document.getElementById('loh-val').textContent=15; document.getElementById('loh-fill').style.width='100%'; }
+  conditions[char] = []; buildCondChips(char);
   alert(`✦ Long Rest! ${char.charAt(0).toUpperCase()+char.slice(1)} is fully restored — HP, spell slots, all resources, conditions cleared.`);
 }
 
@@ -1736,41 +1612,36 @@ function buildConditions(){
 buildConditions();
 CHARS.forEach(c => { buildCondChips(c); });
 
-// Give all pips stable IDs so Firebase can track them
-document.querySelectorAll('.pip:not(.rb)').forEach((p, i) => {
-  if(!p.id) p.id = 'pip_' + i;
-  const orig = p.onclick;
-  p.onclick = function(){
-    orig && orig.call(this);
-    if(!_suppressSync) syncWritePip(this.id, this.classList.contains('spent'));
-  };
+// Assign stable IDs to every pip and dot so Firebase can track them by ID
+document.querySelectorAll('.pip:not(.rb)').forEach((p, i) => { if(!p.id) p.id = 'pip_' + i; });
+document.querySelectorAll('.ds-dot').forEach((d, i) => { if(!d.id) d.id = 'dot_' + i; });
+document.querySelectorAll('.insp').forEach((b, i) => { if(!b.id) b.id = 'insp_' + i; });
+
+// ── Single event delegation listener — catches ALL pip/dot/insp clicks ──
+document.addEventListener('click', function(e) {
+  const t = e.target;
+
+  // Pip clicked (spell slot, Wild Shape, Bardic die, etc.) — not reset buttons
+  if(t.classList.contains('pip') && !t.classList.contains('rb')){
+    t.classList.toggle('spent');
+    return;
+  }
+
+  // Death save dot clicked
+  if(t.classList.contains('ds-dot')){
+    t.classList.toggle('on');
+    return;
+  }
+
+  // Inspiration button clicked
+  if(t.classList.contains('insp')){
+    t.classList.toggle('on');
+    t.textContent = t.classList.contains('on') ? '★ Inspired' : '☆ Inspiration';
+    return;
+  }
 });
 
-// Give all death save dots and inspiration buttons stable IDs
-document.querySelectorAll('.ds-dot, .insp').forEach((el, i) => {
-  if(!el.id) el.id = 'dot_' + i;
-  const orig = el.onclick;
-  el.onclick = function(){
-    orig && orig.call(this);
-    if(!_suppressSync){
-      const on = this.classList.contains('on');
-      syncWriteDot(this.id, on);
-    }
-  };
-});
 
-// Start listening to Firebase
-initFirebaseListeners();
-
-// Sync status indicator
-const statusDot = document.createElement('div');
-statusDot.style.cssText = 'position:fixed;bottom:12px;right:12px;width:8px;height:8px;border-radius:50%;background:#e05555;z-index:999;transition:background .3s;';
-statusDot.title = 'Firebase sync status';
-document.body.appendChild(statusDot);
-db.ref('.info/connected').on('value', snap => {
-  statusDot.style.background = snap.val() ? '#4ade80' : '#e05555';
-  statusDot.title = snap.val() ? 'Synced — all players connected' : 'Offline — changes will sync when reconnected';
-});
 </script>
 
 </body>
