@@ -1304,7 +1304,9 @@ const CHARS = ['seris','edrin','liora','rurik','ashara','lark','kairon'];
 const MAX_HP = {seris:28,edrin:31,liora:25,rurik:25,ashara:25,lark:23,kairon:24};
 const conditions = {seris:[],edrin:[],liora:[],rurik:[],ashara:[],lark:[],kairon:[]};
 let lohPool = 15;
-let _suppressSync = false; // prevent echo loops when we apply incoming data
+let _suppressSync = 0; // counter not boolean — safe for overlapping async callbacks
+
+function _suppress(fn){ _suppressSync++; fn(); _suppressSync--; }
 
 // ═══ SYNC HELPERS ═══
 function fbSet(path, val){ db.ref(path).set(val); }
@@ -1316,22 +1318,18 @@ function syncWriteHP(c, hp, tmp){
   fbSet('party/'+c+'/hp', hp);
   fbSet('party/'+c+'/tmp', tmp);
 }
-// Write a single pip state (spent true/false)
 function syncWritePip(pipId, spent){
   if(_suppressSync) return;
   fbSet('pips/'+pipId, spent);
 }
-// Write conditions array
 function syncWriteConds(c){
   if(_suppressSync) return;
   fbSet('conditions/'+c, conditions[c].length ? conditions[c] : null);
 }
-// Write LOH pool
 function syncWriteLOH(val){
   if(_suppressSync) return;
   fbSet('loh', val);
 }
-// Write death save / inspiration dots
 function syncWriteDot(id, on){
   if(_suppressSync) return;
   fbSet('dots/'+id, on);
@@ -1339,74 +1337,65 @@ function syncWriteDot(id, on){
 
 // ═══ FIREBASE LISTENERS ═══
 function initFirebaseListeners(){
-  // HP & Temp HP per character
   CHARS.forEach(c => {
     db.ref('party/'+c+'/hp').on('value', snap => {
       const val = snap.val();
       if(val === null) return;
-      _suppressSync = true;
-      setHP(c, val);
-      _suppressSync = false;
+      _suppress(() => setHP(c, val));
     });
     db.ref('party/'+c+'/tmp').on('value', snap => {
       const val = snap.val();
       if(val === null) return;
-      _suppressSync = true;
-      setTmp(c, val ?? 0);
-      _suppressSync = false;
+      _suppress(() => setTmp(c, val ?? 0));
     });
   });
 
-  // All pips
   db.ref('pips').on('value', snap => {
     const data = snap.val() || {};
-    _suppressSync = true;
-    Object.entries(data).forEach(([id, spent]) => {
-      const el = document.getElementById(id);
-      if(el){ spent ? el.classList.add('spent') : el.classList.remove('spent'); }
+    _suppress(() => {
+      Object.entries(data).forEach(([id, spent]) => {
+        const el = document.getElementById(id);
+        if(el){ spent ? el.classList.add('spent') : el.classList.remove('spent'); }
+      });
     });
-    _suppressSync = false;
   });
 
-  // Conditions
   db.ref('conditions').on('value', snap => {
     const data = snap.val() || {};
-    _suppressSync = true;
-    CHARS.forEach(c => {
-      conditions[c] = data[c] || [];
-      buildCondChips(c);
+    _suppress(() => {
+      CHARS.forEach(c => {
+        conditions[c] = data[c] || [];
+        buildCondChips(c);
+      });
     });
-    _suppressSync = false;
   });
 
-  // LOH pool
   db.ref('loh').on('value', snap => {
     const val = snap.val();
     if(val === null) return;
-    _suppressSync = true;
-    lohPool = val;
-    const lv = document.getElementById('loh-val');
-    const lf = document.getElementById('loh-fill');
-    if(lv) lv.textContent = lohPool;
-    if(lf) lf.style.width = Math.round(lohPool/15*100)+'%';
-    _suppressSync = false;
+    _suppress(() => {
+      lohPool = val;
+      const lv = document.getElementById('loh-val');
+      const lf = document.getElementById('loh-fill');
+      if(lv) lv.textContent = lohPool;
+      if(lf) lf.style.width = Math.round(lohPool/15*100)+'%';
+    });
   });
 
-  // Death saves & inspiration dots
   db.ref('dots').on('value', snap => {
     const data = snap.val() || {};
-    _suppressSync = true;
-    Object.entries(data).forEach(([id, on]) => {
-      const el = document.getElementById(id);
-      if(!el) return;
-      if(el.classList.contains('insp')){
-        on ? el.classList.add('on') : el.classList.remove('on');
-        el.textContent = on ? '★ Inspired' : '☆ Inspiration';
-      } else {
-        on ? el.classList.add('on') : el.classList.remove('on');
-      }
+    _suppress(() => {
+      Object.entries(data).forEach(([id, on]) => {
+        const el = document.getElementById(id);
+        if(!el) return;
+        if(el.classList.contains('insp')){
+          on ? el.classList.add('on') : el.classList.remove('on');
+          el.textContent = on ? '★ Inspired' : '☆ Inspiration';
+        } else {
+          on ? el.classList.add('on') : el.classList.remove('on');
+        }
+      });
     });
-    _suppressSync = false;
   });
 }
 
@@ -1544,10 +1533,28 @@ function detAdj(c, dir){
   document.getElementById('det-'+c+'-amt').value = '';
 }
 
-function ovSyncHP(c){ const v = parseInt(document.getElementById('ob-'+c+'-hp').value)||0; const el=document.getElementById('det-'+c+'-hp'); if(el) el.value=v; const bar=document.getElementById('ob-'+c+'-bar'); if(bar) bar.style.width=Math.round(v/MAX_HP[c]*100)+'%'; }
-function detSyncHP(c){ const v = parseInt(document.getElementById('det-'+c+'-hp').value)||0; const el=document.getElementById('ob-'+c+'-hp'); if(el) el.value=v; const bar=document.getElementById('ob-'+c+'-bar'); if(bar) bar.style.width=Math.round(v/MAX_HP[c]*100)+'%'; }
-function ovSyncTmp(c){ const v=document.getElementById('ob-'+c+'-tmp').value; const el=document.getElementById('det-'+c+'-tmp'); if(el) el.value=v; }
-function detSyncTmp(c){ const v=document.getElementById('det-'+c+'-tmp').value; const el=document.getElementById('ob-'+c+'-tmp'); if(el) el.value=v; }
+function ovSyncHP(c){
+  const v = parseInt(document.getElementById('ob-'+c+'-hp').value)||0;
+  const el=document.getElementById('det-'+c+'-hp'); if(el) el.value=v;
+  const bar=document.getElementById('ob-'+c+'-bar'); if(bar) bar.style.width=Math.round(v/MAX_HP[c]*100)+'%';
+  syncWriteHP(c, v, getTmp(c));
+}
+function detSyncHP(c){
+  const v = parseInt(document.getElementById('det-'+c+'-hp').value)||0;
+  const el=document.getElementById('ob-'+c+'-hp'); if(el) el.value=v;
+  const bar=document.getElementById('ob-'+c+'-bar'); if(bar) bar.style.width=Math.round(v/MAX_HP[c]*100)+'%';
+  syncWriteHP(c, v, getTmp(c));
+}
+function ovSyncTmp(c){
+  const v = parseInt(document.getElementById('ob-'+c+'-tmp').value)||0;
+  const el=document.getElementById('det-'+c+'-tmp'); if(el) el.value=v;
+  syncWriteHP(c, getHP(c), v);
+}
+function detSyncTmp(c){
+  const v = parseInt(document.getElementById('det-'+c+'-tmp').value)||0;
+  const el=document.getElementById('ob-'+c+'-tmp'); if(el) el.value=v;
+  syncWriteHP(c, getHP(c), v);
+}
 
 function fullHP(c, max){ setHP(c, max); }
 
