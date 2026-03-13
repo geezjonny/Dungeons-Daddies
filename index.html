@@ -660,21 +660,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="res-block">
         <div class="res-lbl">Second Wind — 2 uses (Short Rest)</div>
         <div class="pip-row">
-          <div class="pip g" id="sw0-seris" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip g" id="sw1-seris" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip g" id="sw0-seris">✦</div>
+          <div class="pip g" id="sw1-seris">✦</div>
         </div>
         <div class="res-note">Bonus Action: heal 1d10+3. Regain 1 use per Short Rest, both on Long Rest.</div>
       </div>
       <div class="res-block">
         <div class="res-lbl">Action Surge — 1 use (Short Rest)</div>
-        <div class="pip-row"><div class="pip" id="as0-seris" onclick="this.classList.toggle('spent')">✦</div></div>
+        <div class="pip-row"><div class="pip" id="as0-seris">✦</div></div>
         <div class="res-note">Take an extra Action. <strong>Cannot be a Magic action</strong> (no spellcasting).</div>
       </div>
     </div>
     <div class="death-row">
-      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div>
-      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div>
-      <button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button>
+      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div>
+      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div>
+      <button class="insp">☆ Inspiration</button>
     </div>
   </div></div>
 
@@ -785,8 +785,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="res-block">
         <div class="res-lbl">Channel Divinity — 2 uses (Short Rest)</div>
         <div class="pip-row">
-          <div class="pip g" id="cd0-edrin" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip g" id="cd1-edrin" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip g" id="cd0-edrin">✦</div>
+          <div class="pip g" id="cd1-edrin">✦</div>
         </div>
         <div class="res-note">Options: Sacred Weapon (when you Attack), Divine Sense (BA), Abjure Foes (Action). Regain 1 per Short Rest.</div>
       </div>
@@ -804,18 +804,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="res-block">
         <div class="res-lbl">Spell Slots — 1st Level (Long Rest)</div>
         <div class="pip-row" id="edrin-s1">
-          <div class="pip" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip">✦</div>
+          <div class="pip">✦</div>
+          <div class="pip">✦</div>
           <div class="pip rb" onclick="resetPips('edrin-s1')">↺</div>
         </div>
         <div class="res-note">Spell DC 13 · Spell attack +5 · CHA-based. Prepare 4 spells + oath spells free.</div>
       </div>
     </div>
     <div class="death-row">
-      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div>
-      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div>
-      <button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button>
+      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div>
+      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div>
+      <button class="insp">☆ Inspiration</button>
     </div>
   </div></div>
 
@@ -893,11 +893,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="div"></div>
     <div class="res-row">
       <div class="res-block"><div class="res-lbl">Spell Slots — 1st Level (Long Rest)</div>
-        <div class="pip-row" id="liora-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('liora-s1')">↺</div></div>
+        <div class="pip-row" id="liora-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('liora-s1')">↺</div></div>
         <div class="res-note">Spell DC 12 · Spell attack +4 · WIS-based</div>
       </div>
     </div>
-    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div><button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button></div>
+    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div><button class="insp">☆ Inspiration</button></div>
   </div></div>
   <div class="sec open"><div class="sec-head" onclick="togSec(this)"><div class="sec-title">◈ Stats</div><div class="sec-arrow">▶</div></div><div class="sec-body">
     <div class="ab-grid"><div class="ab-box"><div class="ab-name">STR</div><div class="ab-score">11</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">DEX</div><div class="ab-score">17</div><div class="ab-mod">+3</div></div><div class="ab-box"><div class="ab-name">CON</div><div class="ab-score">13</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">INT</div><div class="ab-score">12</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">WIS</div><div class="ab-score">14</div><div class="ab-mod">+2</div></div><div class="ab-box"><div class="ab-name">CHA</div><div class="ab-score">10</div><div class="ab-mod">+0</div></div></div>
@@ -935,21 +935,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="res-row">
       <div class="res-block"><div class="res-lbl">Bardic Inspiration d6 — 3 uses (Long Rest)</div>
         <div class="pip-row" id="rurik-bi">
-          <div class="pip g" onclick="this.classList.toggle('spent')">d6</div>
-          <div class="pip g" onclick="this.classList.toggle('spent')">d6</div>
-          <div class="pip g" onclick="this.classList.toggle('spent')">d6</div>
+          <div class="pip g">d6</div>
+          <div class="pip g">d6</div>
+          <div class="pip g">d6</div>
         </div>
         <div class="res-note">BA: give an ally a d6 to add to any roll (after rolling, before outcome). Lore: use as <strong>Cutting Words</strong> reaction to subtract from an enemy's roll instead.</div>
       </div>
       <div class="res-block"><div class="res-lbl">Spell Slots</div>
         <div class="res-lbl" style="margin-top:.25rem;color:var(--crystal)">1st (×4)</div>
-        <div class="pip-row" id="rurik-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('rurik-s1')">↺</div></div>
+        <div class="pip-row" id="rurik-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('rurik-s1')">↺</div></div>
         <div class="res-lbl" style="margin-top:.3rem;color:var(--gold)">2nd (×2)</div>
-        <div class="pip-row" id="rurik-s2"><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('rurik-s2')">↺</div></div>
+        <div class="pip-row" id="rurik-s2"><div class="pip g">✦</div><div class="pip g">✦</div><div class="pip rb" onclick="resetPips('rurik-s2')">↺</div></div>
         <div class="res-note">Spell DC 13 · Spell attack +5 · CHA-based</div>
       </div>
     </div>
-    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div><button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button></div>
+    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div><button class="insp">☆ Inspiration</button></div>
   </div></div>
   <div class="sec open"><div class="sec-head" onclick="togSec(this)"><div class="sec-title">◈ Stats</div><div class="sec-arrow">▶</div></div><div class="sec-body">
     <div class="ab-grid"><div class="ab-box"><div class="ab-name">STR</div><div class="ab-score">10</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">DEX</div><div class="ab-score">13</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">CON</div><div class="ab-score">14</div><div class="ab-mod">+2</div></div><div class="ab-box"><div class="ab-name">INT</div><div class="ab-score">12</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">WIS</div><div class="ab-score">10</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">CHA</div><div class="ab-score">17</div><div class="ab-mod">+3</div></div></div>
@@ -989,18 +989,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="div"></div>
     <div class="res-row">
       <div class="res-block"><div class="res-lbl">Channel Divinity — 2 uses (Short Rest)</div>
-        <div class="pip-row"><div class="pip g" id="cd0-ashara" onclick="this.classList.toggle('spent')">✦</div><div class="pip g" id="cd1-ashara" onclick="this.classList.toggle('spent')">✦</div></div>
+        <div class="pip-row"><div class="pip g" id="cd0-ashara">✦</div><div class="pip g" id="cd1-ashara">✦</div></div>
         <div class="res-note">Turn Undead · Preserve Life (heal 15 HP among nearby allies) · Harness Divine Power (regain a slot)</div>
       </div>
       <div class="res-block"><div class="res-lbl">Spell Slots</div>
         <div class="res-lbl" style="margin-top:.25rem;color:var(--crystal)">1st (×4)</div>
-        <div class="pip-row" id="ashara-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('ashara-s1')">↺</div></div>
+        <div class="pip-row" id="ashara-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('ashara-s1')">↺</div></div>
         <div class="res-lbl" style="margin-top:.3rem;color:var(--gold)">2nd (×2)</div>
-        <div class="pip-row" id="ashara-s2"><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('ashara-s2')">↺</div></div>
+        <div class="pip-row" id="ashara-s2"><div class="pip g">✦</div><div class="pip g">✦</div><div class="pip rb" onclick="resetPips('ashara-s2')">↺</div></div>
         <div class="res-note">Spell DC 13 · WIS-based · Prepare 6 spells + domain free</div>
       </div>
     </div>
-    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div><button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button></div>
+    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div><button class="insp">☆ Inspiration</button></div>
   </div></div>
   <div class="sec open"><div class="sec-head" onclick="togSec(this)"><div class="sec-title">◈ Stats</div><div class="sec-arrow">▶</div></div><div class="sec-body">
     <div class="ab-grid"><div class="ab-box"><div class="ab-name">STR</div><div class="ab-score">10</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">DEX</div><div class="ab-score">12</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">CON</div><div class="ab-score">14</div><div class="ab-mod">+2</div></div><div class="ab-box"><div class="ab-name">INT</div><div class="ab-score">11</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">WIS</div><div class="ab-score">17</div><div class="ab-mod">+3</div></div><div class="ab-box"><div class="ab-name">CHA</div><div class="ab-score">13</div><div class="ab-mod">+1</div></div></div>
@@ -1044,21 +1044,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="res-row">
       <div class="res-block"><div class="res-lbl">Bardic Inspiration d6 — 3 uses (Long Rest)</div>
         <div class="pip-row" id="lark-bi">
-          <div class="pip v" onclick="this.classList.toggle('spent')">d6</div>
-          <div class="pip v" onclick="this.classList.toggle('spent')">d6</div>
-          <div class="pip v" onclick="this.classList.toggle('spent')">d6</div>
+          <div class="pip v">d6</div>
+          <div class="pip v">d6</div>
+          <div class="pip v">d6</div>
         </div>
         <div class="res-note">BA: give ally a d6. Glamour: spend a die as BA for <strong>Mantle of Inspiration</strong> — up to 5 allies each get temp HP + a free move.</div>
       </div>
       <div class="res-block"><div class="res-lbl">Spell Slots</div>
         <div class="res-lbl" style="margin-top:.25rem;color:var(--crystal)">1st (×4)</div>
-        <div class="pip-row" id="lark-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('lark-s1')">↺</div></div>
+        <div class="pip-row" id="lark-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('lark-s1')">↺</div></div>
         <div class="res-lbl" style="margin-top:.3rem;color:var(--lark)">2nd (×2)</div>
-        <div class="pip-row" id="lark-s2"><div class="pip v" onclick="this.classList.toggle('spent')">✦</div><div class="pip v" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('lark-s2')">↺</div></div>
+        <div class="pip-row" id="lark-s2"><div class="pip v">✦</div><div class="pip v">✦</div><div class="pip rb" onclick="resetPips('lark-s2')">↺</div></div>
         <div class="res-note">Spell DC 13 · Spell attack +5 · CHA-based</div>
       </div>
     </div>
-    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div><button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button></div>
+    <div class="death-row"><div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div><div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div><button class="insp">☆ Inspiration</button></div>
   </div></div>
   <div class="sec open"><div class="sec-head" onclick="togSec(this)"><div class="sec-title">◈ Stats</div><div class="sec-arrow">▶</div></div><div class="sec-body">
     <div class="ab-grid"><div class="ab-box"><div class="ab-name">STR</div><div class="ab-score">8</div><div class="ab-mod">−1</div></div><div class="ab-box"><div class="ab-name">DEX</div><div class="ab-score">17</div><div class="ab-mod">+3</div></div><div class="ab-box"><div class="ab-name">CON</div><div class="ab-score">12</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">INT</div><div class="ab-score">13</div><div class="ab-mod">+1</div></div><div class="ab-box"><div class="ab-name">WIS</div><div class="ab-score">11</div><div class="ab-mod">+0</div></div><div class="ab-box"><div class="ab-name">CHA</div><div class="ab-score">16</div><div class="ab-mod">+3</div></div></div>
@@ -1118,33 +1118,33 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="res-block">
         <div class="res-lbl">Wild Shape — 2 uses (Short Rest)</div>
         <div class="pip-row" id="kairon-ws">
-          <div class="pip" style="border-color:rgba(138,180,168,.4);color:var(--kairon)" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip" style="border-color:rgba(138,180,168,.4);color:var(--kairon)" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip" style="border-color:rgba(138,180,168,.4);color:var(--kairon)">✦</div>
+          <div class="pip" style="border-color:rgba(138,180,168,.4);color:var(--kairon)">✦</div>
         </div>
         <div class="res-note">Use an Action to activate <strong>Symbiotic Entity</strong> (zombie shift) — costs 1 use. Or transform into a beast (CR ½ or lower, no fly/swim speed). Both regain on Short or Long Rest.</div>
       </div>
       <div class="res-block">
         <div class="res-lbl">Breath Weapon — 3 uses (Long Rest)</div>
         <div class="pip-row" id="kairon-bw">
-          <div class="pip g" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip g" onclick="this.classList.toggle('spent')">✦</div>
-          <div class="pip g" onclick="this.classList.toggle('spent')">✦</div>
+          <div class="pip g">✦</div>
+          <div class="pip g">✦</div>
+          <div class="pip g">✦</div>
         </div>
         <div class="res-note">Action: 30ft line. <strong>2d10 necrotic</strong>. CON save DC 12 — half on success. Regains on Long Rest. Uses = Proficiency Bonus (currently 3).</div>
       </div>
       <div class="res-block">
         <div class="res-lbl">Spell Slots</div>
         <div class="res-lbl" style="margin-top:.25rem;color:var(--crystal)">1st (×4)</div>
-        <div class="pip-row" id="kairon-s1"><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('kairon-s1')">↺</div></div>
+        <div class="pip-row" id="kairon-s1"><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip">✦</div><div class="pip rb" onclick="resetPips('kairon-s1')">↺</div></div>
         <div class="res-lbl" style="margin-top:.3rem;color:var(--gold)">2nd (×2)</div>
-        <div class="pip-row" id="kairon-s2"><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip g" onclick="this.classList.toggle('spent')">✦</div><div class="pip rb" onclick="resetPips('kairon-s2')">↺</div></div>
+        <div class="pip-row" id="kairon-s2"><div class="pip g">✦</div><div class="pip g">✦</div><div class="pip rb" onclick="resetPips('kairon-s2')">↺</div></div>
         <div class="res-note">Spell DC 13 · Spell attack +5 · WIS-based · Prepare 6 spells + subclass spells free</div>
       </div>
     </div>
     <div class="death-row">
-      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div><div class="ds-dot s" onclick="this.classList.toggle('on')"></div></div></div>
-      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div><div class="ds-dot f" onclick="this.classList.toggle('on')"></div></div></div>
-      <button class="insp" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'★ Inspired':'☆ Inspiration'">☆ Inspiration</button>
+      <div class="ds-grp"><span class="ds-lbl">Successes</span><div class="ds-dots"><div class="ds-dot s"></div><div class="ds-dot s"></div><div class="ds-dot s"></div></div></div>
+      <div class="ds-grp"><span class="ds-lbl">Failures</span><div class="ds-dots"><div class="ds-dot f"></div><div class="ds-dot f"></div><div class="ds-dot f"></div></div></div>
+      <button class="insp">☆ Inspiration</button>
     </div>
   </div></div>
 
@@ -1694,27 +1694,36 @@ function buildConditions(){
 buildConditions();
 CHARS.forEach(c => { buildCondChips(c); });
 
-// Give all pips stable IDs so Firebase can track them
-document.querySelectorAll('.pip:not(.rb)').forEach((p, i) => {
-  if(!p.id) p.id = 'pip_' + i;
-  const orig = p.onclick;
-  p.onclick = function(){
-    orig && orig.call(this);
-    if(!_suppressSync) syncWritePip(this.id, this.classList.contains('spent'));
-  };
-});
+// Assign stable IDs to every pip and dot so Firebase can track them by ID
+document.querySelectorAll('.pip:not(.rb)').forEach((p, i) => { if(!p.id) p.id = 'pip_' + i; });
+document.querySelectorAll('.ds-dot').forEach((d, i) => { if(!d.id) d.id = 'dot_' + i; });
+document.querySelectorAll('.insp').forEach((b, i) => { if(!b.id) b.id = 'insp_' + i; });
 
-// Give all death save dots and inspiration buttons stable IDs
-document.querySelectorAll('.ds-dot, .insp').forEach((el, i) => {
-  if(!el.id) el.id = 'dot_' + i;
-  const orig = el.onclick;
-  el.onclick = function(){
-    orig && orig.call(this);
-    if(!_suppressSync){
-      const on = this.classList.contains('on');
-      syncWriteDot(this.id, on);
-    }
-  };
+// ── Single event delegation listener — catches ALL pip/dot/insp clicks ──
+document.addEventListener('click', function(e) {
+  const t = e.target;
+
+  // Pip clicked (spell slot, Wild Shape, Bardic die, etc.) — not reset buttons
+  if(t.classList.contains('pip') && !t.classList.contains('rb')){
+    t.classList.toggle('spent');
+    if(!_suppressSync) syncWritePip(t.id, t.classList.contains('spent'));
+    return;
+  }
+
+  // Death save dot clicked
+  if(t.classList.contains('ds-dot')){
+    t.classList.toggle('on');
+    if(!_suppressSync) syncWriteDot(t.id, t.classList.contains('on'));
+    return;
+  }
+
+  // Inspiration button clicked
+  if(t.classList.contains('insp')){
+    t.classList.toggle('on');
+    t.textContent = t.classList.contains('on') ? '★ Inspired' : '☆ Inspiration';
+    if(!_suppressSync) syncWriteDot(t.id, t.classList.contains('on'));
+    return;
+  }
 });
 
 // Start listening to Firebase
